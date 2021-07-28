@@ -1,4 +1,6 @@
 import 'package:camhed/Pages/homePage.dart';
+import 'package:camhed/Pages/splashScreen/SplashScreen.dart';
+import 'package:camhed/Pages/splashScreen/loader.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: SplashScreen(),
     );
   }
 }

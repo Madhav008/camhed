@@ -1,5 +1,6 @@
-import 'package:camhed/Pages/splashScreen/splash_screen.dart';
 import 'package:flutter/material.dart';
+
+
 
 
 class LoaderScreen extends StatefulWidget {
@@ -14,30 +15,39 @@ class _LoaderScreenState extends State<LoaderScreen> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     var _alignment1 = Alignment.topCenter;
     var _alignment2 = Alignment.bottomCenter;
-    Future.delayed(Duration(seconds: 2), () {
-      // OneSignal.shared.init("c0069866-c963-42d5-9cda-f05f59b99886");
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SplashScreen1(),
-          ));
+    Future.delayed(Duration(seconds: 1), () {
+      // FirebaseAuth.instance.authStateChanges().listen((User user) async {
+      //   if (user == null) {
+      //     await Navigator.pushReplacement(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => StartingPage(),
+      //         ));
+      //   } else {
+      //    await Navigator.pushReplacement(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => MainPage(user),
+      //         ));
+      //   }
+      // });
     });
     return Scaffold(
       backgroundColor: Color(0xffed1a4f),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-        AnimatedContainer(
-                  duration: Duration(seconds: 2),
-                  alignment: _alignment1,
-                  child: Container(
-                      child: InkWell(
-                        onTap: (){
-                          setState(() {
-                            _alignment1 = Alignment.center;
-                          });
-                        },
-                          child: Image.asset('assets/Images/mafosup.png')))),
+          AnimatedContainer(
+              duration: Duration(seconds: 2),
+              alignment: _alignment1,
+              child: Container(
+                  child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          _alignment1 = Alignment.center;
+                        });
+                      },
+                      child: Image.asset('assets/mafosup.png')))),
           AnimatedContainer(
               duration: Duration(seconds: 2),
               alignment: _alignment2,
@@ -48,7 +58,7 @@ class _LoaderScreenState extends State<LoaderScreen> with SingleTickerProviderSt
                           _alignment1 = Alignment.center;
                         });
                       },
-                      child: Image.asset('assets/Images/mafosdown.png')))),
+                      child: Image.asset('assets/mafosdown.png')))),
         ],
       ),
 
