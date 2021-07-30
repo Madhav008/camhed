@@ -33,7 +33,7 @@ class _LoaderScreenState extends State<LoaderScreen> with SingleTickerProviderSt
       // });
     });
     return Scaffold(
-      backgroundColor: Color(0xffed1a4f),
+      backgroundColor: Color(0xffe8364e),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

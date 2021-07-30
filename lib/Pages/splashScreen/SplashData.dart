@@ -14,18 +14,18 @@ class Slide {
 
 final slideList = [
   Slide(
-    imageUrl: 'assets/S1.png',
-    title: 'Fresh Food & Everything',
-    description: 'Discover the best foods from over a million restaurants and fast deliver to your doorstep',
+    imageUrl: 'Images/doctor.png',
+    title: 'No Waiting',
+    description: 'Hassle Free Appointment',
   ),
   Slide(
-    imageUrl: 'assets/S2.png',
-    title: 'Fast Delivery',
-    description: 'Fast delivery to your home, office and wherever you are',
+    imageUrl: 'Images/Queue.png',
+    title: 'Join a Queue',
+    description: 'Get in a queue remotely from your home',
   ),
   Slide(
-    imageUrl: 'assets/S3.png',
-    title: 'Enjoy Today',
-    description: 'Real time tracking of your food on the app once you placed the order',
+    imageUrl: 'Images/Cash.png',
+    title: 'Online Payment',
+    description: 'Pay online for your consultation',
   ),
 ];

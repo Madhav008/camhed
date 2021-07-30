@@ -87,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             // },
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Color(0xffed1a4f),
+                                  color: Color(0xffe8364e),
                                   borderRadius:
                                       BorderRadius.circular(height / 95)),
                               height: height / 22,
@@ -115,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Color(0xffed1a4f),
+                                  color: Color(0xffe8364e),
                                   borderRadius:
                                       BorderRadius.circular(height / 95)),
                               height: height / 22,
@@ -160,7 +160,7 @@ class _SplashScreenState extends State<SplashScreen> {
                               height: height / 14,
                               width: width,
                               decoration: BoxDecoration(
-                                  color: Color(0xffed1a4f),
+                                  color: Color(0xffe8364e),
                                   borderRadius:
                                       BorderRadius.circular(height / 95)),
                             ),
