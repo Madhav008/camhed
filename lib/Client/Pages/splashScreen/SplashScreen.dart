@@ -1,5 +1,5 @@
-import 'package:camhed/Pages/splashScreen/slide_dots.dart';
-import 'package:camhed/Pages/splashScreen/slide_item.dart';
+import 'package:camhed/Client/Pages/splashScreen/slide_dots.dart';
+import 'package:camhed/Client/Pages/splashScreen/slide_item.dart';
 import 'package:flutter/material.dart';
 import 'SplashData.dart';
 
