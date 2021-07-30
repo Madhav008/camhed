@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "315008839101",
+    "project_id": "camhed-61ab8",
+    "storage_bucket": "camhed-61ab8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315008839101:android:aa602977177c07c16036d4",
+        "android_client_info": {
+          "package_name": "com.zirkon.camhed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315008839101-latifrgjdd060n9ku4kkpfgg83i24ffq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC61nwn2DWF_gYc3X3klfhxIRSvDXDvKwo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315008839101-latifrgjdd060n9ku4kkpfgg83i24ffq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,21 @@
+Types of User
+1. Client = user
+2. Doctor =doctor
+3. Admin =admin
+
+UserAuth ={
+    phone:+919467512615
+    type:admin||doctor||user;
+}
+
+Doctor = {
+    name
+}
+
+Admin= {
+name
+} 
+
+User = {
+user
+}
