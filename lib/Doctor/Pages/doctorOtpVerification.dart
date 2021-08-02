@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
@@ -17,9 +18,8 @@ class _DoctorOtpVerificationState extends State<DoctorOtpVerification> {
   bool _loading = true;
   bool _loading2 = false;
   String code = " ";
-  // String verificationId;
-  // String _countDown;
-  // OTPCountDown _otpCountDown;
+  String verificationId = "";
+  String _countDown = "";
   final int _otpTimeInMS = 1000 * 1 * 60;
   bool resendOtp = false;
 
@@ -44,71 +44,71 @@ class _DoctorOtpVerificationState extends State<DoctorOtpVerification> {
   //   );
   // }
 
-  // submitOtp() async {
-  //   try {
-  //     FirebaseAuth auth = FirebaseAuth.instance;
-  //     PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-  //         verificationId: verificationId, smsCode: code);
-  //     // Sign the user in (or link) with the credential
-  //     var userData = await auth.signInWithCredential(phoneAuthCredential);
-  //
-  //     if (userData != null) {
-  //       var existingUser =
-  //       await FireStoreServices().fetchUser(userData.user.uid);
-  //       Users data = Users(
-  //         phone: widget.phone,
-  //         userId: userData.user.uid,
-  //         isAdmin: false,
-  //       );
-  //       if (existingUser == null) {
-  //         await FireStoreServices().addUser(data);
-  //       }
-  //       Navigator.pushReplacement(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) => MainPage(
-  //                 userData.user
-  //             ),
-  //           ));
-  //     }
-  //   } catch (e) {
-  //
-  //     Fluttertoast.showToast(
-  //         msg: "Invalid OTP",
-  //         toastLength: Toast.LENGTH_LONG,
-  //         gravity: ToastGravity.BOTTOM_RIGHT,
-  //         timeInSecForIosWeb: 1,
-  //         backgroundColor: Colors.black,
-  //         textColor: Colors.white,
-  //         fontSize: 16.0);
-  //
-  //     setState(() {
-  //       _loading2 = false;
-  //     });
-  //   }
-  // }
+  submitOtp() async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: code);
+      // Sign the user in (or link) with the credential
+      var userData = await auth.signInWithCredential(phoneAuthCredential);
 
-  // verifyPhone() {
-  //   FirebaseAuth auth = FirebaseAuth.instance;
-  //
-  //   auth.verifyPhoneNumber (
-  //     phoneNumber: "+91${widget.phone}",
-  //     timeout: Duration(seconds: 120),
-  //     verificationCompleted: (AuthCredential credential) async {},
-  //     verificationFailed: (FirebaseAuthException exception) {
-  //       print(exception);
-  //     },
-  //     codeSent: (String verificationId, int resendToken) async {
-  //       // Create a PhoneAuthCredential with the code
-  //       this.verificationId = verificationId;
-  //     },
-  //     codeAutoRetrievalTimeout: (verificationId) {
-  //       setState(() {
-  //         this.verificationId = verificationId;
-  //       });
-  //     },
-  //   );
-  // }
+      if (userData != null) {
+        var existingUser =
+        await FireStoreServices().fetchUser(userData.user.uid);
+        Users data = Users(
+          phone: widget.phone,
+          userId: userData.user.uid,
+          isAdmin: false,
+        );
+        if (existingUser == null) {
+          await FireStoreServices().addUser(data);
+        }
+        // Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => MainPage(
+        //           userData.user
+        //       ),
+        //     ));
+      }
+    } catch (e) {
+
+      Fluttertoast.showToast(
+          msg: "Invalid OTP",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0);
+
+      setState(() {
+        _loading2 = false;
+      });
+    }
+  }
+
+  verifyPhone() {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    auth.verifyPhoneNumber (
+      phoneNumber: "+91${widget.phone}",
+      timeout: Duration(seconds: 120),
+      verificationCompleted: (AuthCredential credential) async {},
+      verificationFailed: (FirebaseAuthException exception) {
+        print(exception);
+      },
+      codeSent: (String verificationId, int resendToken) async {
+        // Create a PhoneAuthCredential with the code
+        this.verificationId = verificationId;
+      },
+      codeAutoRetrievalTimeout: (verificationId) {
+        setState(() {
+          this.verificationId = verificationId;
+        });
+      },
+    );
+  }
 
   @override
   @override
@@ -259,22 +259,22 @@ class _DoctorOtpVerificationState extends State<DoctorOtpVerification> {
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: GestureDetector(
-                // onTap: () {
-                //   if(code.length<6){
-                //     Fluttertoast.showToast(
-                //         msg: "Enter OTP",
-                //         toastLength: Toast.LENGTH_LONG,
-                //         gravity: ToastGravity.BOTTOM_RIGHT,
-                //         timeInSecForIosWeb: 1,
-                //         backgroundColor: Colors.black,
-                //         textColor: Colors.white,
-                //         fontSize: 16.0);
-                //   }else{
-                //     submitOtp();
-                //     setState(() {
-                //       _loading2 = true;
-                //     });}
-                // },
+                onTap: () {
+                  if(code.length<6){
+                    Fluttertoast.showToast(
+                        msg: "Enter OTP",
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM_RIGHT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  }else{
+                    submitOtp();
+                    setState(() {
+                      _loading2 = true;
+                    });}
+                },
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(height / 80),
@@ -307,13 +307,13 @@ class _DoctorOtpVerificationState extends State<DoctorOtpVerification> {
                 ),
                 (resendOtp)
                     ? InkWell(
-                  // onTap: () {
-                  //   verifyPhone();
-                  //   setState(() {
-                  //     resendOtp = false;
-                  //   });
-                  //   _startCountDown();
-                  // },
+                  onTap: () {
+                    verifyPhone();
+                    setState(() {
+                      resendOtp = false;
+                    });
+                    _startCountDown();
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xffED1A4F),
