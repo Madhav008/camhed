@@ -1,3 +1,4 @@
+import 'package:camhed/Client/Pages/Pages/loginPage.dart';
 import 'package:camhed/Client/Pages/splashScreen/slide_dots.dart';
 import 'package:camhed/Client/Pages/splashScreen/slide_item.dart';
 import 'package:flutter/material.dart';
@@ -143,11 +144,11 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Center(
                         child: SizedBox(
                           child: InkWell(
-                            // onTap: () {
-                            //   Navigator.of(context).pushReplacement(
-                            //       MaterialPageRoute(
-                            //           builder: (context) => StartingPage()));
-                            // },
+                            onTap: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            },
                             child: Container(
                               child: Center(
                                   child: Text(
