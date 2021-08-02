@@ -2,6 +2,8 @@ import 'package:camhed/Doctor/Pages/doctorloginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'otpVerification.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -155,12 +157,12 @@ class _LoginPageState extends State<LoginPage> {
                         textColor: Colors.white,
                         fontSize: 16.0);
                   } else {
-                    // await Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => OtpVerification(phone),
-                    //   ),
-                    // );
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OtpVerification(phone),
+                      ),
+                    );
                   }
                 },
                 child: Container(
