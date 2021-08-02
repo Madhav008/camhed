@@ -1,3 +1,5 @@
+import 'package:camhed/Auth/firestore.dart';
+import 'package:camhed/Model/AuthType.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,11 +21,12 @@ class _OtpVerificationState extends State<OtpVerification> {
   bool _loading = true;
   bool _loading2 = false;
   String code = " ";
-  String verificationId = "";
-  String _countDown = "";
-  OTPCountDown _otpCountDown= new OTPCountDown();
+  String verificationId;
+  String _countDown;
+  OTPCountDown _otpCountDown;
   final int _otpTimeInMS = 1000 * 1 * 60;
   bool resendOtp = false;
+
 
   @override
   void dispose() {
@@ -56,15 +59,26 @@ class _OtpVerificationState extends State<OtpVerification> {
 
       if (userData != null) {
         var existingUser =
-        await FireStoreServices().fetchUser(userData.user.uid);
-        Users data = Users(
+        await FireStoreServices().fetchType(userData.user.uid);
+        AuthType data = AuthType(
           phone: widget.phone,
           userId: userData.user.uid,
-          isAdmin: false,
+          type: 'user',
         );
         if (existingUser == null) {
-          await FireStoreServices().addUser(data);
+          await FireStoreServices().setType(data);
         }
+
+        
+      Fluttertoast.showToast(
+          msg: "FUCK",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0);
+
         // Navigator.pushReplacement(
         //     context,
         //     MaterialPageRoute(
@@ -76,7 +90,7 @@ class _OtpVerificationState extends State<OtpVerification> {
     } catch (e) {
 
       Fluttertoast.showToast(
-          msg: "Invalid OTP",
+          msg: e.toString(),
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
@@ -113,7 +127,6 @@ class _OtpVerificationState extends State<OtpVerification> {
   }
 
   @override
-  @override
   void initState() {
     super.initState();
     // EasyLoading.init();
@@ -122,8 +135,8 @@ class _OtpVerificationState extends State<OtpVerification> {
         _loading = false;
       });
     });
-    // verifyPhone();
-    // _startCountDown();
+    verifyPhone();
+    _startCountDown();
   }
 
   Widget build(BuildContext context) {
@@ -242,7 +255,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                 ),
                 Center(
                   child: Text(
-                    "_countDown",
+                    _countDown,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
