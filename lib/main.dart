@@ -1,3 +1,4 @@
+import 'package:camhed/Client/Pages/Pages/clientRegister.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
