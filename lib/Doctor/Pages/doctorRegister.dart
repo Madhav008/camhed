@@ -195,7 +195,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(context,
+                  Navigator.push(context,
                       MaterialPageRoute(builder: (context) => DoctorVerify()));
                 },
                 child: Padding(
