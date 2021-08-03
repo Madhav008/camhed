@@ -1,8 +1,3 @@
-// enum Type {
-//   user,
-//   doctor
-// }
-
 class AuthType {
   String phone;
   String type;

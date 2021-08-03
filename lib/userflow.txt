@@ -9,7 +9,13 @@ UserAuth ={
 }
 
 Doctor = {
-    name
+    name,
+    email,
+    address,
+    idurl,
+    idurl2,
+    profilepic,
+    speceality,
 }
 
 Admin= {
@@ -17,5 +23,8 @@ name
 } 
 
 User = {
-user
+name,
+email,
+address,
+pic
 }
