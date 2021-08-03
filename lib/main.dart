@@ -1,6 +1,5 @@
 import 'package:camhed/Client/Pages/Pages/clientRegister.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
-import 'package:camhed/Doctor/Pages/doctorloginPage.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
 import 'package:camhed/validatior/userRegisterValidation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'Doctor/Pages/doctorRegister.dart';
+import 'Doctor/Pages/doctorVerify.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

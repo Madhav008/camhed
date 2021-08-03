@@ -1,3 +1,4 @@
+import 'package:camhed/Doctor/Pages/doctorVerify.dart';
 import 'package:flutter/material.dart';
 
 class DoctorRegister extends StatefulWidget {
@@ -18,6 +19,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 0,
       ),
@@ -183,20 +185,28 @@ class _DoctorRegisterState extends State<DoctorRegister> {
 
             Padding(
               padding: const EdgeInsets.only(top: 30,left: 15,right: 15),
-              child: Container(
-                height: height / 13,
-                width: width,
-                decoration: BoxDecoration(
-                    color: Color(0xffed1a4f),
-                    borderRadius: BorderRadius.circular(height / 50)),
-                child: Center(
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20),
-                    )),
+              child: InkWell(
+                onTap: (){
+                  Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoctorVerify()));
+                },
+                child: Container(
+                  height: height / 13,
+                  width: width,
+                  decoration: BoxDecoration(
+                      color: Color(0xffed1a4f),
+                      borderRadius: BorderRadius.circular(height / 50)),
+                  child: Center(
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20),
+                      )),
+                ),
               ),
             ),
 
