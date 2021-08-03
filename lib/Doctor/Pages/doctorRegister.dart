@@ -195,8 +195,24 @@ class _DoctorRegisterState extends State<DoctorRegister> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => DoctorVerify()));
+                  if (doctorRegisterValidation.name.value != null &&
+                      doctorRegisterValidation.email.value != null &&
+                      doctorRegisterValidation.address.value != null &&
+                      doctorRegisterValidation.agree != false) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DoctorVerify()));
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "Fill The Form Completly.  ",
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM_RIGHT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  }
                 },
                 child: Padding(
                     padding:
