@@ -15,7 +15,7 @@ class DoctorRegisterValidation with ChangeNotifier {
   }
 
   //getter
-
+  bool get agree => _agree;
   ValidationItem get email => _email;
   ValidationItem get name => _name;
   ValidationItem get address => _address;
@@ -40,19 +40,19 @@ class DoctorRegisterValidation with ChangeNotifier {
   }
 
   void changeName(String value) {
-    if (!_isValidEmail(value)) {
-      _email = ValidationItem(null, "Please Enter Valid Email");
+    if (value.isEmpty) {
+      _name = ValidationItem(null, "Please Enter Name");
     } else {
-      _email = ValidationItem(value, null);
+      _name = ValidationItem(value, null);
     }
     notifyListeners();
   }
 
   void changeAddress(String value) {
-    if (!_isValidEmail(value)) {
-      _email = ValidationItem(null, "Please Enter Valid Email");
+    if (value.isEmpty) {
+      _address = ValidationItem(null, "Please Enter Address");
     } else {
-      _email = ValidationItem(value, null);
+      _address = ValidationItem(value, null);
     }
     notifyListeners();
   }
