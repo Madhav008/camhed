@@ -87,26 +87,27 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                 ],
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(top: 5),
               child: Container(
-                height: height / 6,
-                width: width / 2,
+                height: height/6,
+                width: width/2,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("Images/user.png"),
-                        fit: BoxFit.contain)),
+                  image: DecorationImage(
+                    image: AssetImage("Images/user.png"),fit: BoxFit.contain
+                  )
+                ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(top: 5),
-              child: Text(
-                "We need to verify your ID",
-                style: TextStyle(color: Colors.black, fontSize: height / 35),
-              ),
+              child: Text("We need to verify your ID",style: TextStyle(color: Colors.black,fontSize: height/35),),
             ),
+
             Padding(
-              padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
+              padding: const EdgeInsets.only(top: 25,left: 15,right: 15),
               child: FDottedLine(
                 color: Colors.black38,
                 height: 100.0,
@@ -115,33 +116,28 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                 dottedLength: 10.0,
                 space: 4.0,
                 child: Container(
-                  height: height / 4,
+                  height: height/4,
                   width: width,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(height / 90),
-                      color: Colors.white),
+                    borderRadius: BorderRadius.circular(height/90),
+                    color: Colors.white
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image(
-                        image: AssetImage("Images/add.png"),
-                        height: height / 6,
-                      ),
-                      SizedBox(
-                        height: height / 80,
-                      ),
-                      Text(
-                        "Add front Side of Your ID",
-                        style: TextStyle(color: Colors.black54),
-                      )
+                      Image(image: AssetImage("Images/add.png"),height: height/6,),
+                      SizedBox(height: height/80,),
+                      Text("Add front Side of Your ID",style: TextStyle(color: Colors.black54),)
+
                     ],
                   ),
                 ),
               ),
             ),
+
             Padding(
-              padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+              padding: const EdgeInsets.only(top: 30,left: 15,right: 15),
               child: FDottedLine(
                 color: Colors.black38,
                 height: 100.0,
@@ -150,39 +146,33 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                 dottedLength: 10.0,
                 space: 4.0,
                 child: Container(
-                  height: height / 4,
+                  height: height/4,
                   width: width,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(height / 90),
-                      color: Colors.white),
+                      borderRadius: BorderRadius.circular(height/90),
+                      color: Colors.white
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image(
-                        image: AssetImage("Images/add.png"),
-                        height: height / 6,
-                      ),
-                      SizedBox(
-                        height: height / 80,
-                      ),
-                      Text(
-                        "Add back Side of Your ID",
-                        style: TextStyle(color: Colors.black54),
-                      )
+                      Image(image: AssetImage("Images/add.png"),height: height/6,),
+                      SizedBox(height: height/80,),
+                      Text("Add back Side of Your ID",style: TextStyle(color: Colors.black54),)
+
                     ],
                   ),
                 ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(top: 25),
-              child: Text("Add your photo",
-                  style: TextStyle(
-                      fontSize: height / 50, fontWeight: FontWeight.w400)),
+              child: Text("Add your photo",style: TextStyle(fontSize: height/50,fontWeight: FontWeight.w400)),
             ),
+
             Padding(
-              padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
+              padding: const EdgeInsets.only(top: 25,left: 15,right: 15),
               child: FDottedLine(
                 color: Colors.black38,
                 height: 100.0,
@@ -191,71 +181,35 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                 dottedLength: 10.0,
                 space: 4.0,
                 child: Container(
-                  height: height / 4,
+                  height: height/4,
                   width: width,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(height / 90),
-                      color: Colors.white),
+                      borderRadius: BorderRadius.circular(height/90),
+                      color: Colors.white
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image(
-                        image: AssetImage("Images/userphoto.png"),
-                        height: height / 6,
-                      ),
-                      SizedBox(
-                        height: height / 80,
-                      ),
-                      Text(
-                        "Add your photo",
-                        style: TextStyle(
-                          color: Colors.black54,
-                        ),
-                      )
+                      Image(image: AssetImage("Images/userphoto.png"),height: height/6,),
+                      SizedBox(height: height/80,),
+                      Text("Add your photo",style: TextStyle(color: Colors.black54,),)
+
                     ],
                   ),
                 ),
               ),
             ),
+
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 30, left: 15, right: 15, bottom: 30),
+              padding: const EdgeInsets.only(top: 30,left: 15,right: 15,bottom: 30),
               child: InkWell(
-                onTap: () {
-                  doctorRegisterValidation.setApiCall();
-
-                  if (1 == 1) {
-                    DoctorProfileModel data = DoctorProfileModel(
-                      name: doctorRegisterValidation.name.value,
-                      email: doctorRegisterValidation.email.value,
-                      address: doctorRegisterValidation.address.value,
-                    );
-
-                    print(data.toMap());
-                    var userId = FirebaseAuth.instance.currentUser.uid;
-                    DoctorServices().addUser(userId, data).then((value) {
-                      doctorRegisterValidation.setApiCall();
-                      if (value.data != null) {
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => MainPage(value),
-                        //     ));
-                      }
-                    });
-                  } else {
-                    Fluttertoast.showToast(
-                        msg: "Upload The Id.  ",
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.BOTTOM_RIGHT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
-                    doctorRegisterValidation.setApiCall();
-                  }
-                },
+                // onTap: (){
+                //   Navigator.pushReplacement(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => DoctorVerify()));
+                // },
                 child: Container(
                   height: height / 13,
                   width: width,
@@ -264,15 +218,16 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                       borderRadius: BorderRadius.circular(height / 50)),
                   child: Center(
                       child: Text(
-                    "Submit",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  )),
+                        "Submit",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20),
+                      )),
                 ),
               ),
             ),
+
           ],
         ),
       ),
