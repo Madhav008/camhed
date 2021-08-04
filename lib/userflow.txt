@@ -8,6 +8,45 @@ UserAuth ={
     type:admin||doctor||user;
 }
 
+Hospitals/Clincs = {
+    name,
+    location
+}
+
+Category = {
+    name
+}
+
+
+AdvertisementBanner = {
+    url =[];
+}
+
+
+Location ={
+    country name
+}
+
+//When Doctor Creates its appointement
+AppoinntCreation = {
+        name,
+        hospital,(Create own your own also);
+        time,
+        fees,
+        Category/Specialites,
+}
+
+
+
+
+
+
+
+
+
+
+
+
 Doctor = {
     name,
     email,
