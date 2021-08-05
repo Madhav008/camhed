@@ -1,3 +1,4 @@
+import 'package:camhed/Client/Pages/Pages/doctorsListPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -117,15 +118,23 @@ class _ClientHomePageState extends State<ClientHomePage> {
                             mainAxisSpacing: 20),
                         itemCount: 10,
                         itemBuilder: (BuildContext ctx, index) {
-                          return Container(
-                            child: Column(
-                              children: [
-                                Image(image: AssetImage("Images/corona.png"),height: height/12,),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 15),
-                                  child: Text("COVID-19",style: TextStyle(color: Colors.black38),),
-                                )
-                              ],
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DoctorListPage()));
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Image(image: AssetImage("Images/corona.png"),height: height/12,),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15),
+                                    child: Text("COVID-19",style: TextStyle(color: Colors.black38),),
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         }),
