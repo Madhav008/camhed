@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dropdown/flutter_dropdown.dart';
 
 class CreateDoctorProfile extends StatefulWidget {
   const CreateDoctorProfile({Key key}) : super(key: key);
 
   @override
-
   _CreateDoctorProfileState createState() => _CreateDoctorProfileState();
 }
 
@@ -20,32 +18,44 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
     "cancer",
     "Skin",
   ];
-  var _currentSelectedValue;
+  var _currentSelectedValue1;
+  var _currentSelectedValue2;
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Doctor Profile",style: TextStyle(color: Colors.black),),
+        title: Text(
+          "Doctor Profile",
+          style: TextStyle(color: Colors.black),
+        ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20,top: 20),
-            child: Text("SAVE",style: TextStyle(color: Color(0xffe8364e),fontSize: height/55,fontWeight: FontWeight.w500),)
-          ),
+              padding: const EdgeInsets.only(right: 20, top: 20),
+              child: Text(
+                "SAVE",
+                style: TextStyle(
+                    color: Color(0xffe8364e),
+                    fontSize: height / 55,
+                    fontWeight: FontWeight.w500),
+              )),
         ],
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Color(0xffe8364e)),
-
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15,right: 15,top: 30),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Name",style: TextStyle(color: Colors.black38),),
+              Text(
+                "Name",
+                style: TextStyle(color: Colors.black38),
+              ),
               TextFormField(
                 // onChanged: (value) {
                 //   doctorRegisterValidation.changeAddress(value);
@@ -57,29 +67,28 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   alignLabelWithHint: false,
                   helperText: "",
                   fillColor: Colors.white,
-
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: FormField<String>(
                   builder: (FormFieldState<String> state) {
                     return InputDecorator(
                       decoration: InputDecoration(
-                          labelStyle: TextStyle(color: Colors.black38),
-                          errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
-                          hintText: 'Please select expense',
-                          labelText: "Enter Your City",
+                        labelStyle: TextStyle(color: Colors.black38),
+                        errorStyle:
+                            TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                        hintText: 'Please select expense',
+                        labelText: "Enter Your City",
                       ),
-                      isEmpty: _currentSelectedValue == '',
+                      isEmpty: _currentSelectedValue1 == '',
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: _currentSelectedValue,
+                          value: _currentSelectedValue1,
                           isDense: true,
                           onChanged: (String newValue) {
                             setState(() {
-                              _currentSelectedValue = newValue;
+                              _currentSelectedValue1 = newValue;
                               state.didChange(newValue);
                             });
                           },
@@ -95,7 +104,6 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   },
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: FormField<String>(
@@ -103,18 +111,19 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     return InputDecorator(
                       decoration: InputDecoration(
                         labelStyle: TextStyle(color: Colors.black38),
-                        errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                        errorStyle:
+                            TextStyle(color: Colors.redAccent, fontSize: 16.0),
                         hintText: 'Speciality',
                         labelText: "Enter Your Speciality",
                       ),
-                      isEmpty: _currentSelectedValue == '',
+                      isEmpty: _currentSelectedValue2 == '',
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: _currentSelectedValue,
+                          value: _currentSelectedValue2,
                           isDense: true,
                           onChanged: (String newValue) {
                             setState(() {
-                              _currentSelectedValue = newValue;
+                              _currentSelectedValue2 = newValue;
                               state.didChange(newValue);
                             });
                           },
@@ -130,12 +139,13 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   },
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 30),
-                child: Text("Gender",style: TextStyle(color: Colors.black38),),
+                child: Text(
+                  "Gender",
+                  style: TextStyle(color: Colors.black38),
+                ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Row(
@@ -165,15 +175,15 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                         ],
                       ),
                     ),
-
-
                   ],
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 30),
-                child: Text("Education",style: TextStyle(color: Colors.black38),),
+                child: Text(
+                  "Education",
+                  style: TextStyle(color: Colors.black38),
+                ),
               ),
               TextFormField(
                 // onChanged: (value) {
@@ -186,13 +196,14 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   alignLabelWithHint: false,
                   helperText: "",
                   fillColor: Colors.white,
-
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Text("Experience",style: TextStyle(color: Colors.black38),),
+                child: Text(
+                  "Experience",
+                  style: TextStyle(color: Colors.black38),
+                ),
               ),
               TextFormField(
                 // onChanged: (value) {
@@ -205,10 +216,8 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   alignLabelWithHint: false,
                   helperText: "",
                   fillColor: Colors.white,
-
                 ),
               ),
-
             ],
           ),
         ),

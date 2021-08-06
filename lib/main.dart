@@ -1,5 +1,6 @@
 import 'package:camhed/Admin/AdminPages/AddCountryPage.dart';
 import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
+import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Doctor/Pages/doctorRegister.dart';
 import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: DoctorRegister(),
+        home: CreateDoctorProfile(),
       ),
     );
   }

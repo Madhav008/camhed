@@ -48,8 +48,6 @@ class _DoctorVerifyState extends State<DoctorVerify> {
   }
   @override
   Widget build(BuildContext context) {
-    var doctorRegisterValidation =
-        Provider.of<DoctorRegisterValidation>(context);
     var doctorIdValidation = Provider.of<DoctorIdValidation>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
