@@ -26,7 +26,7 @@ class AdminServices {
 
   Future<List<LocationModel>> getCountry() async {
     List<LocationModel> data;
-    var value = await _db.collection('Category').get();
+    var value = await _db.collection('Locations').get();
 
     data =
         (value.docs).map((e) => LocationModel.fromFirestore(e.data())).toList();

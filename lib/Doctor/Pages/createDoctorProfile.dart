@@ -1,4 +1,9 @@
+import 'package:camhed/Admin/AdminServices/adminService.dart';
+import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateDoctorProfile extends StatefulWidget {
   const CreateDoctorProfile({Key key}) : super(key: key);
@@ -8,23 +13,26 @@ class CreateDoctorProfile extends StatefulWidget {
 }
 
 class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
-  var _city = [
-    "Una",
-    "Hamirpur",
-    "Delhi",
-  ];
-  var _speciality = [
-    "Covid-19",
-    "cancer",
-    "Skin",
-  ];
   var _currentSelectedValue1;
   var _currentSelectedValue2;
+  String name;
+  String gender;
+  String deg;
+  String exp;
+  bool isMale = false;
+  @override
+  void initState() {
+    super.initState();
+    var data = Provider.of<DoctorProfileProvider>(context, listen: false);
+    data.getLocation();
+    data.getSpeciality();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var doctorProfileProvider = Provider.of<DoctorProfileProvider>(context);
+
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -34,12 +42,41 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 20, top: 20),
-              child: Text(
-                "SAVE",
-                style: TextStyle(
-                    color: Color(0xffe8364e),
-                    fontSize: height / 55,
-                    fontWeight: FontWeight.w500),
+              child: InkWell(
+                onTap: () async {
+                  var userId = FirebaseAuth.instance.currentUser.uid;
+                  if (name.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({"name": name});
+                  }
+                  if (_currentSelectedValue1.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({"city": _currentSelectedValue1});
+                  }
+                  if (_currentSelectedValue2.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({"category": _currentSelectedValue2});
+                  }
+                  if (gender.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({"gender": gender});
+                  }
+                },
+                child: Text(
+                  "SAVE",
+                  style: TextStyle(
+                      color: Color(0xffe8364e),
+                      fontSize: height / 55,
+                      fontWeight: FontWeight.w500),
+                ),
               )),
         ],
         backgroundColor: Colors.white,
@@ -57,9 +94,9 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                 style: TextStyle(color: Colors.black38),
               ),
               TextFormField(
-                // onChanged: (value) {
-                //   doctorRegisterValidation.changeAddress(value);
-                // },
+                onChanged: (value) {
+                  name = value;
+                },
                 decoration: InputDecoration(
                   // errorText: doctorRegisterValidation.address.error,
                   hintText: "Enter your full name",
@@ -92,7 +129,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                               state.didChange(newValue);
                             });
                           },
-                          items: _city.map((String value) {
+                          items: doctorProfileProvider.city.map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
@@ -127,7 +164,8 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                               state.didChange(newValue);
                             });
                           },
-                          items: _speciality.map((String value) {
+                          items: doctorProfileProvider.specility
+                              .map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
@@ -153,9 +191,17 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     Row(
                       children: [
                         Checkbox(
-                          value: false,
+                          value: isMale,
                           onChanged: (value) {
                             // doctorRegisterValidation.setAgree();
+
+                            setState(() {
+                              isMale = !isMale;
+                            });
+
+                            if (isMale) {
+                              gender = "Male";
+                            }
                           },
                         ),
                         Text("Male")
@@ -166,8 +212,14 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                       child: Row(
                         children: [
                           Checkbox(
-                            value: false,
+                            value: isMale == false ? true : false,
                             onChanged: (value) {
+                              setState(() {
+                                isMale = !isMale;
+                              });
+                              if (!isMale) {
+                                gender = "Female";
+                              }
                               // doctorRegisterValidation.setAgree();
                             },
                           ),
@@ -186,9 +238,9 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                 ),
               ),
               TextFormField(
-                // onChanged: (value) {
-                //   doctorRegisterValidation.changeAddress(value);
-                // },
+                onChanged: (value) {
+                  deg = value;
+                },
                 decoration: InputDecoration(
                   // errorText: doctorRegisterValidation.address.error,
                   hintText: "Eg. MBBS",
@@ -206,9 +258,9 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                 ),
               ),
               TextFormField(
-                // onChanged: (value) {
-                //   doctorRegisterValidation.changeAddress(value);
-                // },
+                onChanged: (value) {
+                  exp = value;
+                },
                 decoration: InputDecoration(
                   // errorText: doctorRegisterValidation.address.error,
                   hintText: "Years of experience",

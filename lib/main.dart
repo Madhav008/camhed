@@ -1,8 +1,10 @@
 import 'package:camhed/Admin/AdminPages/AddCountryPage.dart';
 import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
+import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
 import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Doctor/Pages/doctorRegister.dart';
 import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
+import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
 import 'package:camhed/validatior/userRegisterValidation.dart';
@@ -32,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => DoctorIdValidation(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DoctorProfileProvider(),
         ),
       ],
       child: MaterialApp(

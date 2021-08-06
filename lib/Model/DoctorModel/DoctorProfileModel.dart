@@ -16,6 +16,7 @@ class DoctorProfileModel {
   String fees;
   String hospital;
   String position;
+  String city;
   List<SessionTimeModel> time;
 
   DoctorProfileModel(
@@ -31,6 +32,9 @@ class DoctorProfileModel {
       this.profilepic,
       this.time,
       this.hospital,
+      this.gender,
+      this.fees,
+      this.city,
       this.position,
       this.status});
 
@@ -45,9 +49,12 @@ class DoctorProfileModel {
       'status': status,
       'category': category,
       'phone': phone,
+      'city': city,
       'experiance': experiance,
       'hospital': hospital,
       'position': position,
+      'gender': gender,
+      'fees': fees,
       'time': List<dynamic>.from(time.map((e) => e)),
       'profilepic': profilepic,
     };
@@ -68,6 +75,9 @@ class DoctorProfileModel {
         phone: firestore['phone'],
         hospital: firestore['hospital'],
         profilepic: firestore['profilepic'],
+        fees: firestore['fees'],
+        gender: firestore['gender'],
+        city: firestore['city'],
         position: firestore['position'],
         time: List<SessionTimeModel>.from(firestore['time'].map((x) => x)),
         status: firestore['status']);
