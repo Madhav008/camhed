@@ -3,6 +3,7 @@ import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
 import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Doctor/Pages/doctorRegister.dart';
+import 'package:camhed/Doctor/Pages/doctorVerify.dart';
 import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: CreateDoctorProfile(),
+        home: DoctorVerify(),
       ),
     );
   }

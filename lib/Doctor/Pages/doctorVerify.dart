@@ -5,6 +5,7 @@ import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fdottedline/fdottedline.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -23,13 +24,13 @@ class DoctorVerify extends StatefulWidget {
 }
 
 class _DoctorVerifyState extends State<DoctorVerify> {
-
-
-    var storageRef = FirebaseStorage.instance;
+  var storageRef = FirebaseStorage.instance;
   String postId = Uuid().v4();
   File file;
-  
-    Future<String> uploadImage(imageFile) async {
+  File file1;
+  File file2;
+  File file3;
+  Future<String> uploadImage(imageFile) async {
     var uploadTask = storageRef.ref("post_$postId.jpg").putFile(imageFile);
     var storageSnap = await uploadTask;
     String downloadUrl = await storageSnap.ref.getDownloadURL();
@@ -40,12 +41,13 @@ class _DoctorVerifyState extends State<DoctorVerify> {
     // ignore: deprecated_member_use
     var file = await ImagePicker().pickImage(source: ImageSource.gallery);
     // var file = await _picker.getImage(source: ImageSource.gallery);
-  
+
     setState(() {
       this.file = File(file.path);
     });
     return this.file;
   }
+
   @override
   Widget build(BuildContext context) {
     var doctorIdValidation = Provider.of<DoctorIdValidation>(context);
@@ -145,28 +147,53 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                   strokeWidth: 2.0,
                   dottedLength: 10.0,
                   space: 4.0,
-                  child: Container(
-                    height: height / 4,
-                    width: width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(height / 90),
-                        color: Colors.white),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image(
-                          image: AssetImage("Images/add.png"),
-                          height: height / 6,
-                        ),
-                        SizedBox(
-                          height: height / 80,
-                        ),
-                        Text(
-                          "Add front Side of Your ID",
-                          style: TextStyle(color: Colors.black54),
-                        )
-                      ],
+                  child: InkWell(
+                    onTap: () {
+                      var userId = FirebaseAuth.instance.currentUser.uid;
+                      handleChooseFromGallery().then((value) {
+                        setState(() {
+                          file1 = value;
+                        });
+                        uploadImage(value).then((value) {
+                          FirebaseFirestore.instance
+                              .collection('DoctorProfile')
+                              .doc(userId)
+                              .update({"idurl1": value});
+                        });
+                      });
+                    },
+                    child: Container(
+                      height: height / 4,
+                      width: width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(height / 90),
+                          color: Colors.white),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          (file != null)
+                              ? Container(
+                                  height: height / 4,
+                                  width: width,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: FileImage(file),
+                                          fit: BoxFit.cover)),
+                                )
+                              : Image(
+                                  image: AssetImage("Images/add.png"),
+                                  height: height / 6,
+                                ),
+                          SizedBox(
+                            height: height / 80,
+                          ),
+                          Text(
+                            "Add front Side of Your ID",
+                            style: TextStyle(color: Colors.black54),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -180,28 +207,53 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                   strokeWidth: 2.0,
                   dottedLength: 10.0,
                   space: 4.0,
-                  child: Container(
-                    height: height / 4,
-                    width: width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(height / 90),
-                        color: Colors.white),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image(
-                          image: AssetImage("Images/add.png"),
-                          height: height / 6,
-                        ),
-                        SizedBox(
-                          height: height / 80,
-                        ),
-                        Text(
-                          "Add back Side of Your ID",
-                          style: TextStyle(color: Colors.black54),
-                        )
-                      ],
+                  child: InkWell(
+                    onTap: () {
+                      var userId = FirebaseAuth.instance.currentUser.uid;
+                      handleChooseFromGallery().then((value) {
+                        setState(() {
+                          file2 = value;
+                        });
+                        uploadImage(value).then((value) {
+                          FirebaseFirestore.instance
+                              .collection('DoctorProfile')
+                              .doc(userId)
+                              .update({"idBack": value});
+                        });
+                      });
+                    },
+                    child: Container(
+                      height: height / 4,
+                      width: width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(height / 90),
+                          color: Colors.white),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          (file != null)
+                              ? Container(
+                                  height: height / 4,
+                                  width: width,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: FileImage(file2),
+                                          fit: BoxFit.cover)),
+                                )
+                              : Image(
+                                  image: AssetImage("Images/add.png"),
+                                  height: height / 6,
+                                ),
+                          SizedBox(
+                            height: height / 80,
+                          ),
+                          Text(
+                            "Add back Side of Your ID",
+                            style: TextStyle(color: Colors.black54),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -221,30 +273,55 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                   strokeWidth: 2.0,
                   dottedLength: 10.0,
                   space: 4.0,
-                  child: Container(
-                    height: height / 4,
-                    width: width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(height / 90),
-                        color: Colors.white),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image(
-                          image: AssetImage("Images/userphoto.png"),
-                          height: height / 6,
-                        ),
-                        SizedBox(
-                          height: height / 80,
-                        ),
-                        Text(
-                          "Add your photo",
-                          style: TextStyle(
-                            color: Colors.black54,
+                  child: InkWell(
+                    onTap: () {
+                      var userId = FirebaseAuth.instance.currentUser.uid;
+                      handleChooseFromGallery().then((value) {
+                        setState(() {
+                          file3 = value;
+                        });
+                        uploadImage(value).then((value) {
+                          FirebaseFirestore.instance
+                              .collection('DoctorProfile')
+                              .doc(userId)
+                              .update({"profilepic": value});
+                        });
+                      });
+                    },
+                    child: Container(
+                      height: height / 4,
+                      width: width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(height / 90),
+                          color: Colors.white),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          (file3 != null)
+                              ? Container(
+                                  height: height / 4,
+                                  width: width,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: FileImage(file3),
+                                          fit: BoxFit.cover)),
+                                )
+                              :Image(
+                            image: AssetImage("Images/userphoto.png"),
+                            height: height / 6,
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            height: height / 80,
+                          ),
+                          Text(
+                            "Add your photo",
+                            style: TextStyle(
+                              color: Colors.black54,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
