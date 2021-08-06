@@ -46,19 +46,16 @@ class AdminServices {
     return data;
   }
 
-
-    Future addBanner(BannerModel data) {
+  Future addBanner(BannerModel data) {
     return _db.collection('Banner').add(data.toMap());
   }
 
-  Future<List<BannerModel>> getBanner() async {
-    List<BannerModel> data;
-    var value = await _db.collection('Banner').get();
+  Future<BannerModel> getBanner() async {
+    BannerModel data;
+    var value =
+        await _db.collection('Banner').doc("JjwIOhuXaqlvUlaFHUpO").get();
 
-    data =
-        (value.docs).map((e) => BannerModel.fromFirestore(e.data())).toList();
+    data = BannerModel.fromFirestore(value.data());
     return data;
   }
-  
-
 }
