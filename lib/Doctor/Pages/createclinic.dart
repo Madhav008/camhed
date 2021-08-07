@@ -1,10 +1,6 @@
-import 'package:camhed/Admin/AdminServices/adminService.dart';
-import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CreateClinic extends StatefulWidget {
   const CreateClinic({Key key}) : super(key: key);
@@ -15,17 +11,16 @@ class CreateClinic extends StatefulWidget {
 
 class _CreateClinicState extends State<CreateClinic> {
   var _currentSelectedValue1;
-  var _currentSelectedValue2;
+
   String name;
-  String gender;
-  String deg;
-  String exp;
-  bool isMale = false;
+  String address;
+  String clinicNo;
+  String fees;
 
   TimeOfDay initialTime = TimeOfDay.now();
 
-  List <TimeOfDay> start_time = [];
-  List <TimeOfDay> end_time = [];
+  List<TimeOfDay> start_time = [];
+  List<TimeOfDay> end_time = [];
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +38,47 @@ class _CreateClinicState extends State<CreateClinic> {
           Padding(
               padding: const EdgeInsets.only(right: 20, top: 20),
               child: InkWell(
+                onTap: () async {
+                  var userId = FirebaseAuth.instance.currentUser.uid;
+                  if (name.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('Hospitals')
+                        .doc(userId)
+                        .set({
+                      "name": name,
+                      "city": _currentSelectedValue1,
+                      "clinicNo": clinicNo,
+                      "address": address
+                    });
+                  }
+
+                  if (fees.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({"fees": fees});
+                  }
+
+                  if (start_time.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({
+                      "StartTime": List<dynamic>.from(
+                          start_time.map((e) => e.toString())),
+                    });
+                  }
+
+                  if (end_time.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({
+                      "EndTime":
+                          List<dynamic>.from(end_time.map((e) => e.toString()))
+                    });
+                  }
+                },
                 child: Text(
                   "SAVE",
                   style: TextStyle(
@@ -67,9 +103,9 @@ class _CreateClinicState extends State<CreateClinic> {
                 style: TextStyle(color: Colors.black38),
               ),
               TextFormField(
-                // onChanged: (value) {
-                //   name = value;
-                // },
+                onChanged: (value) {
+                  name = value;
+                },
                 decoration: InputDecoration(
                   // errorText: doctorRegisterValidation.address.error,
                   hintText: "Enter your clinic Name",
@@ -88,8 +124,7 @@ class _CreateClinicState extends State<CreateClinic> {
                         labelStyle: TextStyle(color: Colors.black38),
                         errorStyle:
                             TextStyle(color: Colors.redAccent, fontSize: 16.0),
-                        hintText: 'Please select expense',
-                        labelText: "Enter Your Location",
+                        labelText: "Enter Your City",
                       ),
                       isEmpty: _currentSelectedValue1 == '',
                       child: DropdownButtonHideUnderline(
@@ -122,12 +157,32 @@ class _CreateClinicState extends State<CreateClinic> {
                 ),
               ),
               TextFormField(
-                // onChanged: (value) {
-                //   deg = value;
-                // },
+                onChanged: (value) {
+                  clinicNo = value;
+                },
                 decoration: InputDecoration(
                   // errorText: doctorRegisterValidation.address.error,
                   hintText: "Enter Clinic Number",
+                  hintStyle: TextStyle(color: Colors.black38),
+                  alignLabelWithHint: false,
+                  helperText: "",
+                  fillColor: Colors.white,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  "Address",
+                  style: TextStyle(color: Colors.black38),
+                ),
+              ),
+              TextFormField(
+                onChanged: (value) {
+                  address = value;
+                },
+                decoration: InputDecoration(
+                  // errorText: doctorRegisterValidation.address.error,
+                  hintText: "Enter Your Clinic Address",
                   hintStyle: TextStyle(color: Colors.black38),
                   alignLabelWithHint: false,
                   helperText: "",
@@ -143,7 +198,7 @@ class _CreateClinicState extends State<CreateClinic> {
               ),
               TextFormField(
                 onChanged: (value) {
-                  exp = value;
+                  fees = value;
                 },
                 decoration: InputDecoration(
                   // errorText: doctorRegisterValidation.address.error,
@@ -182,13 +237,17 @@ class _CreateClinicState extends State<CreateClinic> {
                           });
                         },
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xffe8364e),
-                            borderRadius: BorderRadius.circular(height/100)
-                          ),
-                          height: height/20,
-                            width: width/4,
-                            child: Center(child: Text("Start",style: TextStyle(color: Colors.white),)))),
+                            decoration: BoxDecoration(
+                                color: Color(0xffe8364e),
+                                borderRadius:
+                                    BorderRadius.circular(height / 100)),
+                            height: height / 20,
+                            width: width / 4,
+                            child: Center(
+                                child: Text(
+                              "Start",
+                              style: TextStyle(color: Colors.white),
+                            )))),
                     InkWell(
                         onTap: () async {
                           TimeOfDay pickedTime = await showTimePicker(
@@ -206,25 +265,33 @@ class _CreateClinicState extends State<CreateClinic> {
                           });
 
                           print(start_time);
-                          print(end_time);
+                          // print(end_time);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 30),
                           child: Container(
                               decoration: BoxDecoration(
                                   color: Color(0xffe8364e),
-                                  borderRadius: BorderRadius.circular(height/100)
-                              ),
-                              height: height/20,
-                              width: width/4,
-                              child: Center(child: Text("End",style: TextStyle(color: Colors.white),))),
+                                  borderRadius:
+                                      BorderRadius.circular(height / 100)),
+                              height: height / 20,
+                              width: width / 4,
+                              child: Center(
+                                  child: Text(
+                                "End",
+                                style: TextStyle(color: Colors.white),
+                              ))),
                         )),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Column(
                           children: [
-                            Text("(*You can add multiple sessions)",style: TextStyle(color: Colors.black38,fontSize: height/70),),
+                            Text(
+                              "(*You can add multiple sessions)",
+                              style: TextStyle(
+                                  color: Colors.black38, fontSize: height / 70),
+                            ),
                           ],
                         ),
                       ),
@@ -243,29 +310,42 @@ class _CreateClinicState extends State<CreateClinic> {
                   physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: start_time.length ,
+                  itemCount: start_time.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 15,top: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  height: height/15,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(start_time[index].hour.toString() +":"+ start_time[index].minute.toString(),style: TextStyle(color: Colors.black,fontSize: height/50,fontWeight: FontWeight.w600),),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 3),
-                                        child: Text(end_time[index].hour.toString() +":"+ end_time[index].minute.toString(),style: TextStyle(color: Colors.black38),),
-                                      )
-                                    ],
-                                  )),
-                            ],
-                          ),
-                        ));
+                      padding: const EdgeInsets.only(left: 15, top: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              height: height / 15,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    start_time[index].hour.toString() +
+                                        ":" +
+                                        start_time[index].minute.toString(),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: height / 50,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 3),
+                                    child: Text(
+                                      end_time[index].hour.toString() +
+                                          ":" +
+                                          end_time[index].minute.toString(),
+                                      style: TextStyle(color: Colors.black38),
+                                    ),
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
+                    ));
                   }),
             ],
           ),

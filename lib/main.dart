@@ -5,6 +5,7 @@ import 'package:camhed/Doctor/Pages/addClinic.dart';
 import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Doctor/Pages/doctorRegister.dart';
 import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
+import 'package:camhed/Doctor/Pages/searchHospital.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
 import 'package:camhed/validatior/userRegisterValidation.dart';

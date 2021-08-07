@@ -1,5 +1,3 @@
-import 'package:camhed/Model/DoctorModel/SessionTimeModel.dart';
-
 class DoctorProfileModel {
   String name;
   String email;
@@ -17,7 +15,8 @@ class DoctorProfileModel {
   String hospital;
   String position;
   String city;
-  List<SessionTimeModel> time;
+  List<String> endTime;
+  List<String> startTime;
 
   DoctorProfileModel(
       {this.name,
@@ -30,12 +29,13 @@ class DoctorProfileModel {
       this.category,
       this.experiance,
       this.profilepic,
-      this.time,
       this.hospital,
       this.gender,
       this.fees,
       this.city,
       this.position,
+      this.startTime,
+      this.endTime,
       this.status});
 
   Map<String, dynamic> toMap() {
@@ -55,7 +55,8 @@ class DoctorProfileModel {
       'position': position,
       'gender': gender,
       'fees': fees,
-      'time': List<dynamic>.from(time.map((e) => e)),
+      'StartTime': startTime,
+      'EndTime': endTime,
       'profilepic': profilepic,
     };
   }
@@ -79,7 +80,8 @@ class DoctorProfileModel {
         gender: firestore['gender'],
         city: firestore['city'],
         position: firestore['position'],
-        time: List<SessionTimeModel>.from(firestore['time'].map((x) => x)),
+        startTime: List<String>.from(firestore['startTime'].map((x) => x)),
+        endTime: List<String>.from(firestore['endTime'].map((x) => x)),
         status: firestore['status']);
   }
 }

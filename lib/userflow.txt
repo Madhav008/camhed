@@ -10,7 +10,9 @@ UserAuth ={
 
 Hospitals/Clincs = {
     name,
-    location
+    address,
+    city,
+    ListofDoctors =id,
 }
 
 Category = {
@@ -35,16 +37,6 @@ AppoinntCreation = {
         fees,
         Category/Specialites,
 }
-
-
-
-
-
-
-
-
-
-
 
 
 Doctor = {
