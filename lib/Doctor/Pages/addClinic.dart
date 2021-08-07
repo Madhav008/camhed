@@ -1,3 +1,4 @@
+import 'package:camhed/Doctor/Pages/createclinic.dart';
 import 'package:camhed/Doctor/Pages/searchHospital.dart';
 import 'package:flutter/material.dart';
 
@@ -44,8 +45,8 @@ class _AddClinicState extends State<AddClinic> {
               Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: InkWell(
-                  onTap: (){{
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchHospital()));}
+                  onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchHospital()));
                   },
                   child: Container(
                     height: height/12,
@@ -60,14 +61,19 @@ class _AddClinicState extends State<AddClinic> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  height: height/12,
-                  width: width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(height/60),
-                      color: Color(0xffe8364e)
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateClinic()));
+                  },
+                  child: Container(
+                    height: height/12,
+                    width: width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(height/60),
+                        color: Color(0xffe8364e)
+                    ),
+                    child: Center(child: Text("ADD OWNED CLINIC",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: height/45),)),
                   ),
-                  child: Center(child: Text("ADD OWNED CLINIC",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: height/45),)),
                 ),
               ),
 

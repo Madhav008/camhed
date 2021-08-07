@@ -35,6 +35,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => DoctorIdValidation(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => DoctorProfileProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
