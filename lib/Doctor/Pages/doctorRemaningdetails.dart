@@ -1,19 +1,24 @@
+import 'package:camhed/Auth/firestore.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DoctorRemaningDetails extends StatefulWidget {
-  const DoctorRemaningDetails({Key key}) : super(key: key);
-
+  String hospitalId;
+  DoctorRemaningDetails({this.hospitalId});
   @override
   _DoctorRemaningDetailsState createState() => _DoctorRemaningDetailsState();
 }
 
 class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
   TimeOfDay initialTime = TimeOfDay.now();
-
+  String fees;
   List<TimeOfDay> start_time = [];
   List<TimeOfDay> end_time = [];
+  List<String> docId = [FirebaseAuth.instance.currentUser.uid];
+
   @override
   Widget build(BuildContext context) {
     var doctorProfileProvider = Provider.of<DoctorProfileProvider>(context);
@@ -21,11 +26,51 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("ADD CLINIC",style: TextStyle(color: Color(0xffe8364e)),),
+        title: Text(
+          "ADD CLINIC",
+          style: TextStyle(color: Color(0xffe8364e)),
+        ),
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 20, top: 20),
               child: InkWell(
+                onTap: () async {
+                  print(widget.hospitalId);
+                  var userId = FirebaseAuth.instance.currentUser.uid;
+                  FirebaseFirestore.instance
+                      .collection('Hospitals')
+                      .doc(widget.hospitalId)
+                      .update({
+                    'Doctors': List<dynamic>.from(docId.map((e) => e)),
+                  });
+
+                  if (fees.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({"fees": fees});
+                  }
+
+                  if (start_time.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({
+                      "StartTime": List<dynamic>.from(
+                          start_time.map((e) => e.toString())),
+                    });
+                  }
+
+                  if (end_time.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({
+                      "EndTime":
+                          List<dynamic>.from(end_time.map((e) => e.toString()))
+                    });
+                  }
+                },
                 child: Text(
                   "SAVE",
                   style: TextStyle(
@@ -37,10 +82,9 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
         ],
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Color(0xffe8364e)),
-
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 15,right: 15,top: 20),
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -55,9 +99,9 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
                     ),
                   ),
                   TextFormField(
-                    // onChanged: (value) {
-                    //   fees = value;
-                    // },
+                    onChanged: (value) {
+                      fees = value;
+                    },
                     decoration: InputDecoration(
                       // errorText: doctorRegisterValidation.address.error,
                       hintText: "Entet fee per session",
@@ -67,7 +111,6 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
                       fillColor: Colors.white,
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Text(
@@ -99,14 +142,14 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
                                 decoration: BoxDecoration(
                                     color: Color(0xffe8364e),
                                     borderRadius:
-                                    BorderRadius.circular(height / 100)),
+                                        BorderRadius.circular(height / 100)),
                                 height: height / 20,
                                 width: width / 4,
                                 child: Center(
                                     child: Text(
-                                      "Start",
-                                      style: TextStyle(color: Colors.white),
-                                    )))),
+                                  "Start",
+                                  style: TextStyle(color: Colors.white),
+                                )))),
                         InkWell(
                             onTap: () async {
                               TimeOfDay pickedTime = await showTimePicker(
@@ -132,14 +175,14 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
                                   decoration: BoxDecoration(
                                       color: Color(0xffe8364e),
                                       borderRadius:
-                                      BorderRadius.circular(height / 100)),
+                                          BorderRadius.circular(height / 100)),
                                   height: height / 20,
                                   width: width / 4,
                                   child: Center(
                                       child: Text(
-                                        "End",
-                                        style: TextStyle(color: Colors.white),
-                                      ))),
+                                    "End",
+                                    style: TextStyle(color: Colors.white),
+                                  ))),
                             )),
                         Expanded(
                           child: Padding(
@@ -149,7 +192,8 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
                                 Text(
                                   "(*You can add multiple sessions)",
                                   style: TextStyle(
-                                      color: Colors.black38, fontSize: height / 70),
+                                      color: Colors.black38,
+                                      fontSize: height / 70),
                                 ),
                               ],
                             ),
@@ -158,7 +202,6 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
                       ],
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(top: 25),
                     child: Text(
@@ -174,43 +217,44 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
                       itemBuilder: (context, index) {
                         return InkWell(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 15, top: 15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      height: height / 15,
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            start_time[index].hour.toString() +
-                                                ":" +
-                                                start_time[index].minute.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: height / 50,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 3),
-                                            child: Text(
-                                              end_time[index].hour.toString() +
-                                                  ":" +
-                                                  end_time[index].minute.toString(),
-                                              style: TextStyle(color: Colors.black38),
-                                            ),
-                                          )
-                                        ],
-                                      )),
-                                ],
-                              ),
-                            ));
+                          padding: const EdgeInsets.only(left: 15, top: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  height: height / 15,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        start_time[index].hour.toString() +
+                                            ":" +
+                                            start_time[index].minute.toString(),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: height / 50,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 3),
+                                        child: Text(
+                                          end_time[index].hour.toString() +
+                                              ":" +
+                                              end_time[index].minute.toString(),
+                                          style:
+                                              TextStyle(color: Colors.black38),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ],
+                          ),
+                        ));
                       }),
                 ],
               ),
-
-              ],
+            ],
           ),
         ),
       ),

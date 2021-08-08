@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateClinic extends StatefulWidget {
   const CreateClinic({Key key}) : super(key: key);
@@ -25,6 +26,12 @@ class _CreateClinicState extends State<CreateClinic> {
   List<TimeOfDay> end_time = [];
 
   @override
+  void initState() {
+    Provider.of<DoctorProfileProvider>(context, listen: false).getCity();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var doctorProfileProvider = Provider.of<DoctorProfileProvider>(context);
 
@@ -41,16 +48,19 @@ class _CreateClinicState extends State<CreateClinic> {
               padding: const EdgeInsets.only(right: 20, top: 20),
               child: InkWell(
                 onTap: () async {
+                  var hospitalId = Uuid().v1();
                   var userId = FirebaseAuth.instance.currentUser.uid;
                   if (name.isNotEmpty) {
                     await FirebaseFirestore.instance
                         .collection('Hospitals')
-                        .doc(userId)
+                        .doc(hospitalId)
                         .set({
+                      "id": hospitalId,
                       "name": name,
                       "city": _currentSelectedValue1,
                       "clinicNo": clinicNo,
-                      "address": address
+                      "address": address,
+                      "Doctors": [userId]
                     });
                   }
 

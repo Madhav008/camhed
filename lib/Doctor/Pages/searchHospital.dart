@@ -99,10 +99,9 @@ class _SearchHospitalState extends State<SearchHospital> {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: InkWell(
-                onTap: (){
-
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateClinic()));
-
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CreateClinic()));
                 },
                 child: Text(
                   "Add it here",
@@ -183,38 +182,43 @@ class _SearchHospitalState extends State<SearchHospital> {
                 itemCount: search.hospital.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorRemaningDetails()));
-                    },
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorRemaningDetails(
+                                  hospitalId: search.hospital[index].id),
+                            ));
+                      },
                       child: Padding(
-                    padding: const EdgeInsets.only(left: 15, top: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            height: height / 15,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${search.hospital[index].name}",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: height / 50,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 3),
-                                  child: Text(
-                                    "${search.hospital[index].location}",
-                                    style: TextStyle(color: Colors.black38),
-                                  ),
-                                )
-                              ],
-                            )),
-                      ],
-                    ),
-                  ));
+                        padding: const EdgeInsets.only(left: 15, top: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                height: height / 15,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${search.hospital[index].name}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: height / 50,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 3),
+                                      child: Text(
+                                        "${search.hospital[index].location}",
+                                        style: TextStyle(color: Colors.black38),
+                                      ),
+                                    )
+                                  ],
+                                )),
+                          ],
+                        ),
+                      ));
                 }),
           ),
         ],
