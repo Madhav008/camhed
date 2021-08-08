@@ -138,7 +138,8 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                DoctorListPage()));
+                                                DoctorListPage(
+                                                    category[index].name)));
                                   },
                                   child: Container(
                                     child: Column(

@@ -1,6 +1,10 @@
+import 'package:camhed/Admin/AdminServices/adminService.dart';
 import 'package:camhed/Doctor/Pages/doctorVerify.dart';
+import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
+import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -195,14 +199,27 @@ class _DoctorRegisterState extends State<DoctorRegister> {
               ),
               InkWell(
                 onTap: () {
+                  doctorRegisterValidation.setApiCall();
+
                   if (doctorRegisterValidation.name.value != null &&
                       doctorRegisterValidation.email.value != null &&
                       doctorRegisterValidation.address.value != null &&
                       doctorRegisterValidation.agree != false) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DoctorVerify()));
+                    DoctorProfileModel data = DoctorProfileModel(
+                      name: doctorRegisterValidation.name.value,
+                      email: doctorRegisterValidation.email.value,
+                      address: doctorRegisterValidation.address.value,
+                    );
+
+                    print(data.toMap());
+                    var userId = FirebaseAuth.instance.currentUser.uid;
+                    DoctorServices().addUser(userId, data).then((value) {
+                      doctorRegisterValidation.setApiCall();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DoctorVerify()));
+                    });
                   } else {
                     Fluttertoast.showToast(
                         msg: "Fill The Form Completly.  ",

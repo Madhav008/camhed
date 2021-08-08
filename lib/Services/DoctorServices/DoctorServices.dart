@@ -14,4 +14,18 @@ class DoctorServices {
         .get()
         .then((value) => DoctorProfileModel.fromFirestore(value.data()));
   }
+
+  Future<List<DoctorProfileModel>> fetchCategoryDoctor(String category) async {
+    List<DoctorProfileModel> data;
+    await _db
+        .collection('DoctorProfile')
+        .where('category', isEqualTo: category)
+        .get()
+        .then((value) {
+      data = (value.docs)
+          .map((e) => DoctorProfileModel.fromFirestore(e.data()))
+          .toList();
+    });
+    return data;
+  }
 }

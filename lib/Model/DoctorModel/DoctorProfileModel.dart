@@ -12,7 +12,6 @@ class DoctorProfileModel {
   String experiance;
   String profilepic;
   String fees;
-  String hospital;
   String position;
   String country;
   List<String> endTime;
@@ -29,7 +28,6 @@ class DoctorProfileModel {
       this.category,
       this.experiance,
       this.profilepic,
-      this.hospital,
       this.gender,
       this.fees,
       this.country,
@@ -51,7 +49,6 @@ class DoctorProfileModel {
       'phone': phone,
       'country': country,
       'experiance': experiance,
-      'hospital': hospital,
       'position': position,
       'gender': gender,
       'fees': fees,
@@ -74,14 +71,13 @@ class DoctorProfileModel {
         category: firestore['category'],
         experiance: firestore['experiance'],
         phone: firestore['phone'],
-        hospital: firestore['hospital'],
         profilepic: firestore['profilepic'],
         fees: firestore['fees'],
         gender: firestore['gender'],
         country: firestore['country'],
         position: firestore['position'],
-        startTime: List<String>.from(firestore['startTime'].map((x) => x)),
-        endTime: List<String>.from(firestore['endTime'].map((x) => x)),
+        startTime: List<String>.from(firestore['StartTime'].map((x) => x)),
+        endTime: List<String>.from(firestore['EndTime'].map((x) => x)),
         status: firestore['status']);
   }
 }

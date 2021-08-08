@@ -17,7 +17,7 @@ class SearchDoctorHospitalProvider with ChangeNotifier {
         .collection("Hospitals")
         .where("name", isGreaterThanOrEqualTo: query.capitalize())
         .get();
-    print(query);
+    // print(query);
 
     foodData.docs.forEach((food) {
       final resultFood = HospitalModel.fromFirestore(food.data());

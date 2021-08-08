@@ -53,11 +53,18 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                         .doc(userId)
                         .update({"name": name});
                   }
+
+                  if (deg.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({"position": deg});
+                  }
                   if (_currentSelectedValue1.isNotEmpty) {
                     await FirebaseFirestore.instance
                         .collection('DoctorProfile')
                         .doc(userId)
-                        .update({"city": _currentSelectedValue1});
+                        .update({"country": _currentSelectedValue1});
                   }
                   if (_currentSelectedValue2.isNotEmpty) {
                     await FirebaseFirestore.instance
@@ -70,6 +77,13 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                         .collection('DoctorProfile')
                         .doc(userId)
                         .update({"gender": gender});
+                  }
+
+                   if (exp.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('DoctorProfile')
+                        .doc(userId)
+                        .update({"experiance": exp});
                   }
                 },
                 child: Text(
