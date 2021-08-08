@@ -1,4 +1,6 @@
 import 'package:camhed/Doctor/DoctorProvider/SearchHospitalProvider.dart';
+import 'package:camhed/Doctor/Pages/createclinic.dart';
+import 'package:camhed/Doctor/Pages/doctorRemaningdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -96,10 +98,17 @@ class _SearchHospitalState extends State<SearchHospital> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                "Add it here",
-                style: TextStyle(
-                    color: Color(0xffe8364e), fontWeight: FontWeight.w600),
+              child: InkWell(
+                onTap: (){
+
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateClinic()));
+
+                },
+                child: Text(
+                  "Add it here",
+                  style: TextStyle(
+                      color: Color(0xffe8364e), fontWeight: FontWeight.w600),
+                ),
               ),
             )
           ],
@@ -174,6 +183,9 @@ class _SearchHospitalState extends State<SearchHospital> {
                 itemCount: search.hospital.length,
                 itemBuilder: (context, index) {
                   return InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorRemaningDetails()));
+                    },
                       child: Padding(
                     padding: const EdgeInsets.only(left: 15, top: 15),
                     child: Column(

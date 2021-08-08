@@ -30,9 +30,9 @@ class _AddClinicState extends State<AddClinic> {
               Text("Add clinic to your profile",style: TextStyle(fontSize: height/40,fontWeight: FontWeight.w600),),
 
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 25),
                 child: Container(
-                  height: height/4,
+                  height: height/3,
                   width: width,
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -43,7 +43,7 @@ class _AddClinicState extends State<AddClinic> {
               ),
 
               Padding(
-                padding: const EdgeInsets.only(top: 40),
+                padding: const EdgeInsets.only(top: 50),
                 child: InkWell(
                   onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchHospital()));
@@ -59,23 +59,23 @@ class _AddClinicState extends State<AddClinic> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateClinic()));
-                  },
-                  child: Container(
-                    height: height/12,
-                    width: width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(height/60),
-                        color: Color(0xffe8364e)
-                    ),
-                    child: Center(child: Text("ADD OWNED CLINIC",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: height/45),)),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 20),
+              //   child: InkWell(
+              //     onTap: (){
+              //       Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateClinic()));
+              //     },
+              //     child: Container(
+              //       height: height/12,
+              //       width: width,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(height/60),
+              //           color: Color(0xffe8364e)
+              //       ),
+              //       child: Center(child: Text("ADD OWNED CLINIC",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: height/45),)),
+              //     ),
+              //   ),
+              // ),
 
 
             ],
