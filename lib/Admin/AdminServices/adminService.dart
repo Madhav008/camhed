@@ -42,7 +42,8 @@ class AdminServices {
     var value = await _db.collection('Hospitals').get();
 
     data =
-        (value.docs).map((e) => HospitalModel.fromFirestore(e.data())).toList();
+        value.docs.map((e) => HospitalModel.fromFirestore(e.data())).toList();
+
     return data;
   }
 

@@ -33,6 +33,6 @@ class HospitalModel {
         location: firestore['address'],
         city: firestore['city'],
         clinicNo: firestore['clinicNo'],
-        doctorId: firestore['Doctors']);
+        doctorId: List<String>.from(firestore['Doctors'].map((x) => x)));
   }
 }
