@@ -1,5 +1,8 @@
 import 'package:camhed/Admin/AdminPages/AddCountryPage.dart';
+import 'package:camhed/Client/Pages/Pages/clientRegister.dart';
 import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
+import 'package:camhed/Client/Pages/Pages/loginPage.dart';
+import 'package:camhed/Client/Pages/Pages/makeAppointment.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
 import 'package:camhed/Doctor/DoctorProvider/SearchHospitalProvider.dart';
 import 'package:camhed/Doctor/Pages/addClinic.dart';
@@ -50,7 +53,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ClientHomePage(),
+        home: MakeAppoinmentPage(),
       ),
     );
   }
