@@ -1,4 +1,6 @@
+import 'package:camhed/Doctor/DoctorProvider/SearchHospitalProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchHospital extends StatefulWidget {
   const SearchHospital({Key key}) : super(key: key);
@@ -8,8 +10,30 @@ class SearchHospital extends StatefulWidget {
 }
 
 class _SearchHospitalState extends State<SearchHospital> {
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    var search =
+        Provider.of<SearchDoctorHospitalProvider>(context, listen: false);
+    search.resetStreams();
+  }
+
+  clearSearch() {
+    var search =
+        Provider.of<SearchDoctorHospitalProvider>(context, listen: false);
+    searchController.clear();
+    search.resetStreams();
+    setState(() {});
+  }
+
+  bool issearch = false;
+
   @override
   Widget build(BuildContext context) {
+    var search = Provider.of<SearchDoctorHospitalProvider>(context);
+
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var textfieldDimension = height / 18;
@@ -18,13 +42,23 @@ class _SearchHospitalState extends State<SearchHospital> {
         title: Container(
           height: height / 18,
           child: TextField(
+            controller: searchController,
             style: TextStyle(
               fontSize: height / 50, // This is not so important
             ),
             decoration: new InputDecoration(
-              suffixIcon: Icon(
-                Icons.search,
-                color: Color(0xffe8364e),
+              suffixIcon: InkWell(
+                onTap: () {
+                  if (searchController.text.isNotEmpty) {
+                    search.getHospital(searchController.text);
+                  }
+                  clearSearch();
+                },
+                child: Icon(
+                  Icons.search,
+                  size: height / 25,
+                  color: Color(0xffED1A4F),
+                ),
               ),
               hintText: 'Search....',
               focusedBorder: OutlineInputBorder(
@@ -72,57 +106,106 @@ class _SearchHospitalState extends State<SearchHospital> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: width,
-              height: height/18,
-              color: Colors.black12,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("Clinics matching your search",style: TextStyle(color: Colors.black54),),
-                  ],
-                ),
+      body: (search.hospital.length == 0)
+          ? buildNoContent()
+          : buildSearchResult(width, height),
+    );
+  }
+
+  SingleChildScrollView buildNoContent() {
+    var height = MediaQuery.of(context).size.height;
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 50.0),
+        child: Container(
+          child: Column(
+            children: [
+              Container(
+                height: height / 2,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("Images/search.png"),
+                        fit: BoxFit.cover)),
+              ),
+              Text(
+                "Search Hospitals",
+                style: TextStyle(
+                    color: Color(0xffED1A4F),
+                    fontSize: height / 35,
+                    fontWeight: FontWeight.w600),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  SingleChildScrollView buildSearchResult(double width, double height) {
+    var search = Provider.of<SearchDoctorHospitalProvider>(context);
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: width,
+            height: height / 18,
+            color: Colors.black12,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Clinics matching your search",
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15,top: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: search.hospital.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                          Container(
-                            height: height/15,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Mcm Optical",style: TextStyle(color: Colors.black,fontSize: height/50,fontWeight: FontWeight.w600),),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 3),
-                                child: Text("9a Samulong Highway Sto. Nino,Marikina City",style: TextStyle(color: Colors.black38),),
-                              )
-                            ],
-                          )),
+                        Container(
+                            height: height / 15,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${search.hospital[index].name}",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: height / 50,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 3),
+                                  child: Text(
+                                    "${search.hospital[index].location}",
+                                    style: TextStyle(color: Colors.black38),
+                                  ),
+                                )
+                              ],
+                            )),
                       ],
                     ),
-                        ));
-                  }),
-            ),
-          ],
-        ),
+                  ));
+                }),
+          ),
+        ],
       ),
     );
   }

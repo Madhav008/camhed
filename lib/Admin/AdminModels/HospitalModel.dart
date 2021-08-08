@@ -11,6 +11,6 @@ class HospitalModel {
   factory HospitalModel.fromFirestore(Map<String, dynamic> firestore) {
     if (firestore == null) return null;
     return HospitalModel(
-        name: firestore['name'], location: firestore['location']);
+        name: firestore['name'], location: firestore['Location']);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:camhed/Admin/AdminPages/AddCountryPage.dart';
 import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
+import 'package:camhed/Doctor/DoctorProvider/SearchHospitalProvider.dart';
 import 'package:camhed/Doctor/Pages/addClinic.dart';
 import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Doctor/Pages/doctorRegister.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => DoctorProfileProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => SearchDoctorHospitalProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -46,7 +50,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: AddClinic(),
+        home: SearchHospital(),
       ),
     );
   }
