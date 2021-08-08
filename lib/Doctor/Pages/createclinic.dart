@@ -1,6 +1,8 @@
+import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateClinic extends StatefulWidget {
   const CreateClinic({Key key}) : super(key: key);
@@ -24,7 +26,7 @@ class _CreateClinicState extends State<CreateClinic> {
 
   @override
   Widget build(BuildContext context) {
-    // var doctorProfileProvider = Provider.of<DoctorProfileProvider>(context);
+    var doctorProfileProvider = Provider.of<DoctorProfileProvider>(context);
 
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
@@ -132,17 +134,17 @@ class _CreateClinicState extends State<CreateClinic> {
                           value: _currentSelectedValue1,
                           isDense: true,
                           onChanged: (String newValue) {
-                            // setState(() {
-                            //   _currentSelectedValue1 = newValue;
-                            //   state.didChange(newValue);
-                            // });
+                            setState(() {
+                              _currentSelectedValue1 = newValue;
+                              state.didChange(newValue);
+                            });
                           },
-                          // items: doctorProfileProvider.city.map((String value) {
-                          //   return DropdownMenuItem<String>(
-                          //     value: value,
-                          //     child: Text(value),
-                          //   );
-                          // }).toList(),
+                          items: doctorProfileProvider.city.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
                       ),
                     );

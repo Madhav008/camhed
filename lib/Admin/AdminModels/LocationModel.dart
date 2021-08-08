@@ -1,18 +1,21 @@
 class LocationModel {
-  String name;
+  String country;
+  List<String> city;
 
-
-  LocationModel({this.name});
+  LocationModel({this.country, this.city});
 
   Map<String, dynamic> toMap() {
-    return {'Country': name};
+    return {
+      'Country': country,
+      'City': List<dynamic>.from(city.map((e) => e)),
+    };
   }
 
   factory LocationModel.fromFirestore(Map<String, dynamic> firestore) {
     if (firestore == null) return null;
     return LocationModel(
-      name: firestore['Country'],
+      country: firestore['Country'],
+      city: List<String>.from(firestore['City'].map((x) => x)),
     );
   }
 }
-

@@ -131,7 +131,8 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                               state.didChange(newValue);
                             });
                           },
-                          items: doctorProfileProvider.city.map((String value) {
+                          items:
+                              doctorProfileProvider.country.map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),

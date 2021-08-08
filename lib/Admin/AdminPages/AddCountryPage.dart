@@ -14,7 +14,8 @@ class AddCountryPage extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () {
-                LocationModel data = new LocationModel(name: "India");
+                LocationModel data = new LocationModel(
+                    country: "Japan", city: ['Tokyo', 'Narra']);
                 AdminServices().addCountry(data);
               },
               child: Text("Add Country")),
