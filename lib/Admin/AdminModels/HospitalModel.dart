@@ -5,12 +5,12 @@ class HospitalModel {
   HospitalModel({this.name, this.location});
 
   Map<String, dynamic> toMap() {
-    return {'name': name, 'Location': location};
+    return {'name': name, 'address': location};
   }
 
   factory HospitalModel.fromFirestore(Map<String, dynamic> firestore) {
     if (firestore == null) return null;
     return HospitalModel(
-        name: firestore['name'], location: firestore['Location']);
+        name: firestore['name'], location: firestore['address']);
   }
 }
