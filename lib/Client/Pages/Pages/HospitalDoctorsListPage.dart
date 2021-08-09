@@ -3,6 +3,8 @@ import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
 import 'package:flutter/material.dart';
 
+import 'makeAppointment.dart';
+
 class HospitalDoctorsListPage extends StatefulWidget {
   HospitalModel hospital;
   HospitalDoctorsListPage(this.hospital);
@@ -53,6 +55,9 @@ class _HospitalDoctorsListPageState extends State<HospitalDoctorsListPage> {
                             builder: (context, snapshot) {
                               DoctorProfileModel doctor = snapshot.data;
                               return InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MakeAppoinmentPage()));
+                                },
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                       right: 15, top: 15, left: 15),

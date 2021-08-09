@@ -1,3 +1,4 @@
+import 'package:camhed/Client/Pages/Pages/makeAppointment.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
 import 'package:flutter/material.dart';
@@ -177,20 +178,25 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 5, right: 5),
-                                          child: Container(
-                                            height: height / 25,
-                                            width: width,
-                                            decoration: BoxDecoration(
-                                                color: Color(0xffe8364e),
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: Center(
-                                                child: Text(
-                                              "BOOK NOW ",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w300),
-                                            )),
+                                          child: InkWell(
+                                            onTap: (){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>MakeAppoinmentPage()));
+                                            },
+                                            child: Container(
+                                              height: height / 25,
+                                              width: width,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xffe8364e),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Center(
+                                                  child: Text(
+                                                "BOOK NOW ",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w300),
+                                              )),
+                                            ),
                                           ),
                                         )
                                       ],
