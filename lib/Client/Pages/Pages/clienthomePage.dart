@@ -4,8 +4,10 @@ import 'package:camhed/Admin/AdminModels/HospitalModel.dart';
 import 'package:camhed/Admin/AdminServices/adminService.dart';
 import 'package:camhed/Client/Pages/Pages/HospitalDoctorsListPage.dart';
 import 'package:camhed/Client/Pages/Pages/doctorsListPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class ClientHomePage extends StatefulWidget {
   const ClientHomePage({Key key}) : super(key: key);
@@ -14,7 +16,11 @@ class ClientHomePage extends StatefulWidget {
   _ClientHomePageState createState() => _ClientHomePageState();
 }
 
+
 class _ClientHomePageState extends State<ClientHomePage> {
+
+
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -210,7 +216,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             HospitalDoctorsListPage(
-                                               hospital[index]),
+                                                hospital[index]),
                                       ));
                                 },
                                 child: Material(
