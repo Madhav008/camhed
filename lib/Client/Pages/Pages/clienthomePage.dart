@@ -2,6 +2,7 @@ import 'package:camhed/Admin/AdminModels/BannerModel.dart';
 import 'package:camhed/Admin/AdminModels/CategoryModel.dart';
 import 'package:camhed/Admin/AdminModels/HospitalModel.dart';
 import 'package:camhed/Admin/AdminServices/adminService.dart';
+import 'package:camhed/Client/Pages/Pages/HospitalDoctorsListPage.dart';
 import 'package:camhed/Client/Pages/Pages/doctorsListPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -202,52 +203,65 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                     mainAxisSpacing: 20),
                             itemCount: hospital.length,
                             itemBuilder: (BuildContext ctx, index) {
-                              return Material(
-                                elevation: 1,
-                                borderRadius:
-                                    BorderRadius.circular(height / 120),
-                                child: ClipRRect(
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            HospitalDoctorsListPage(
+                                               hospital[index]),
+                                      ));
+                                },
+                                child: Material(
+                                  elevation: 1,
                                   borderRadius:
                                       BorderRadius.circular(height / 120),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black12),
-                                      borderRadius:
-                                          BorderRadius.circular(height / 120),
-                                    ),
-                                    child: Expanded(
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: Image(
-                                              image: AssetImage(
-                                                  "Images/hospital.png"),
-                                              height: height / 10,
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(height / 120),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: Colors.black12),
+                                        borderRadius:
+                                            BorderRadius.circular(height / 120),
+                                      ),
+                                      child: Expanded(
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10),
+                                              child: Image(
+                                                image: AssetImage(
+                                                    "Images/hospital.png"),
+                                                height: height / 10,
+                                              ),
                                             ),
-                                          ),
-                                          Divider(),
-                                          Column(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 3),
-                                                child: Text(
-                                                  '${hospital[index].name}',
-                                                  style: TextStyle(
-                                                      color: Colors.black38,
-                                                      fontSize: height / 65),
-                                                  overflow:
-                                                      TextOverflow.visible,
-                                                  maxLines: 2,
-                                                  softWrap: true,
-                                                ),
-                                              )
-                                              // Text("COVID-19 COVID-19 COVID-19 COVID-19",style: TextStyle(color: Colors.black38),),
-                                            ],
-                                          )
-                                        ],
+                                            Divider(),
+                                            Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 3),
+                                                  child: Text(
+                                                    '${hospital[index].name}',
+                                                    style: TextStyle(
+                                                        color: Colors.black38,
+                                                        fontSize: height / 65),
+                                                    overflow:
+                                                        TextOverflow.visible,
+                                                    maxLines: 2,
+                                                    softWrap: true,
+                                                  ),
+                                                )
+                                                // Text("COVID-19 COVID-19 COVID-19 COVID-19",style: TextStyle(color: Colors.black38),),
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
