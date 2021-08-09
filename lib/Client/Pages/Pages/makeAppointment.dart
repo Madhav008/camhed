@@ -56,9 +56,9 @@ class AppointmentModel {
 class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<AppointmentModel> makeAppointment(AppointmentModel data) {
+   makeAppointment(AppointmentModel data) {
     var id = Uuid().v1();
-    return _db.collection("Appointments").doc(id).set(data.toMap());
+    _db.collection("Appointments").doc(id).set(data.toMap());
   }
 
   String name;
@@ -244,7 +244,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
                           child: Text(
-                            "Select Appointment Date",
+                            "Select Appointment Time",
                             style: TextStyle(
                                 fontSize: height / 45,
                                 fontWeight: FontWeight.w500),
@@ -357,9 +357,9 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                       fontSize: height /
                                           60, // This is not so important
                                     ),
-                                    // onChanged: (value) {
-                                    //   name = value;
-                                    // },
+                                    onChanged: (value) {
+                                      name = value;
+                                    },
                                     decoration: InputDecoration(
                                       // errorText: doctorRegisterValidation.address.error,
                                       hintText: "Your Name",
@@ -414,9 +414,9 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                       fontSize: height /
                                           60, // This is not so important
                                     ),
-                                    // onChanged: (value) {
-                                    //   name = value;
-                                    // },
+                                    onChanged: (value) {
+                                      age = value;
+                                    },
                                     decoration: InputDecoration(
                                       // errorText: doctorRegisterValidation.address.error,
                                       hintText: "Age",
@@ -536,9 +536,9 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                       fontSize: height /
                                           60, // This is not so important
                                     ),
-                                    // onChanged: (value) {
-                                    //   name = value;
-                                    // },
+                                    onChanged: (value) {
+                                      address = value;
+                                    },
                                     decoration: InputDecoration(
                                       // errorText: doctorRegisterValidation.address.error,
                                       hintText: "Address",
@@ -593,9 +593,9 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                       fontSize: height /
                                           60, // This is not so important
                                     ),
-                                    // onChanged: (value) {
-                                    //   name = value;
-                                    // },
+                                    onChanged: (value) {
+                                      phone = value;
+                                    },
                                     decoration: InputDecoration(
                                       // errorText: doctorRegisterValidation.address.error,
                                       hintText: "Mobile",
@@ -733,19 +733,31 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
-                          child: Container(
-                            height: height / 18,
-                            width: width,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(height / 80),
-                                color: Color(0xffe8364e)),
-                            child: Center(
-                                child: Text(
-                              "PAY NOW",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: height / 50),
-                            )),
+                          child: InkWell(
+                            onTap: (){
+                              var data = AppointmentModel(
+                                name: name,
+                                age: age,
+                                gender: "Male",
+                                address: address,
+                                phone: phone,
+                              );
+                              makeAppointment(data);
+                            },
+                            child: Container(
+                              height: height / 18,
+                              width: width,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(height / 80),
+                                  color: Color(0xffe8364e)),
+                              child: Center(
+                                  child: Text(
+                                "PAY NOW",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: height / 50),
+                              )),
+                            ),
                           ),
                         )
                       ],

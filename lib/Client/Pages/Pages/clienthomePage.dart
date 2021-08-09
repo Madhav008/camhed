@@ -53,8 +53,71 @@ class _ClientHomePageState extends State<ClientHomePage> {
         iconTheme: IconThemeData(color: Color(0xffe8364e)),
       ),
       drawer: Drawer(
-        child: Column(
-          children: [],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: height/4,
+                width: width,
+                color: Color(0xffe8364e),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: height/10,
+                      width: height/10,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(200),
+                        color: Colors.white,
+                        image: DecorationImage(
+                          image: AssetImage("Images/userlogo.png"),fit: BoxFit.cover
+                        )
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Text("Aditya Puri",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: height/50),),
+                    )
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.description),
+                title: Text("My Appointments",style: TextStyle(fontSize: height/45,fontWeight: FontWeight.w300),),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text("My Profile",style: TextStyle(fontSize: height/45,fontWeight: FontWeight.w300),),
+              ),ListTile(
+                leading: Icon(Icons.help),
+                title: Text("Support",style: TextStyle(fontSize: height/45,fontWeight: FontWeight.w300),),
+              ),
+              ListTile(
+                leading: Icon(Icons.power_settings_new),
+                title: Text("Log Out",style: TextStyle(fontSize: height/45,fontWeight: FontWeight.w300),),
+              ),
+              Divider(thickness: 1,),
+              Padding(
+                padding: const EdgeInsets.only(left: 15,top: 15),
+                child: Text("Rate Us",style: TextStyle(fontSize: height/50,fontWeight: FontWeight.w300),),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15,top: 10),
+                child: Text("about Us",style: TextStyle(fontSize: height/50,fontWeight: FontWeight.w300),),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15,top: 10),
+                child: Text("Terms & Conditions",style: TextStyle(fontSize: height/50,fontWeight: FontWeight.w300),),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15,top: 10),
+                child: Text("Privacy Policy",style: TextStyle(fontSize: height/50,fontWeight: FontWeight.w300),),
+              ),
+
+
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
