@@ -179,8 +179,13 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                           padding: const EdgeInsets.only(
                                               left: 5, right: 5),
                                           child: InkWell(
-                                            onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>MakeAppoinmentPage()));
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          MakeAppoinmentPage(
+                                                            doctorProfileModel:    doctors[index])));
                                             },
                                             child: Container(
                                               height: height / 25,
@@ -194,7 +199,8 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                 "BOOK NOW ",
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontWeight: FontWeight.w300),
+                                                    fontWeight:
+                                                        FontWeight.w300),
                                               )),
                                             ),
                                           ),

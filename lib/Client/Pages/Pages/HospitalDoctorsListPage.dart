@@ -55,8 +55,15 @@ class _HospitalDoctorsListPageState extends State<HospitalDoctorsListPage> {
                             builder: (context, snapshot) {
                               DoctorProfileModel doctor = snapshot.data;
                               return InkWell(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MakeAppoinmentPage()));
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MakeAppoinmentPage(
+                                                doctorProfileModel:
+                                                    doctor,
+                                              )));
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(

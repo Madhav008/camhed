@@ -1,62 +1,23 @@
+import 'package:camhed/Model/AppointmentModel.dart';
+import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class MakeAppoinmentPage extends StatefulWidget {
-  const MakeAppoinmentPage({Key key}) : super(key: key);
+  DoctorProfileModel doctorProfileModel;
+
+  MakeAppoinmentPage({@required this.doctorProfileModel});
 
   @override
   _MakeAppoinmentPageState createState() => _MakeAppoinmentPageState();
 }
 
-class AppointmentModel {
-  String name;
-  String phone;
-  String time;
-  String gender;
-  String date;
-  String age;
-  String address;
-  AppointmentModel(
-      {this.name,
-      this.phone,
-      this.time,
-      this.gender,
-      this.date,
-      this.age,
-      this.address});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'phone': phone,
-      'gender': gender,
-      'time': time,
-      'Date': date,
-      'age': age,
-      'address': address,
-    };
-  }
-
-  factory AppointmentModel.fromFirestore(Map<String, dynamic> firestore) {
-    if (firestore == null) return null;
-
-    return AppointmentModel(
-        gender: firestore['gender'],
-        name: firestore['name'],
-        phone: firestore['phone'],
-        age: firestore['age'],
-        date: firestore['date'],
-        address: firestore['address'],
-        time: firestore['time']);
-  }
-}
-
 class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
-   makeAppointment(AppointmentModel data) {
+  makeAppointment(AppointmentModel data) {
     var id = Uuid().v1();
     _db.collection("Appointments").doc(id).set(data.toMap());
   }
@@ -128,7 +89,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Dr. Aditya Puri",
+                                      "${widget.doctorProfileModel.name}",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
@@ -138,7 +99,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                       height: height / 200,
                                     ),
                                     Text(
-                                      "30+ Year Exp",
+                                      "${widget.doctorProfileModel.experiance}+ Year Exp",
                                       style: TextStyle(
                                           color: Color(0xffe8364e),
                                           fontWeight: FontWeight.w500,
@@ -148,14 +109,14 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                       height: height / 250,
                                     ),
                                     Text(
-                                      "MD (Medicine)",
+                                      "${widget.doctorProfileModel.position}",
                                       style: TextStyle(
                                           color: Colors.black38,
                                           fontSize: height / 65),
                                     ),
                                     SizedBox(height: height / 250),
                                     Text(
-                                      "COVID-19",
+                                      "${widget.doctorProfileModel.category}",
                                       style: TextStyle(
                                           color: Colors.black38,
                                           fontSize: height / 65),
@@ -658,7 +619,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                     fontSize: height / 55),
                               ),
                               Text(
-                                " \$50",
+                                " \$${widget.doctorProfileModel.fees}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: height / 50),
@@ -734,7 +695,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: InkWell(
-                            onTap: (){
+                            onTap: () {
                               var data = AppointmentModel(
                                 name: name,
                                 age: age,
