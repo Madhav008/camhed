@@ -14,7 +14,7 @@ class DoctorListPage extends StatefulWidget {
 }
 
 class _DoctorListPageState extends State<DoctorListPage> {
-  HospitalModel hospitalData;
+  HospitalModel hospitalData = new HospitalModel();
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -55,9 +55,11 @@ class _DoctorListPageState extends State<DoctorListPage> {
                             .where('phone', isEqualTo: doctors[index].phone)
                             .get()
                             .then((value) {
-                          hospitalData.location =
-                              (value.docs).first['location'];
-                          hospitalData.name = (value.docs).first['name'];
+                            hospitalData.location =
+                                (value.docs).first['location'];
+                            hospitalData.name = (value.docs).first['name'];
+                          
+                          print(value.docs.first['name']);
                         });
                         return InkWell(
                           child: Padding(

@@ -14,9 +14,7 @@ class InitialSplashScreen extends StatefulWidget {
 }
 
 class _InitialSplashScreenState extends State<InitialSplashScreen> {
-  var userId = FirebaseAuth.instance.currentUser.uid;
   var userType;
- 
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +27,8 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
                 builder: (context) => LoginPage(),
               ));
         } else {
+          var userId = FirebaseAuth.instance.currentUser.uid;
+
           await FirebaseFirestore.instance
               .collection('userType')
               .doc(userId)
