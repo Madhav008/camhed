@@ -2,6 +2,7 @@ import 'package:camhed/Client/Pages/Pages/loginPage.dart';
 import 'package:camhed/Client/Pages/splashScreen/slide_dots.dart';
 import 'package:camhed/Client/Pages/splashScreen/slide_item.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'SplashData.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,16 +18,16 @@ class _SplashScreenState extends State<SplashScreen> {
   //   _pageController.animateToPage(index, curve: null, duration: null);
   // }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _firstTime();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _firstTime();
+  }
 
-  // _firstTime() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   preferences.setBool("firstTime", true);
-  // }
+  _firstTime() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setBool("firstTime", true);
+  }
 
   _onPageChanged(int index) {
     setState(() {
