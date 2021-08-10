@@ -30,8 +30,7 @@ class DoctorServices {
     return data;
   }
 
-  Future<List<String>> fetchHospitalDoctor(
-      String hospitalId) async {
+  Future<List<String>> fetchHospitalDoctor(String hospitalId) async {
     // List<DoctorProfileModel> data = [];
     List<HospitalModel> hospitalData;
     // DoctorProfileModel docData;
@@ -54,4 +53,6 @@ class DoctorServices {
 
     return hospitalData.first.doctorId;
   }
+
+  
 }

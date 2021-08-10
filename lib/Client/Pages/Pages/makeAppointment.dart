@@ -36,11 +36,22 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
   bool male = true;
   bool female = false;
   bool others = false;
-  bool dateisselected = true;
-
+  bool selectedDate = true;
+  int selectedContainer;
+  int selectedTimeContainer;
+  // @override
+  // void initState() {
+  //   selectedContainer = 1;
+  //   selectedTimeContainer = 1;
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
-    DateTime dates = new DateTime(now.weekday,now.month,now.day,);
+    DateTime dates = new DateTime(
+      now.weekday,
+      now.month,
+      now.day,
+    );
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -145,7 +156,6 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
 
             ///////////////////////////////////////////////////////////////////////////////////////////
 
-
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
               child: Material(
@@ -177,76 +187,117 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                               height: height / 10,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: 30,
+                                  itemCount: 5,
                                   itemBuilder: (context, index) {
-                                    DateTime ndates = dates.add(Duration(days:index));
-                                    String weekday = DateFormat('EEEE').format(ndates);
-                                    String month = DateFormat('MMMM').format(ndates);
-                                    print(ndates);
+                                    DateTime ndates =
+                                        dates.add(Duration(days: index));
+                                    String weekday =
+                                        DateFormat('EEEE').format(ndates);
+                                    String month =
+                                        DateFormat('MMMM').format(ndates);
+                                    // print(ndates);
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: InkWell(
-                                        onTap: (){
+                                        onTap: () {
                                           setState(() {
-                                            dateisselected = !dateisselected;
+                                            selectedContainer = index;
                                           });
 
+                                          if (selectedContainer == index) {
+                                            date = weekday.substring(0, 3) +
+                                                " " +
+                                                "${ndates.day}" +
+                                                " " +
+                                                month.substring(0, 3);
+                                          }
+                                          print(date);
                                         },
-                                          child: (dateisselected)?Container(
-                                        height: height / 9,
-                                        width: width / 5,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 1,
-                                                color: Color(0xffe8364e)),
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(
-                                                height / 60)),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(weekday.substring(0,3)),
-                                            Text(
-                                              ndates.day.toString(),
-                                              style: TextStyle(
-                                                  color: Color(0xffe8364e),
-                                                  fontSize: height / 50,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Text(month.substring(0,3)),
-                                          ],
-                                        ),
-                                      ):Container(
-                                            height: height / 9,
-                                            width: width / 5,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 1,
-                                                    color: Colors.white),
-                                                color: Color(0xffe8364e),
-                                                borderRadius: BorderRadius.circular(
-                                                    height / 60)),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                              children: [
-                                                Text("Mon"),
-                                                Text(
-                                                  "26",
-                                                  style: TextStyle(
-                                                      color: Color(0xffe8364e),
-                                                      fontSize: height / 50,
-                                                      fontWeight: FontWeight.w500),
+                                        child: (selectedContainer == index)
+                                            ? Container(
+                                                height: height / 9,
+                                                width: width / 5,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        width: 1,
+                                                        color:
+                                                            Color(0xffe8364e)),
+                                                    color: Colors.red,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            height / 60)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      weekday.substring(0, 3),
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      ndates.day.toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: height / 50,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    Text(
+                                                      month.substring(0, 3),
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Text("Jul"),
-                                              ],
-                                            ),
-                                          ))
+                                              )
+                                            : Container(
+                                                height: height / 9,
+                                                width: width / 5,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        width: 1,
+                                                        color:
+                                                            Color(0xffe8364e)),
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            height / 60)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      weekday.substring(0, 3),
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      ndates.day.toString(),
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xffe8364e),
+                                                          fontSize: height / 50,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    Text(
+                                                      month.substring(0, 3),
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                      ),
                                     );
                                   })),
                         ),
@@ -271,35 +322,82 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                     var startTime = widget
                                         .doctorProfileModel.startTime[index];
                                     startTime =
-                                    startTime.split("(")[1].split(")")[0];
+                                        startTime.split("(")[1].split(")")[0];
 
                                     var endTime = widget
                                         .doctorProfileModel.endTime[index];
                                     endTime =
-                                    endTime.split("(")[1].split(")")[0];
+                                        endTime.split("(")[1].split(")")[0];
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: InkWell(
-                                          child: Container(
-                                        height: height / 20,
-                                        width: width / 2.3,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 1,
-                                                color: Color(0xffe8364e)),
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(
-                                                height / 80)),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text("${startTime}   -   ${endTime}"),
-                                          ],
-                                        ),
-                                      )),
+                                          onTap: () {
+                                            setState(() {
+                                              selectedTimeContainer = index;
+                                            });
+
+                                            if (selectedTimeContainer ==
+                                                index) {
+                                              time =
+                                                  "${startTime}   -   ${endTime}";
+                                            }
+                                          },
+                                          child: (selectedTimeContainer ==
+                                                  index)
+                                              ? Container(
+                                                  height: height / 20,
+                                                  width: width / 2.3,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: Color(
+                                                              0xffe8364e)),
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              height / 80)),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        "${startTime}   -   ${endTime}",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              : Container(
+                                                  height: height / 20,
+                                                  width: width / 2.3,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: Color(
+                                                              0xffe8364e)),
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              height / 80)),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                          "${startTime}   -   ${endTime}"),
+                                                    ],
+                                                  ),
+                                                )),
                                     );
                                   })),
                         ),
@@ -487,11 +585,10 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                   value: male,
                                   onChanged: (value) {
                                     setState(() {
-                                      male=true;
-                                      female =false;
+                                      male = true;
+                                      female = false;
                                       others = false;
                                     });
-
                                   },
                                 ),
                                 Text(
@@ -503,8 +600,8 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                   activeColor: Color(0xffe8364e),
                                   onChanged: (value) {
                                     setState(() {
-                                      female=true;
-                                      male= false;
+                                      female = true;
+                                      male = false;
                                       others = false;
                                     });
                                   },
@@ -518,11 +615,10 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                   value: others,
                                   onChanged: (value) {
                                     setState(() {
-                                      others=true;
-                                      male =false;
-                                      female =false;
+                                      others = true;
+                                      male = false;
+                                      female = false;
                                     });
-
                                   },
                                 ),
                                 Text(
@@ -771,12 +867,22 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                           padding: const EdgeInsets.only(top: 20),
                           child: InkWell(
                             onTap: () {
+                              String gen;
+                              if (male == true) {
+                                gen = "male";
+                              } else if (female == true) {
+                                gen = "female";
+                              } else {
+                                gen = "Other";
+                              }
                               var data = AppointmentModel(
                                 name: name,
                                 age: age,
-                                gender: "Male",
+                                gender: gen,
                                 address: address,
                                 phone: phone,
+                                date: date,
+                                time: time,
                               );
                               makeAppointment(data);
                             },

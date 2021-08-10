@@ -61,8 +61,7 @@ class _HospitalDoctorsListPageState extends State<HospitalDoctorsListPage> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               MakeAppoinmentPage(
-                                                doctorProfileModel:
-                                                    doctor,
+                                                doctorProfileModel: doctor,
                                               )));
                                 },
                                 child: Padding(
@@ -248,7 +247,7 @@ class _HospitalDoctorsListPageState extends State<HospitalDoctorsListPage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      "Sanjeevani The Medical Center",
+                                                      "${widget.hospital.name}",
                                                       style: TextStyle(
                                                           color: Colors.black87,
                                                           fontSize:
@@ -258,7 +257,7 @@ class _HospitalDoctorsListPageState extends State<HospitalDoctorsListPage> {
                                                       height: height / 100,
                                                     ),
                                                     Text(
-                                                      "Opposite Durga Mandir, Ratu Road Ranchi",
+                                                      "${widget.hospital.location}",
                                                       style: TextStyle(
                                                           color: Colors.black38,
                                                           fontSize:

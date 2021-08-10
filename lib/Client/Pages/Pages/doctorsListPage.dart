@@ -1,6 +1,8 @@
+import 'package:camhed/Admin/AdminModels/HospitalModel.dart';
 import 'package:camhed/Client/Pages/Pages/makeAppointment.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DoctorListPage extends StatefulWidget {
@@ -12,6 +14,7 @@ class DoctorListPage extends StatefulWidget {
 }
 
 class _DoctorListPageState extends State<DoctorListPage> {
+  HospitalModel hospitalData;
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -47,6 +50,15 @@ class _DoctorListPageState extends State<DoctorListPage> {
                       shrinkWrap: true,
                       itemCount: doctors.length,
                       itemBuilder: (context, index) {
+                        FirebaseFirestore.instance
+                            .collection('Hospitals')
+                            .where('phone', isEqualTo: doctors[index].phone)
+                            .get()
+                            .then((value) {
+                          hospitalData.location =
+                              (value.docs).first['location'];
+                          hospitalData.name = (value.docs).first['name'];
+                        });
                         return InkWell(
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -185,7 +197,9 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           MakeAppoinmentPage(
-                                                            doctorProfileModel:    doctors[index])));
+                                                              doctorProfileModel:
+                                                                  doctors[
+                                                                      index])));
                                             },
                                             child: Container(
                                               height: height / 25,
@@ -220,7 +234,7 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Sanjeevani The Medical Center",
+                                                "${hospitalData.name}",
                                                 style: TextStyle(
                                                     color: Colors.black87,
                                                     fontSize: height / 60),
@@ -229,7 +243,7 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                 height: height / 100,
                                               ),
                                               Text(
-                                                "Opposite Durga Mandir, Ratu Road Ranchi",
+                                                "${hospitalData.location}",
                                                 style: TextStyle(
                                                     color: Colors.black38,
                                                     fontSize: height / 60),
