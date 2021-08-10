@@ -3,6 +3,7 @@ import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class MakeAppoinmentPage extends StatefulWidget {
@@ -22,6 +23,8 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
     _db.collection("Appointments").doc(id).set(data.toMap());
   }
 
+  DateTime now = DateTime.now();
+
   String name;
   String phone;
   String time;
@@ -37,6 +40,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime dates = new DateTime(now.weekday,now.month,now.day,);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -140,6 +144,8 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
             ),
 
             ///////////////////////////////////////////////////////////////////////////////////////////
+
+
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
               child: Material(
@@ -171,8 +177,12 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                               height: height / 10,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
+                                  itemCount: 30,
                                   itemBuilder: (context, index) {
+                                    DateTime ndates = dates.add(Duration(days:index));
+                                    String weekday = DateFormat('EEEE').format(ndates);
+                                    String month = DateFormat('MMMM').format(ndates);
+                                    print(ndates);
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: InkWell(
@@ -198,15 +208,15 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text("Mon"),
+                                            Text(weekday.substring(0,3)),
                                             Text(
-                                              "26",
+                                              ndates.day.toString(),
                                               style: TextStyle(
                                                   color: Color(0xffe8364e),
                                                   fontSize: height / 50,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            Text("Jul"),
+                                            Text(month.substring(0,3)),
                                           ],
                                         ),
                                       ):Container(
@@ -258,6 +268,15 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                   itemCount: widget
                                       .doctorProfileModel.startTime.length,
                                   itemBuilder: (context, index) {
+                                    var startTime = widget
+                                        .doctorProfileModel.startTime[index];
+                                    startTime =
+                                    startTime.split("(")[1].split(")")[0];
+
+                                    var endTime = widget
+                                        .doctorProfileModel.endTime[index];
+                                    endTime =
+                                    endTime.split("(")[1].split(")")[0];
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: InkWell(
@@ -277,7 +296,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text("10:00 AM - 07:00 PM"),
+                                            Text("${startTime}   -   ${endTime}"),
                                           ],
                                         ),
                                       )),
