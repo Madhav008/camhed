@@ -30,6 +30,11 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
   String age;
   String address;
 
+  bool male = true;
+  bool female = false;
+  bool others = false;
+  bool dateisselected = true;
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -171,7 +176,13 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: InkWell(
-                                          child: Container(
+                                        onTap: (){
+                                          setState(() {
+                                            dateisselected = !dateisselected;
+                                          });
+
+                                        },
+                                          child: (dateisselected)?Container(
                                         height: height / 9,
                                         width: width / 5,
                                         decoration: BoxDecoration(
@@ -198,7 +209,34 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                             Text("Jul"),
                                           ],
                                         ),
-                                      )),
+                                      ):Container(
+                                            height: height / 9,
+                                            width: width / 5,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: Colors.white),
+                                                color: Color(0xffe8364e),
+                                                borderRadius: BorderRadius.circular(
+                                                    height / 60)),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text("Mon"),
+                                                Text(
+                                                  "26",
+                                                  style: TextStyle(
+                                                      color: Color(0xffe8364e),
+                                                      fontSize: height / 50,
+                                                      fontWeight: FontWeight.w500),
+                                                ),
+                                                Text("Jul"),
+                                              ],
+                                            ),
+                                          ))
                                     );
                                   })),
                         ),
@@ -426,30 +464,47 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                             Row(
                               children: [
                                 Checkbox(
-                                  value: false,
-                                  // onChanged: (value) {
-                                  //   userRegisterValidation.setAgree();
-                                  // },
+                                  activeColor: Color(0xffe8364e),
+                                  value: male,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      male=true;
+                                      female =false;
+                                      others = false;
+                                    });
+
+                                  },
                                 ),
                                 Text(
                                   "Male",
                                   style: TextStyle(fontSize: height / 70),
                                 ),
                                 Checkbox(
-                                  value: false,
-                                  // onChanged: (value) {
-                                  //   userRegisterValidation.setAgree();
-                                  // },
+                                  value: female,
+                                  activeColor: Color(0xffe8364e),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      female=true;
+                                      male= false;
+                                      others = false;
+                                    });
+                                  },
                                 ),
                                 Text(
                                   "Female",
                                   style: TextStyle(fontSize: height / 70),
                                 ),
                                 Checkbox(
-                                  value: false,
-                                  // onChanged: (value) {
-                                  //   userRegisterValidation.setAgree();
-                                  // },
+                                  activeColor: Color(0xffe8364e),
+                                  value: others,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      others=true;
+                                      male =false;
+                                      female =false;
+                                    });
+
+                                  },
                                 ),
                                 Text(
                                   "Others",
