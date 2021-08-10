@@ -217,8 +217,19 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                               height: height / 20,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
+                                  itemCount: widget
+                                      .doctorProfileModel.startTime.length,
                                   itemBuilder: (context, index) {
+                                    var startTime = widget
+                                        .doctorProfileModel.startTime[index];
+                                    startTime =
+                                        startTime.split("(")[1].split(")")[0];
+
+                                    var endTime = widget
+                                        .doctorProfileModel.endTime[index];
+                                    endTime =
+                                        endTime.split("(")[1].split(")")[0];
+                                    // print(startTime);
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: InkWell(
@@ -238,7 +249,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text("10:00 AM - 07:00 PM"),
+                                            Text("${startTime} - ${endTime} "),
                                           ],
                                         ),
                                       )),
