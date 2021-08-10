@@ -55,11 +55,10 @@ class _DoctorListPageState extends State<DoctorListPage> {
                             .where('phone', isEqualTo: doctors[index].phone)
                             .get()
                             .then((value) {
-                            hospitalData.location =
-                                (value.docs).first['location'];
-                            hospitalData.name = (value.docs).first['name'];
-                          
-                          print(value.docs.first['name']);
+                          hospitalData.location = (value.docs).first['address'];
+                          hospitalData.name = (value.docs).first['name'];
+
+                          print(value.docs.toList());
                         });
                         return InkWell(
                           child: Padding(
