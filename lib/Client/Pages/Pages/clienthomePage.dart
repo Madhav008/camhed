@@ -3,6 +3,7 @@ import 'package:camhed/Admin/AdminModels/CategoryModel.dart';
 import 'package:camhed/Admin/AdminModels/HospitalModel.dart';
 import 'package:camhed/Admin/AdminServices/adminService.dart';
 import 'package:camhed/Client/Pages/Pages/HospitalDoctorsListPage.dart';
+import 'package:camhed/Client/Pages/Pages/clientappointmentsPage.dart';
 import 'package:camhed/Client/Pages/Pages/doctorsListPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,6 +84,9 @@ class _ClientHomePageState extends State<ClientHomePage> {
                 ),
               ),
               ListTile(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ClientAppointmentPage()));
+                },
                 leading: Icon(Icons.description),
                 title: Text("My Appointments",style: TextStyle(fontSize: height/45,fontWeight: FontWeight.w300),),
               ),
