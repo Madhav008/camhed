@@ -198,6 +198,12 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           MakeAppoinmentPage(
+                                                              hospitalLocation:
+                                                                  hospitalData
+                                                                      .location,
+                                                              hospitalName:
+                                                                  hospitalData
+                                                                      .name,
                                                               doctorProfileModel:
                                                                   doctors[
                                                                       index])));

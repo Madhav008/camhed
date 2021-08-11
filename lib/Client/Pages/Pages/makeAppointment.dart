@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:camhed/Model/AppointmentModel.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,8 +11,13 @@ import 'package:uuid/uuid.dart';
 
 class MakeAppoinmentPage extends StatefulWidget {
   DoctorProfileModel doctorProfileModel;
+  String hospitalName;
+  String hospitalLocation;
 
-  MakeAppoinmentPage({@required this.doctorProfileModel});
+  MakeAppoinmentPage(
+      {@required this.doctorProfileModel,
+      @required this.hospitalLocation,
+      @required this.hospitalName});
 
   @override
   _MakeAppoinmentPageState createState() => _MakeAppoinmentPageState();
@@ -17,10 +25,10 @@ class MakeAppoinmentPage extends StatefulWidget {
 
 class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
   FirebaseFirestore _db = FirebaseFirestore.instance;
+  var userId = FirebaseAuth.instance.currentUser.uid;
 
-  makeAppointment(AppointmentModel data) {
-    var id = Uuid().v1();
-    _db.collection("Appointments").doc(id).set(data.toMap());
+  makeAppointment(AppointmentList data) {
+    _db.collection("Appointments").doc(userId).set(data.toMap());
   }
 
   DateTime now = DateTime.now();
@@ -211,7 +219,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                                 " " +
                                                 month.substring(0, 3);
                                           }
-                                          print(date);
+                                          // print(date);
                                         },
                                         child: (selectedContainer == index)
                                             ? Container(
@@ -867,6 +875,8 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                           padding: const EdgeInsets.only(top: 20),
                           child: InkWell(
                             onTap: () {
+                              var id = "camhead000" +
+                                  Random().nextInt(999999).toString();
                               String gen;
                               if (male == true) {
                                 gen = "male";
@@ -876,15 +886,25 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                 gen = "Other";
                               }
                               var data = AppointmentModel(
-                                name: name,
-                                age: age,
-                                gender: gen,
-                                address: address,
-                                phone: phone,
-                                date: date,
-                                time: time,
-                              );
-                              makeAppointment(data);
+                                  appointmentId: id,
+                                  userId: userId,
+                                  name: name,
+                                  age: age,
+                                  gender: gen,
+                                  address: address,
+                                  phone: phone,
+                                  date: date,
+                                  time: time,
+                                  bookingStatus: "Pending",
+                                  doctorCategory:
+                                      widget.doctorProfileModel.category,
+                                  doctorName: widget.doctorProfileModel.name,
+                                  hospitalName: widget.hospitalName,
+                                  hospitalLocation: widget.hospitalLocation,
+                                  paymentStatus: "fasle");
+
+                              var listData = AppointmentList(data: [data]);
+                              makeAppointment(listData);
                             },
                             child: Container(
                               height: height / 18,
