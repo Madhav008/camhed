@@ -1,4 +1,5 @@
 class DoctorProfileModel {
+  String doctorId;
   String name;
   String email;
   String address;
@@ -18,7 +19,8 @@ class DoctorProfileModel {
   List<String> startTime;
 
   DoctorProfileModel(
-      {this.name,
+      {this.doctorId,
+      this.name,
       this.email,
       this.address,
       this.idurl1,
@@ -38,6 +40,7 @@ class DoctorProfileModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'docId': doctorId,
       'name': name,
       'email': email,
       'address': address,
@@ -62,6 +65,7 @@ class DoctorProfileModel {
     if (firestore == null) return null;
 
     return DoctorProfileModel(
+        doctorId: firestore['docId'],
         name: firestore['name'],
         email: firestore['email'],
         address: firestore['address'],

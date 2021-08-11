@@ -40,7 +40,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
   String date;
   String age;
   String address;
-
+  List<AppointmentModel> appointmentData = [];
   bool male = true;
   bool female = false;
   bool others = false;
@@ -901,9 +901,11 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                   doctorName: widget.doctorProfileModel.name,
                                   hospitalName: widget.hospitalName,
                                   hospitalLocation: widget.hospitalLocation,
-                                  paymentStatus: "fasle");
+                                  paymentStatus: "fasle",
+                                  payment: widget.doctorProfileModel.fees);
+                              List<AppointmentModel> de = [];
 
-                              var listData = AppointmentList(data: [data]);
+                              var listData = AppointmentList(data: de);
                               makeAppointment(listData);
                             },
                             child: Container(

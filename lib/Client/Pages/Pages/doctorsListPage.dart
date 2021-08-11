@@ -15,8 +15,10 @@ class DoctorListPage extends StatefulWidget {
 
 class _DoctorListPageState extends State<DoctorListPage> {
   HospitalModel hospitalData = new HospitalModel();
+
   @override
   Widget build(BuildContext context) {
+    var _db = FirebaseFirestore.instance;
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -50,15 +52,17 @@ class _DoctorListPageState extends State<DoctorListPage> {
                       shrinkWrap: true,
                       itemCount: doctors.length,
                       itemBuilder: (context, index) {
-                        FirebaseFirestore.instance
-                            .collection('Hospitals')
-                            .where('phone', isEqualTo: doctors[index].phone)
+                        _db
+                            .collection("Hospitals")
+                            .where("Doctors",
+                                arrayContains: doctors[index].doctorId)
                             .get()
                             .then((value) {
-                          hospitalData.location = (value.docs).first['address'];
-                          hospitalData.name = (value.docs).first['name'];
-
-                          print(value.docs.toList());
+                          setState(() {
+                            hospitalData.location =
+                                (value.docs).first['address'];
+                            hospitalData.name = (value.docs).first['name'];
+                          });
                         });
                         return InkWell(
                           child: Padding(

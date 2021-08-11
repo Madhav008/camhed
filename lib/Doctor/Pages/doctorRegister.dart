@@ -200,7 +200,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
               InkWell(
                 onTap: () {
                   doctorRegisterValidation.setApiCall();
-
+                  var id = FirebaseAuth.instance.currentUser.uid;
                   if (doctorRegisterValidation.name.value != null &&
                       doctorRegisterValidation.email.value != null &&
                       doctorRegisterValidation.address.value != null &&
@@ -209,6 +209,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
                       name: doctorRegisterValidation.name.value,
                       email: doctorRegisterValidation.email.value,
                       address: doctorRegisterValidation.address.value,
+                      doctorId: id,
                     );
 
                     print(data.toMap());

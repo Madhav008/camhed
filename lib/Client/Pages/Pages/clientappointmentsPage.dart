@@ -272,13 +272,11 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
                                                                   color: Colors
                                                                       .black38),
                                                             ),
-                                                            Expanded(
-                                                              child: Text(
-                                                                "${data.appointmentId}",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black38),
-                                                              ),
+                                                            Text(
+                                                              "${data.appointmentId}",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black38),
                                                             ),
                                                           ],
                                                         ),
@@ -302,7 +300,7 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
                                                                           55),
                                                             ),
                                                             Text(
-                                                              "\$ ${data.payment}",
+                                                              "\$ 55",
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .black,
