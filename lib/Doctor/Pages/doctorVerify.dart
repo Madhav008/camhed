@@ -30,6 +30,7 @@ class _DoctorVerifyState extends State<DoctorVerify> {
   File file1;
   File file2;
   File file3;
+
   Future<String> uploadImage(imageFile) async {
     var uploadTask = storageRef.ref("post_$postId.jpg").putFile(imageFile);
     var storageSnap = await uploadTask;
@@ -172,26 +173,32 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          (file != null)
+                          (file1 != null)
                               ? Container(
                                   height: height / 4,
                                   width: width,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
-                                          image: FileImage(file),
-                                          fit: BoxFit.cover)),
+                                          image: FileImage(file1),
+                                          fit: BoxFit.contain)),
                                 )
                               : Image(
                                   image: AssetImage("Images/add.png"),
                                   height: height / 6,
                                 ),
-                          SizedBox(
-                            height: height / 80,
-                          ),
-                          Text(
-                            "Add front Side of Your ID",
-                            style: TextStyle(color: Colors.black54),
-                          )
+                          // (file1 == null)
+                          //     ? SizedBox(
+                          //         height: height / 80,
+                          //       )
+                          //     : SizedBox(
+                          //         height: 0,
+                          //       ),
+                          // (file1 == null)
+                          //     ? Text(
+                          //         "Add front Side of Your ID",
+                          //         style: TextStyle(color: Colors.black54),
+                          //       )
+                          //     : Text(""),
                         ],
                       ),
                     ),
@@ -232,7 +239,7 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          (file != null)
+                          (file2 != null)
                               ? Container(
                                   height: height / 4,
                                   width: width,
@@ -307,10 +314,10 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                                           image: FileImage(file3),
                                           fit: BoxFit.cover)),
                                 )
-                              :Image(
-                            image: AssetImage("Images/userphoto.png"),
-                            height: height / 6,
-                          ),
+                              : Image(
+                                  image: AssetImage("Images/userphoto.png"),
+                                  height: height / 6,
+                                ),
                           SizedBox(
                             height: height / 80,
                           ),
