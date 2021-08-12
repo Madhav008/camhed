@@ -1,6 +1,7 @@
 import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
 import 'package:camhed/Client/Pages/Pages/loginPage.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
+import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
 import 'package:camhed/Doctor/Pages/doctorVerify.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,7 +41,8 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DoctorVerify(),
+                  // builder: (context) => DoctorVerify(),
+                  builder: (context) => DoctorHomePage(),
                 ));
           }
           if (userType == "user") {
