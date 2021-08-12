@@ -3,6 +3,7 @@ import 'package:camhed/Client/Pages/Pages/clientRegister.dart';
 import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
 import 'package:camhed/Client/Pages/Pages/loginPage.dart';
 import 'package:camhed/Client/Pages/Pages/makeAppointment.dart';
+import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/splashScreen/InitialSplashScreen.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
@@ -59,6 +60,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => SearchDoctorHospitalProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => AppointmentProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -74,7 +78,7 @@ class MyApp extends StatelessWidget {
                 return SplashScreen();
                 break;
               default:
-                return DoctorVerify();
+                return InitialSplashScreen();
             }
           },
         ),

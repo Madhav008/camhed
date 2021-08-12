@@ -21,6 +21,7 @@ class AppointmentList {
 }
 
 class AppointmentModel {
+  String doctorId;
   String userId;
   String name;
   String phone;
@@ -40,6 +41,7 @@ class AppointmentModel {
 
   AppointmentModel(
       {this.name,
+      this.doctorId,
       this.userId,
       this.phone,
       this.time,
@@ -60,6 +62,7 @@ class AppointmentModel {
     return {
       'name': name,
       'phone': phone,
+      'doctorId': doctorId,
       'userId': userId,
       'gender': gender,
       'time': time,
@@ -86,6 +89,7 @@ class AppointmentModel {
         name: firestore['name'],
         phone: firestore['phone'],
         age: firestore['age'],
+        doctorId: firestore['doctorId'],
         date: firestore['Date'],
         address: firestore['address'],
         bookingStatus: firestore['bookingStatus'],
