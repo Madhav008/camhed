@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
                 return SplashScreen();
                 break;
               default:
-                return InitialSplashScreen();
+                return ClientRegister();
             }
           },
         ),

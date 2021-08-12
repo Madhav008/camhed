@@ -5,8 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserServices {
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future addUser(String userId, UserProfile user) {
-    return _db.collection('UserProfile').doc(userId).set(user.toMap());
+  bool addUser(String userId, UserProfile user) {
+    try {
+      _db.collection('UserProfile').doc(userId).set(user.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<UserProfile> fetchUser(String userId) {

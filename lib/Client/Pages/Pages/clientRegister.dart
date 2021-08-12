@@ -1,3 +1,4 @@
+import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
 import 'package:camhed/Model/UserModel/User.dart';
 import 'package:camhed/Services/UserServices/UserServices.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
@@ -196,7 +197,7 @@ class _ClientRegisterState extends State<ClientRegister> {
               Padding(
                 padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
                 child: InkWell(
-                   onTap: () {
+                  onTap: () {
                     userRegisterValidation.setApiCall();
 
                     if (userRegisterValidation.name.value != null &&
@@ -209,18 +210,24 @@ class _ClientRegisterState extends State<ClientRegister> {
                         address: userRegisterValidation.address.value,
                       );
                       var userId = FirebaseAuth.instance.currentUser.uid;
-                      UserServices()
-                          .addUser(userId ,data)
-                          .then((value) {
-                        userRegisterValidation.setApiCall();
-                        if (value.data != null) {
-                          // Navigator.pushReplacement(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => MainPage(value),
-                          //     ));
-                        }
-                      });
+                      var value = UserServices().addUser(userId, data);
+                      userRegisterValidation.setApiCall();
+                      if (value) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ClientHomePage(),
+                            ));
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Network Error Please Try Again.  ",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM_RIGHT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      }
                     } else {
                       Fluttertoast.showToast(
                           msg: "Fill The Form Completly.  ",
@@ -233,7 +240,6 @@ class _ClientRegisterState extends State<ClientRegister> {
                       userRegisterValidation.setApiCall();
                     }
                   },
-                
                   child: Container(
                     height: height / 13,
                     width: width,

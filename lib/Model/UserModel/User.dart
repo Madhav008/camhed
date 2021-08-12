@@ -22,6 +22,6 @@ class UserProfile {
         name: firestore['name'],
         email: firestore['email'],
         address: firestore['address'],
-        profilePic: firestore['priofilePic']);
+        profilePic: firestore['profilePic']);
   }
 }
