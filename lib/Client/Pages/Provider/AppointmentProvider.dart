@@ -16,6 +16,7 @@ class AppointmentProvider with ChangeNotifier {
   List<AppointmentModel> _de = <AppointmentModel>[];
   String _doctorId;
   bool _isApiCallProcess = false;
+  bool paymentDone = true;
 
   String get name => _name;
   String get phone => _phone;
@@ -43,15 +44,25 @@ class AppointmentProvider with ChangeNotifier {
     setApiCall();
   }
 
-  setAppointment(AppointmentModel data) {
+  makeDoctorAppointment(AppointmentList data, String doctorId) {
+    _db.collection("DoctorAppointments").doc(doctorId).set(data.toMap());
+    print(doctorId);
+  }
+
+  setAppointment(AppointmentModel data, String doctorId) {
     _isApiCallProcess = true;
     _de.add(data);
     var appListData = AppointmentList(data: _de);
     makeAppointment(appListData);
+    if (paymentDone) {
+      makeDoctorAppointment(appListData, doctorId);
+    }
+
     notifyListeners();
   }
 
   getAppointments() async {
+    clearList();
     AppointmentList data;
     var userId = FirebaseAuth.instance.currentUser.uid;
     var res = await _db.collection('Appointments').doc(userId).get();
@@ -65,6 +76,11 @@ class AppointmentProvider with ChangeNotifier {
 
   void setApiCall() {
     _isApiCallProcess = !_isApiCallProcess;
+    notifyListeners();
+  }
+
+  clearList() {
+    _de.clear();
     notifyListeners();
   }
 }

@@ -922,7 +922,8 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                     paymentStatus: "fasle",
                                     payment: widget.doctorProfileModel.fees);
 
-                                appointment.setAppointment(data);
+                                appointment.setAppointment(
+                                    data, widget.doctorProfileModel.doctorId);
                               },
                               child: Container(
                                 height: height / 18,
