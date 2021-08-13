@@ -1,5 +1,7 @@
+import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Doctor/Pages/doctorSettingPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DoctorHomePage extends StatefulWidget {
   const DoctorHomePage({Key key}) : super(key: key);
@@ -86,6 +88,14 @@ class DoctorAppoinments extends StatefulWidget {
 }
 
 class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
+
+  @override
+  void initState() { 
+    super.initState();
+    // Provider.of<AppointmentProvider>(context,listen:false).getDoctorAppointments();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var height = widget.height;

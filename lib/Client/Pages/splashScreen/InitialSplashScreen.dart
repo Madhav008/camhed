@@ -36,8 +36,10 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
               .get()
               .then((value) => userType = value.data()['type']);
 
-          print(userType);
+          // print(userType);
           if (userType == "doctor") {
+//Status Check Of Doctor Verification
+
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(

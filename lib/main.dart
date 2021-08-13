@@ -1,30 +1,17 @@
-import 'package:camhed/Admin/AdminPages/AddCountryPage.dart';
-import 'package:camhed/Client/Pages/Pages/clientRegister.dart';
-import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
-import 'package:camhed/Client/Pages/Pages/loginPage.dart';
-import 'package:camhed/Client/Pages/Pages/makeAppointment.dart';
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/splashScreen/InitialSplashScreen.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
 import 'package:camhed/Doctor/DoctorProvider/SearchHospitalProvider.dart';
-import 'package:camhed/Doctor/Pages/addClinic.dart';
-import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
-import 'package:camhed/Doctor/Pages/createclinic.dart';
-import 'package:camhed/Doctor/Pages/doctorRegister.dart';
-import 'package:camhed/Doctor/Pages/doctorVerify.dart';
-import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
-import 'package:camhed/Doctor/Pages/searchHospital.dart';
+import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
 import 'package:camhed/validatior/userRegisterValidation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Client/Pages/Pages/doctorsListPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
