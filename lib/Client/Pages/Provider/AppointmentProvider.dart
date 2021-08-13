@@ -50,42 +50,47 @@ class AppointmentProvider with ChangeNotifier {
     setApiCall();
   }
 
-  makeDoctorAppointment(AppointmentList data, String doctorId) {
-    _db.collection("DoctorAppointments").doc(doctorId).set(data.toMap());
-    // print(doctorId);
-  }
-
   setAppointment(AppointmentModel data, String doctorId) {
     _isApiCallProcess = true;
     _de.add(data);
 
     var appListData = AppointmentList(data: _de);
     makeAppointment(appListData);
-    if (paymentDone) {
-      getDoctorAppointmentsForUser(doctorId);
 
-      _doctorAppointment.add(data);
-      var docAppointment = AppointmentList(data: _doctorAppointment);
-      makeDoctorAppointment(docAppointment, doctorId);
+    if (paymentDone) {
+      getDoctorAppointmentsForUser(doctorId, data);
+      // print(_doctorAppointment);
+
     }
 
     notifyListeners();
   }
 
-  getDoctorAppointmentsForUser(String userId) async {
+  makeDoctorAppointment(AppointmentList data, String doctorId) async {
+    await _db.collection("DoctorAppointments").doc(doctorId).set(data.toMap());
+    // print(data.data);
+  }
+
+  getDoctorAppointmentsForUser(String userId, AppointmentModel datass) async {
     clearDocList();
     AppointmentList data;
-    // var userId = FirebaseAuth.instance.currentUser.uid;
+
     var res = await _db.collection('DoctorAppointments').doc(userId).get();
 
     data = AppointmentList.fromFirestore(res.data());
 
+    print(data.toMap());
     _doctorAppointment.addAll(data.data);
+    // print(_doctorAppointment);
+    _doctorAppointment.add(datass);
 
+    var docAppointment = AppointmentList(data: _doctorAppointment);
+    print(docAppointment.data.length);
+
+    makeDoctorAppointment(docAppointment, userId);
     notifyListeners();
   }
 
-  
   getDoctorAppointments() async {
     clearDocList();
     AppointmentList data;
@@ -98,6 +103,7 @@ class AppointmentProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
   getAppointments() async {
     clearList();
     AppointmentList data;
