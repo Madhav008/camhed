@@ -1,5 +1,6 @@
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Doctor/Pages/doctorSettingPage.dart';
+import 'package:camhed/Model/AppointmentModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,6 @@ class _DoctorHomePageState extends State<DoctorHomePage>
           backgroundColor: Colors.white,
           appBar: AppBar(
             bottom: TabBar(
-
               tabs: myTabs,
               indicatorColor: Colors.white,
               indicatorWeight: 3.0,
@@ -51,9 +51,12 @@ class _DoctorHomePageState extends State<DoctorHomePage>
               Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorSettingPage()));
-                  },
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DoctorSettingPage()));
+                    },
                     child: Icon(Icons.settings)),
               )
             ],
@@ -67,8 +70,8 @@ class _DoctorHomePageState extends State<DoctorHomePage>
           ),
           body: TabBarView(
             children: [
-              DoctorAppoinments(height,width),
-              DoctorAppoinmentsHistory(height,width),
+              DoctorAppoinments(height, width),
+              DoctorAppoinmentsHistory(height, width),
             ],
             controller: _tabController,
           ),
@@ -79,25 +82,23 @@ class _DoctorHomePageState extends State<DoctorHomePage>
 class DoctorAppoinments extends StatefulWidget {
   var height;
   var width;
-  DoctorAppoinments(this.height,this.width);
-
-
+  DoctorAppoinments(this.height, this.width);
 
   @override
   _DoctorAppoinmentsState createState() => _DoctorAppoinmentsState();
 }
 
 class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
-
   @override
-  void initState() { 
+  void initState() {
     super.initState();
-    // Provider.of<AppointmentProvider>(context,listen:false).getDoctorAppointments();
+    Provider.of<AppointmentProvider>(context, listen: false)
+        .getDoctorAppointments();
   }
-
 
   @override
   Widget build(BuildContext context) {
+    var docAppointment = Provider.of<AppointmentProvider>(context);
     var height = widget.height;
     var width = widget.width;
     return SingleChildScrollView(
@@ -107,11 +108,12 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: 2,
+              itemCount: docAppointment.doctorAppointment.length,
               itemBuilder: (context, index) {
+                AppointmentModel docData =
+                    docAppointment.doctorAppointment[index];
                 return Padding(
-                  padding: const EdgeInsets.only(
-                      left: 15, right: 15, top: 20),
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
                   child: Material(
                     elevation: 2,
                     borderRadius: BorderRadius.circular(widget.height / 80),
@@ -119,8 +121,7 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                         width: width,
                         height: height / 3.7,
                         decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(height / 80),
+                          borderRadius: BorderRadius.circular(height / 80),
                           color: Colors.white,
                         ),
                         child: Column(
@@ -133,16 +134,12 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 7,
-                                        top: 1,
-                                        right: 7,
-                                        bottom: 5),
+                                        left: 7, top: 1, right: 7, bottom: 5),
                                     child: Row(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                      MainAxisAlignment
-                                          .spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
@@ -152,69 +149,55 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                               decoration: BoxDecoration(
                                                   image: DecorationImage(
                                                       image: AssetImage(
-                                                          "Images/avatar.png"),fit: BoxFit.cover)),
+                                                          "Images/avatar.png"),
+                                                      fit: BoxFit.cover)),
                                             ),
                                             SizedBox(
                                               width: width / 25,
                                             ),
                                             Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Madhav Jindal",
+                                                  "${docData.name}",
                                                   style: TextStyle(
-                                                      color:
-                                                      Colors.black,
+                                                      color: Colors.black,
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w600,
-                                                      fontSize:
-                                                      height / 55),
+                                                          FontWeight.w600,
+                                                      fontSize: height / 55),
                                                 ),
                                                 SizedBox(
                                                   height: height / 250,
                                                 ),
                                                 Text(
-                                                  "76",
+                                                  "${docData.age}",
                                                   style: TextStyle(
-                                                      color: Colors
-                                                          .black38,
-                                                      fontSize:
-                                                      height / 65),
+                                                      color: Colors.black38,
+                                                      fontSize: height / 65),
                                                 ),
                                                 SizedBox(
                                                   height: height / 200,
                                                 ),
                                                 Text(
-                                                  "Female",
+                                                  "${docData.gender}",
                                                   style: TextStyle(
-                                                      color:
-                                                      Colors.black,
+                                                      color: Colors.black,
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w500,
-                                                      fontSize:
-                                                      height / 65),
+                                                          FontWeight.w500,
+                                                      fontSize: height / 65),
                                                 ),
-                                                SizedBox(
-                                                    height:
-                                                    height / 250),
+                                                SizedBox(height: height / 250),
                                                 Row(
                                                   children: [
-
                                                     Text(
-                                                      "9:00 - 10:00",
+                                                      "${docData.time}",
                                                       style: TextStyle(
                                                           color: Colors
                                                               .orangeAccent,
-                                                          fontSize:
-                                                          height /
-                                                              65,
+                                                          fontSize: height / 65,
                                                           fontWeight:
-                                                          FontWeight
-                                                              .w600),
+                                                              FontWeight.w600),
                                                     ),
                                                   ],
                                                 ),
@@ -234,8 +217,7 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(top: 1),
+                                    padding: const EdgeInsets.only(top: 1),
                                     child: Center(child: Divider()),
                                   ),
                                   Padding(
@@ -245,26 +227,25 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                       children: [
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                              CrossAxisAlignment.center,
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Mon",
+                                              "${docData.date}",
                                               style: TextStyle(
                                                 color: Colors.red,
                                               ),
                                             ),
                                             Text(
-                                              "26",
+                                              "${docData.date}",
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: height / 50,
-                                                  fontWeight:
-                                                  FontWeight.w500),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                             Text(
-                                              "Oct",
+                                              "${docData.date}",
                                               style: TextStyle(
                                                 color: Colors.black38,
                                               ),
@@ -273,8 +254,7 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                         ),
                                         Padding(
                                           padding:
-                                          const EdgeInsets.only(
-                                              left: 15),
+                                              const EdgeInsets.only(left: 15),
                                           child: Container(
                                             height: height / 15,
                                             width: 1,
@@ -283,78 +263,66 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                         ),
                                         Padding(
                                           padding:
-                                          const EdgeInsets.only(
-                                              left: 10),
+                                              const EdgeInsets.only(left: 10),
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment
-                                                .start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
                                                 children: [
-                                                  Text(
-                                                      "Booking Status: "),
+                                                  Text("Booking Status: "),
                                                   Text(
                                                     "Confirmed",
                                                     style: TextStyle(
-                                                        color: Colors
-                                                            .orangeAccent,
+                                                        color:
+                                                            Colors.orangeAccent,
                                                         fontWeight:
-                                                        FontWeight
-                                                            .w600),
+                                                            FontWeight.w600),
                                                   )
                                                 ],
                                               ),
                                               Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(top: 3),
+                                                padding: const EdgeInsets.only(
+                                                    top: 3),
                                                 child: Row(
                                                   children: [
                                                     Text(
                                                       "Appointment Id: ",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .black38),
+                                                          color:
+                                                              Colors.black38),
                                                     ),
                                                     Text(
-                                                      "id",
+                                                      "${docData.appointmentId}",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .black38),
+                                                          color:
+                                                              Colors.black38),
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                               Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(top: 5),
+                                                padding: const EdgeInsets.only(
+                                                    top: 5),
                                                 child: Row(
                                                   children: [
                                                     Text(
                                                       "Amount: ",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .black,
+                                                          color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight
-                                                              .w500,
+                                                              FontWeight.w500,
                                                           fontSize:
-                                                          height /
-                                                              55),
+                                                              height / 55),
                                                     ),
                                                     Text(
-                                                      "\$ 55",
+                                                      "\$ ${docData.payment}",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .black,
+                                                          color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight
-                                                              .w500,
+                                                              FontWeight.w500,
                                                           fontSize:
-                                                          height /
-                                                              55),
+                                                              height / 55),
                                                     ),
                                                   ],
                                                 ),
@@ -382,10 +350,11 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
 class DoctorAppoinmentsHistory extends StatefulWidget {
   var height;
   var width;
-  DoctorAppoinmentsHistory(this.height,this.width);
+  DoctorAppoinmentsHistory(this.height, this.width);
 
   @override
-  _DoctorAppoinmentsHistoryState createState() => _DoctorAppoinmentsHistoryState();
+  _DoctorAppoinmentsHistoryState createState() =>
+      _DoctorAppoinmentsHistoryState();
 }
 
 class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
@@ -403,8 +372,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
               itemCount: 2,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.only(
-                      left: 15, right: 15, top: 20),
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
                   child: Material(
                     elevation: 2,
                     borderRadius: BorderRadius.circular(widget.height / 80),
@@ -412,8 +380,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                         width: width,
                         height: height / 3.7,
                         decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(height / 80),
+                          borderRadius: BorderRadius.circular(height / 80),
                           color: Colors.white,
                         ),
                         child: Column(
@@ -426,16 +393,12 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 7,
-                                        top: 1,
-                                        right: 7,
-                                        bottom: 5),
+                                        left: 7, top: 1, right: 7, bottom: 5),
                                     child: Row(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                      MainAxisAlignment
-                                          .spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
@@ -445,26 +408,23 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                               decoration: BoxDecoration(
                                                   image: DecorationImage(
                                                       image: AssetImage(
-                                                          "Images/avatar.png"),fit: BoxFit.cover)),
+                                                          "Images/avatar.png"),
+                                                      fit: BoxFit.cover)),
                                             ),
                                             SizedBox(
                                               width: width / 25,
                                             ),
                                             Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "Madhav Jindal",
                                                   style: TextStyle(
-                                                      color:
-                                                      Colors.black,
+                                                      color: Colors.black,
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w600,
-                                                      fontSize:
-                                                      height / 55),
+                                                          FontWeight.w600,
+                                                      fontSize: height / 55),
                                                 ),
                                                 SizedBox(
                                                   height: height / 250,
@@ -472,10 +432,8 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                 Text(
                                                   "76",
                                                   style: TextStyle(
-                                                      color: Colors
-                                                          .black38,
-                                                      fontSize:
-                                                      height / 65),
+                                                      color: Colors.black38,
+                                                      fontSize: height / 65),
                                                 ),
                                                 SizedBox(
                                                   height: height / 200,
@@ -483,31 +441,22 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                 Text(
                                                   "Female",
                                                   style: TextStyle(
-                                                      color:
-                                                      Colors.black,
+                                                      color: Colors.black,
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w500,
-                                                      fontSize:
-                                                      height / 65),
+                                                          FontWeight.w500,
+                                                      fontSize: height / 65),
                                                 ),
-                                                SizedBox(
-                                                    height:
-                                                    height / 250),
+                                                SizedBox(height: height / 250),
                                                 Row(
                                                   children: [
-
                                                     Text(
                                                       "9:00 - 10:00",
                                                       style: TextStyle(
                                                           color: Colors
                                                               .orangeAccent,
-                                                          fontSize:
-                                                          height /
-                                                              65,
+                                                          fontSize: height / 65,
                                                           fontWeight:
-                                                          FontWeight
-                                                              .w600),
+                                                              FontWeight.w600),
                                                     ),
                                                   ],
                                                 ),
@@ -527,8 +476,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(top: 1),
+                                    padding: const EdgeInsets.only(top: 1),
                                     child: Center(child: Divider()),
                                   ),
                                   Padding(
@@ -538,9 +486,9 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                       children: [
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                              CrossAxisAlignment.center,
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               "Mon",
@@ -553,8 +501,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: height / 50,
-                                                  fontWeight:
-                                                  FontWeight.w500),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                             Text(
                                               "Oct",
@@ -566,8 +513,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                         ),
                                         Padding(
                                           padding:
-                                          const EdgeInsets.only(
-                                              left: 15),
+                                              const EdgeInsets.only(left: 15),
                                           child: Container(
                                             height: height / 15,
                                             width: 1,
@@ -576,78 +522,66 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                         ),
                                         Padding(
                                           padding:
-                                          const EdgeInsets.only(
-                                              left: 10),
+                                              const EdgeInsets.only(left: 10),
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment
-                                                .start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
                                                 children: [
-                                                  Text(
-                                                      "Booking Status: "),
+                                                  Text("Booking Status: "),
                                                   Text(
                                                     "Confirmed",
                                                     style: TextStyle(
-                                                        color: Colors
-                                                            .orangeAccent,
+                                                        color:
+                                                            Colors.orangeAccent,
                                                         fontWeight:
-                                                        FontWeight
-                                                            .w600),
+                                                            FontWeight.w600),
                                                   )
                                                 ],
                                               ),
                                               Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(top: 3),
+                                                padding: const EdgeInsets.only(
+                                                    top: 3),
                                                 child: Row(
                                                   children: [
                                                     Text(
                                                       "Appointment Id: ",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .black38),
+                                                          color:
+                                                              Colors.black38),
                                                     ),
                                                     Text(
                                                       "id",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .black38),
+                                                          color:
+                                                              Colors.black38),
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                               Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(top: 5),
+                                                padding: const EdgeInsets.only(
+                                                    top: 5),
                                                 child: Row(
                                                   children: [
                                                     Text(
                                                       "Amount: ",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .black,
+                                                          color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight
-                                                              .w500,
+                                                              FontWeight.w500,
                                                           fontSize:
-                                                          height /
-                                                              55),
+                                                              height / 55),
                                                     ),
                                                     Text(
                                                       "\$ 55",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .black,
+                                                          color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight
-                                                              .w500,
+                                                              FontWeight.w500,
                                                           fontSize:
-                                                          height /
-                                                              55),
+                                                              height / 55),
                                                     ),
                                                   ],
                                                 ),
@@ -671,9 +605,3 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
     );
   }
 }
-
-
-
-
-
-

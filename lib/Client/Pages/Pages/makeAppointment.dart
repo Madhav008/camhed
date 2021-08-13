@@ -72,8 +72,8 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
         iconTheme: IconThemeData(color: Color(0xffe8364e)),
       ),
       body: ProgressHUD(
-        // inAsyncCall: appointment.isApiCallProcess,
-        inAsyncCall: false,
+        inAsyncCall: appointment.isApiCallProcess,
+        // inAsyncCall: false,
         child: SingleChildScrollView(
           child: Column(
             children: [

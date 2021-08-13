@@ -59,8 +59,6 @@ class AppointmentProvider with ChangeNotifier {
 
     if (paymentDone) {
       getDoctorAppointmentsForUser(doctorId, data);
-      // print(_doctorAppointment);
-
     }
 
     notifyListeners();
