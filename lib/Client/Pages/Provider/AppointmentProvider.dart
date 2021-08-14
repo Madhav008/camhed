@@ -15,7 +15,9 @@ class AppointmentProvider with ChangeNotifier {
   String _address;
   List<AppointmentModel> _de = <AppointmentModel>[];
   List<AppointmentModel> _doctorAppointment = <AppointmentModel>[];
+  List<AppointmentModel> _doctorAppointmentHistory = <AppointmentModel>[];
 
+  List<AppointmentModel> _doctorAppointmentPending = <AppointmentModel>[];
   String _doctorId;
   bool _isApiCallProcess = false;
   bool _paymentDone = true;
@@ -29,7 +31,10 @@ class AppointmentProvider with ChangeNotifier {
   String get address => _address;
   List<AppointmentModel> get de => _de;
   List<AppointmentModel> get doctorAppointment => _doctorAppointment;
-
+  List<AppointmentModel> get doctorAppointmentHistory =>
+      _doctorAppointmentHistory;
+  List<AppointmentModel> get doctorAppointmentPending =>
+      _doctorAppointmentPending;
   String get doctorId => _doctorId;
   bool get isApiCallProcess => _isApiCallProcess;
   bool get paymentDone => _paymentDone;
@@ -89,6 +94,30 @@ class AppointmentProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  getDoctorAppointmentsHistory() {
+    clearDocHistoryList();
+    // getDoctorAppointments();
+    _doctorAppointment.forEach((element) {
+      if (element.bookingStatus == 'Done') {
+        _doctorAppointmentHistory.add(element);
+      }
+    });
+    notifyListeners();
+  }
+
+  getDoctorAppointmentsPending() {
+    clearDocPendingList();
+    // getDoctorAppointments();
+    _doctorAppointment.forEach((element) {
+      print(element.bookingStatus);
+      if (element.bookingStatus == 'Pending') {
+        _doctorAppointmentPending.add(element);
+        // print(_doctorAppointmentHistory.toList());
+      }
+    });
+    notifyListeners();
+  }
+
   getDoctorAppointments() async {
     clearDocList();
     AppointmentList data;
@@ -98,7 +127,8 @@ class AppointmentProvider with ChangeNotifier {
     data = AppointmentList.fromFirestore(res.data());
 
     _doctorAppointment.addAll(data.data);
-
+    getDoctorAppointmentsPending();
+    getDoctorAppointmentsHistory();
     notifyListeners();
   }
 
@@ -127,6 +157,16 @@ class AppointmentProvider with ChangeNotifier {
 
   clearDocList() {
     _doctorAppointment.clear();
+    notifyListeners();
+  }
+
+  clearDocHistoryList() {
+    _doctorAppointmentHistory.clear();
+    notifyListeners();
+  }
+
+  clearDocPendingList() {
+    _doctorAppointmentPending.clear();
     notifyListeners();
   }
 }

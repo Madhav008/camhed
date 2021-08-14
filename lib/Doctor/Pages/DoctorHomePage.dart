@@ -1,3 +1,4 @@
+import 'package:camhed/Auth/authentication.dart';
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Doctor/Pages/doctorSettingPage.dart';
 import 'package:camhed/Model/AppointmentModel.dart';
@@ -52,6 +53,8 @@ class _DoctorHomePageState extends State<DoctorHomePage>
                 padding: const EdgeInsets.only(right: 15),
                 child: InkWell(
                     onTap: () {
+                      // Auth().signOut();
+                      // setState(() {});
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -108,7 +111,7 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: docAppointment.doctorAppointment.length,
+              itemCount: docAppointment.doctorAppointmentPending.length,
               itemBuilder: (context, index) {
                 AppointmentModel docData =
                     docAppointment.doctorAppointment[index];
@@ -358,8 +361,11 @@ class DoctorAppoinmentsHistory extends StatefulWidget {
 }
 
 class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
+
+
   @override
   Widget build(BuildContext context) {
+    var docHistory = Provider.of<AppointmentProvider>(context);
     var height = widget.height;
     var width = widget.width;
     return SingleChildScrollView(
@@ -369,8 +375,9 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: 2,
+              itemCount: docHistory.doctorAppointmentHistory.length,
               itemBuilder: (context, index) {
+                var docHistDetail = docHistory.doctorAppointmentHistory[index];
                 return Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
                   child: Material(
@@ -419,7 +426,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Madhav Jindal",
+                                                  "${docHistDetail.name}",
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -430,7 +437,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                   height: height / 250,
                                                 ),
                                                 Text(
-                                                  "76",
+                                                  "${docHistDetail.age}",
                                                   style: TextStyle(
                                                       color: Colors.black38,
                                                       fontSize: height / 65),
@@ -439,7 +446,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                   height: height / 200,
                                                 ),
                                                 Text(
-                                                  "Female",
+                                                  "${docHistDetail.gender}",
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -450,7 +457,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      "9:00 - 10:00",
+                                                      "${docHistDetail.time}",
                                                       style: TextStyle(
                                                           color: Colors
                                                               .orangeAccent,
@@ -491,20 +498,20 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Mon",
+                                              "${docHistDetail.date}",
                                               style: TextStyle(
                                                 color: Colors.red,
                                               ),
                                             ),
                                             Text(
-                                              "26",
+                                              "${docHistDetail.date}",
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: height / 50,
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
-                                              "Oct",
+                                              "${docHistDetail.date}",
                                               style: TextStyle(
                                                 color: Colors.black38,
                                               ),
@@ -552,7 +559,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                               Colors.black38),
                                                     ),
                                                     Text(
-                                                      "id",
+                                                      "${docHistDetail.appointmentId}",
                                                       style: TextStyle(
                                                           color:
                                                               Colors.black38),
@@ -575,7 +582,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                               height / 55),
                                                     ),
                                                     Text(
-                                                      "\$ 55",
+                                                      "\$ ${docHistDetail.payment}",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
