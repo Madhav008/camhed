@@ -160,7 +160,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                 ),
               ),
               ListTile(
-                onTap: Auth().signOut(),
+                onTap: () => Auth().signOut(),
                 leading: Icon(Icons.power_settings_new),
                 title: Text(
                   "Log Out",
