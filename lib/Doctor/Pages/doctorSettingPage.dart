@@ -1,3 +1,5 @@
+import 'package:camhed/Doctor/Pages/doctorAccount.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DoctorSettingPage extends StatelessWidget {
@@ -8,8 +10,7 @@ class DoctorSettingPage extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white60
-      ,
+      backgroundColor: Color(0xfff1f0f6),
       appBar: AppBar(
         elevation: 0,
         title: Text(
@@ -28,7 +29,10 @@ class DoctorSettingPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Support"),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text("Support",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: height/50),),
+                ),
                 Row(
                   children: [
                     Padding(
@@ -43,7 +47,89 @@ class DoctorSettingPage extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: Container(
+              height: height/13,
+              width: width,
+              color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Text("Wallet",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: height/50),),
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Icon(Icons.navigate_next),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 1),
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorAccount()));
+              },
+              child: Container(
+                height: height/13,
+                width: width,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("Account",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: height/50),),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Icon(Icons.navigate_next),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 1),
+            child: Container(
+              height: height/13,
+              width: width,
+              color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Text("Rate us on playstore",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: height/50),),
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Icon(Icons.navigate_next),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
