@@ -7,11 +7,13 @@ import 'package:camhed/Client/Pages/Pages/clientProfilePage.dart';
 import 'package:camhed/Client/Pages/Pages/clientappointmentsPage.dart';
 import 'package:camhed/Client/Pages/Pages/doctorsListPage.dart';
 import 'package:camhed/Client/Pages/Pages/userselectcity.dart';
+import 'package:camhed/Client/Pages/Provider/DoctorSearchProvider.dart';
 import 'package:camhed/Model/UserModel/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class ClientHomePage extends StatefulWidget {
@@ -34,7 +36,13 @@ class _ClientHomePageState extends State<ClientHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var docSearch = Provider.of<DoctorSearchProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -58,7 +66,11 @@ class _ClientHomePageState extends State<ClientHomePage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(left: 5),
-            child: Icon(Icons.search),
+            child: InkWell(
+                onTap: () {
+                  docSearch.getDoctors("madhav");
+                },
+                child: Icon(Icons.search)),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),

@@ -1,4 +1,5 @@
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
+import 'package:camhed/Client/Pages/Provider/DoctorSearchProvider.dart';
 import 'package:camhed/Client/Pages/splashScreen/InitialSplashScreen.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
@@ -11,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +49,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AppointmentProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DoctorSearchProvider(),
         ),
       ],
       child: MaterialApp(
