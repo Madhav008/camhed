@@ -2,6 +2,7 @@ import 'package:camhed/Admin/AdminModels/BannerModel.dart';
 import 'package:camhed/Admin/AdminModels/CategoryModel.dart';
 import 'package:camhed/Admin/AdminModels/HospitalModel.dart';
 import 'package:camhed/Admin/AdminServices/adminService.dart';
+import 'package:camhed/Auth/authentication.dart';
 import 'package:camhed/Client/Pages/Pages/HospitalDoctorsListPage.dart';
 import 'package:camhed/Client/Pages/Pages/clientProfilePage.dart';
 import 'package:camhed/Client/Pages/Pages/clientappointmentsPage.dart';
@@ -159,6 +160,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                 ),
               ),
               ListTile(
+                onTap: Auth().signOut(),
                 leading: Icon(Icons.power_settings_new),
                 title: Text(
                   "Log Out",
