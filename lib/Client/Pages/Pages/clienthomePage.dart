@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import 'homeSearchPage.dart';
+
 class ClientHomePage extends StatefulWidget {
   const ClientHomePage({Key key}) : super(key: key);
 
@@ -69,7 +71,8 @@ class _ClientHomePageState extends State<ClientHomePage> {
             padding: const EdgeInsets.only(left: 5),
             child: InkWell(
                 onTap: () {
-                  docSearch.getDoctors("madhav");
+                  // docSearch.getDoctors("madhav");
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeSearchPage()));
                 },
                 child: Icon(Icons.search)),
           ),
