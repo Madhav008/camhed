@@ -1,4 +1,6 @@
+import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserSelectCity extends StatefulWidget {
   const UserSelectCity({Key key}) : super(key: key);
@@ -8,9 +10,16 @@ class UserSelectCity extends StatefulWidget {
 }
 
 class _UserSelectCityState extends State<UserSelectCity> {
-  int selectedcity =0;
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<LocationProvider>(context, listen: false).getLocation();
+  }
+
+  int selectedcity = 0;
   @override
   Widget build(BuildContext context) {
+    var location = Provider.of<LocationProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,40 +34,44 @@ class _UserSelectCityState extends State<UserSelectCity> {
         child: Column(
           children: [
             ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: 5,
-                itemBuilder: (context, index) {
-              return InkWell(
-                onTap: (){
-                  setState(() {
-                    selectedcity = index;
-                  });
-
-                },
-                child: ListTile(
-                  leading: (selectedcity==index)?Checkbox(
-                    onChanged: (value){
-                      setState(() {
-                        selectedcity = index;
-                      });
-                    },
-                    activeColor: Color(0xffe8364e),
-                    value: true,
-                  ):Checkbox(
-                    onChanged: (value){
-                      setState(() {
-                        selectedcity = index;
-                      });
-                    },
-                    activeColor: Color(0xffe8364e),
-                    value: false,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: location.city.length,
+              itemBuilder: (context, index) {
+                var city = location.city[index];
+                return InkWell(
+                  onTap: () {
+                    location.changeCity(location.city[index]);
+                    setState(() {
+                      selectedcity = index;
+                    });
+                  },
+                  child: ListTile(
+                    leading: (selectedcity == index)
+                        ? Checkbox(
+                            onChanged: (value) {
+                              location.changeCity(location.city[index]);
+                              setState(() {
+                                selectedcity = index;
+                              });
+                            },
+                            activeColor: Color(0xffe8364e),
+                            value: true,
+                          )
+                        : Checkbox(
+                            onChanged: (value) {
+                              setState(() {
+                                selectedcity = index;
+                              });
+                            },
+                            activeColor: Color(0xffe8364e),
+                            value: false,
+                          ),
+                    title: Text("${city}"),
                   ),
-                  title: Text("Ranchi"),
-                ),
-              );
-                },
+                );
+              },
             )
           ],
         ),

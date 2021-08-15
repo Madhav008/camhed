@@ -270,7 +270,7 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                                               // builder: (context) =>
                                               // MakeAppoinmentPage(
                                               // hospitalLocation:
-                                              // hospitalData
+                                             // hospitalData
                                               //     .location,
                                               // hospitalName:
                                               // hospitalData

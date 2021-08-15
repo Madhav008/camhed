@@ -1,5 +1,6 @@
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorSearchProvider.dart';
+import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
 import 'package:camhed/Client/Pages/splashScreen/InitialSplashScreen.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
@@ -52,6 +53,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => DoctorSearchProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LocationProvider(),
         ),
       ],
       child: MaterialApp(
