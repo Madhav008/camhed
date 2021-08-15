@@ -1,18 +1,25 @@
+import 'package:camhed/Doctor/DoctorProvider/TimeSessaionProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChangeSessions extends StatefulWidget {
-  const ChangeSessions({Key key}) : super(key: key);
-
   @override
   _ChangeSessionsState createState() => _ChangeSessionsState();
 }
 
 class _ChangeSessionsState extends State<ChangeSessions> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<TimeSessionProvider>(context, listen: false).getProfileData();
+  }
+
   TimeOfDay initialTime = TimeOfDay.now();
-  List<TimeOfDay> start_time = [];
-  List<TimeOfDay> end_time = [];
+  var start_time;
+  var end_time;
   @override
   Widget build(BuildContext context) {
+    var timeSeesion = Provider.of<TimeSessionProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -33,70 +40,82 @@ class _ChangeSessionsState extends State<ChangeSessions> {
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: 5,
+                itemCount: timeSeesion.startTime.length,
                 itemBuilder: (context, index) {
+                  var startTime = timeSeesion.startTime[index];
+                  startTime = startTime.split("(")[1].split(")")[0];
+
+                  var endTime = timeSeesion.endTime[index];
+                  endTime = endTime.split("(")[1].split(")")[0];
                   return InkWell(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 15,right: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Material(
-                              elevation: 1,
-                              child: Container(
-                                  height: height / 15,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 15),
-                                        child: Row(
-
-                                          children: [
-                                            Text(
-                                              "10" +
-                                                  ":" +
-                                                  "30",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: height / 50,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(left: 15),
-                                              child: Text("To"),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(left: 15),
-                                              child: Text(
-                                                "12" +
-                                                    ":" +
-                                                    "30",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: height / 50,
-                                                    fontWeight: FontWeight.w600),
-                                              ),
-                                            ),
-                                          ],
+                    padding:
+                        const EdgeInsets.only(left: 15, top: 15, right: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Material(
+                          elevation: 1,
+                          child: Container(
+                              height: height / 15,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          startTime,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: height / 50,
+                                              fontWeight: FontWeight.w600),
                                         ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15),
+                                          child: Text("To"),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15),
+                                          child: Text(
+                                            endTime,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: height / 50,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: InkWell(
+                                      onTap: () {
+                                        timeSeesion.removeSession(
+                                            timeSeesion.startTime[index],
+                                            timeSeesion.endTime[index]);
+                                      },
+                                      child: Icon(
+                                        Icons.cancel,
+                                        color: Color(0xffe8364e),
                                       ),
-
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 15),
-                                        child: Icon(Icons.cancel,color: Color(0xffe8364e),),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                          ],
+                                    ),
+                                  )
+                                ],
+                              )),
                         ),
-                      ));
+                      ],
+                    ),
+                  ));
                 }),
             Padding(
-              padding: const EdgeInsets.only(left: 15,top: 30),
+              padding: const EdgeInsets.only(left: 15, top: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +131,7 @@ class _ChangeSessionsState extends State<ChangeSessions> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20,left: 15),
+              padding: const EdgeInsets.only(top: 20, left: 15),
               child: Row(
                 children: [
                   InkWell(
@@ -128,21 +147,21 @@ class _ChangeSessionsState extends State<ChangeSessions> {
                           },
                         );
                         setState(() {
-                          start_time.add(pickedTime);
+                          start_time = pickedTime;
                         });
                       },
                       child: Container(
                           decoration: BoxDecoration(
                               color: Color(0xffe8364e),
                               borderRadius:
-                              BorderRadius.circular(height / 100)),
+                                  BorderRadius.circular(height / 100)),
                           height: height / 20,
                           width: width / 4,
                           child: Center(
                               child: Text(
-                                "Start",
-                                style: TextStyle(color: Colors.white),
-                              )))),
+                            "Start",
+                            style: TextStyle(color: Colors.white),
+                          )))),
                   InkWell(
                       onTap: () async {
                         TimeOfDay pickedTime = await showTimePicker(
@@ -156,10 +175,10 @@ class _ChangeSessionsState extends State<ChangeSessions> {
                           },
                         );
                         setState(() {
-                          end_time.add(pickedTime);
+                          end_time = pickedTime;
                         });
 
-                        print(start_time);
+                        // print(start_time);
                         // print(end_time);
                       },
                       child: Padding(
@@ -168,14 +187,14 @@ class _ChangeSessionsState extends State<ChangeSessions> {
                             decoration: BoxDecoration(
                                 color: Color(0xffe8364e),
                                 borderRadius:
-                                BorderRadius.circular(height / 100)),
+                                    BorderRadius.circular(height / 100)),
                             height: height / 20,
                             width: width / 4,
                             child: Center(
                                 child: Text(
-                                  "End",
-                                  style: TextStyle(color: Colors.white),
-                                ))),
+                              "End",
+                              style: TextStyle(color: Colors.white),
+                            ))),
                       )),
                   Expanded(
                     child: Padding(
@@ -185,14 +204,33 @@ class _ChangeSessionsState extends State<ChangeSessions> {
                           Text(
                             "(*You can add multiple sessions)",
                             style: TextStyle(
-                                color: Colors.black38,
-                                fontSize: height / 70),
+                                color: Colors.black38, fontSize: height / 70),
                           ),
                         ],
                       ),
                     ),
                   )
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () {
+                  timeSeesion.updateTime(
+                      start_time.toString(), end_time.toString());
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Color(0xffe8364e),
+                        borderRadius: BorderRadius.circular(height / 100)),
+                    height: height / 20,
+                    width: width / 4,
+                    child: Center(
+                        child: Text(
+                      "Update",
+                      style: TextStyle(color: Colors.white),
+                    ))),
               ),
             ),
           ],

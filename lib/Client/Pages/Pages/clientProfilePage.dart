@@ -135,8 +135,11 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
                                       borderRadius: BorderRadius.circular(200),
                                       color: Colors.white,
                                       image: DecorationImage(
-                                          image:
-                                              NetworkImage(userData.profilePic),
+                                          image: (userData.profilePic != null)
+                                              ? NetworkImage(
+                                                  userData.profilePic)
+                                              : NetworkImage(
+                                                  'Images/userlogo.png'),
                                           fit: BoxFit.cover)),
                                 ),
                         ),

@@ -34,7 +34,6 @@ class LocationProvider with ChangeNotifier {
           "${placemark.locality}, ${placemark.countryName} ";
       _selectedCity = placemark.locality;
 
-      print(placemark.addressLine);
       notifyListeners();
     });
   }

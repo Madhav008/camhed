@@ -5,6 +5,7 @@ import 'package:camhed/Client/Pages/splashScreen/InitialSplashScreen.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
 import 'package:camhed/Doctor/DoctorProvider/SearchHospitalProvider.dart';
+import 'package:camhed/Doctor/DoctorProvider/TimeSessaionProvider.dart';
 import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
@@ -56,6 +57,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => LocationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TimeSessionProvider(),
         ),
       ],
       child: MaterialApp(
