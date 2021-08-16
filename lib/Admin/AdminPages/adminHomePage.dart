@@ -1,5 +1,6 @@
 import 'package:camhed/Admin/AdminPages/DoctorVerifyPage.dart';
 import 'package:camhed/Admin/AdminPages/adminSettings.dart';
+import 'package:camhed/Admin/AdminProvider/ContryProvider.dart';
 import 'package:camhed/Admin/AdminProvider/DoctorStatusProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
   @override
   void initState() {
     super.initState();
+    Provider.of<CountryProvider>(context, listen: false).getLocationData();
+
     Provider.of<DoctorStatusProvider>(context, listen: false).getDoctorData();
   }
 
@@ -35,9 +38,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminSettings()));
-              },
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AdminSettings()));
+                },
                 child: Icon(Icons.settings)),
           )
         ],

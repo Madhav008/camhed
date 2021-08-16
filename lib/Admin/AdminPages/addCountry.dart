@@ -12,12 +12,6 @@ class AddCountry extends StatefulWidget {
 }
 
 class _AddCountryState extends State<AddCountry> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<CountryProvider>(context, listen: false).getLocationData();
-  }
-
   TextEditingController countryControlller = TextEditingController();
   @override
   Widget build(BuildContext context) {
