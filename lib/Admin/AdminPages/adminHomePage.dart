@@ -1,6 +1,8 @@
 import 'package:camhed/Admin/AdminPages/DoctorVerifyPage.dart';
+import 'package:camhed/Admin/AdminProvider/DoctorStatusProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({Key key}) : super(key: key);
@@ -11,7 +13,14 @@ class AdminHomePage extends StatefulWidget {
 
 class _AdminHomePageState extends State<AdminHomePage> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<DoctorStatusProvider>(context, listen: false).getDoctorData();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var doctor = Provider.of<DoctorStatusProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -53,8 +62,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
                   physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: doctor.doctorData.length,
                   itemBuilder: (context, index) {
+                    var doc = doctor.doctorData[index];
                     return InkWell(
                       child: Padding(
                         padding:
@@ -103,7 +113,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "Dr. Madhav",
+                                                    "${doc.name}",
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         fontWeight:
@@ -114,9 +124,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                                     height: height / 200,
                                                   ),
                                                   Text(
-                                                    "7876200034",
+                                                    "${doc.phone}",
                                                     style: TextStyle(
-                                                        color: Color(0xffe8364e),
+                                                        color:
+                                                            Color(0xffe8364e),
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontSize: height / 65),
@@ -125,7 +136,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                                     height: height / 250,
                                                   ),
                                                   Text(
-                                                    "Adity@hotmail.com",
+                                                    "${doc.email}",
                                                     style: TextStyle(
                                                         color: Colors.black38,
                                                         fontSize: height / 65),
@@ -135,24 +146,41 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                             ],
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.only(right: 10),
+                                            padding: const EdgeInsets.only(
+                                                right: 10),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
                                                 InkWell(
-                                                  onTap: (){
-                                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorVerifyPage()));
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                DoctorVerifyPage()));
                                                   },
                                                   child: Container(
-                                                    height: height/20,
-                                                    width: width/4.5,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(height/120),
-                                                      color: Color(0xffe8364e)
-                                                    ),
-                                                    child: Center(child: Text("Check",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: height/55),))
-                                                  ),
+                                                      height: height / 20,
+                                                      width: width / 4.5,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      height /
+                                                                          120),
+                                                          color: Color(
+                                                              0xffe8364e)),
+                                                      child: Center(
+                                                          child: Text(
+                                                        "Check",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize:
+                                                                height / 55),
+                                                      ))),
                                                 )
                                               ],
                                             ),

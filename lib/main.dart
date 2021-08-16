@@ -1,4 +1,5 @@
 import 'package:camhed/Admin/AdminPages/adminHomePage.dart';
+import 'package:camhed/Admin/AdminProvider/DoctorStatusProvider.dart';
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorSearchProvider.dart';
 import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
@@ -61,6 +62,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => TimeSessionProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DoctorStatusProvider(),
         ),
       ],
       child: MaterialApp(
