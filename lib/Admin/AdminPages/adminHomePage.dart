@@ -1,4 +1,5 @@
 import 'package:camhed/Admin/AdminPages/DoctorVerifyPage.dart';
+import 'package:camhed/Admin/AdminPages/adminSettings.dart';
 import 'package:camhed/Admin/AdminProvider/DoctorStatusProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
-            child: Icon(Icons.settings),
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminSettings()));
+              },
+                child: Icon(Icons.settings)),
           )
         ],
         backgroundColor: Color(0xffe8364e),
