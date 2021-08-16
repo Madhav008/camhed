@@ -1,5 +1,8 @@
+import 'package:camhed/Admin/AdminModels/LocationModel.dart';
 import 'package:camhed/Admin/AdminPages/addcity.dart';
+import 'package:camhed/Admin/AdminProvider/ContryProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddCountry extends StatefulWidget {
   const AddCountry({Key key}) : super(key: key);
@@ -10,7 +13,15 @@ class AddCountry extends StatefulWidget {
 
 class _AddCountryState extends State<AddCountry> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<CountryProvider>(context, listen: false).getLocationData();
+  }
+
+  TextEditingController countryControlller = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    var country = Provider.of<CountryProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -46,15 +57,19 @@ class _AddCountryState extends State<AddCountry> {
                   physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: 3,
+                  itemCount: country.country.length,
                   itemBuilder: (context, index) {
+                    var con = country.country[index];
                     return InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AddCity()));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddCity(con)));
                       },
                       child: Padding(
                         padding:
-                        const EdgeInsets.only(right: 15, top: 15, left: 15),
+                            const EdgeInsets.only(right: 15, top: 15, left: 15),
                         child: Material(
                           elevation: 1,
                           borderRadius: BorderRadius.circular(height / 100),
@@ -64,17 +79,24 @@ class _AddCountryState extends State<AddCountry> {
                               border: Border.all(color: Colors.black12),
                               borderRadius: BorderRadius.circular(height / 100),
                             ),
-                            child: Center(child: Text("Cameroon",style: TextStyle(color: Colors.black,fontSize: height/45),)),
+                            child: Center(
+                                child: Text(
+                              "${con}",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: height / 45),
+                            )),
                           ),
                         ),
                       ),
                     );
                   }),
             ),
-
             Padding(
-              padding: const EdgeInsets.only(top: 15,left: 15,right: 15),
-              child: Divider(thickness: 1,color: Color(0xffe8364e),),
+              padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
+              child: Divider(
+                thickness: 1,
+                color: Color(0xffe8364e),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
@@ -90,8 +112,9 @@ class _AddCountryState extends State<AddCountry> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15,right: 15,top: 30),
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 30),
               child: TextFormField(
+                controller: countryControlller,
                 decoration: InputDecoration(
                   labelText: "Add New Country",
                   alignLabelWithHint: false,
@@ -104,20 +127,31 @@ class _AddCountryState extends State<AddCountry> {
                 ),
               ),
             ),
-            Container(
-              height: height / 18,
-              width: width/3,
-              decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(height / 50)),
-              child: Center(
-                  child: Text(
-                    "Add",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  )),
+            InkWell(
+              onTap: () {
+                if (countryControlller.text.isNotEmpty) {
+                  var data =
+                      LocationModel(country: countryControlller.text, city: []);
+                  country.addCountry(data);
+
+                  countryControlller.clear();
+                }
+              },
+              child: Container(
+                height: height / 18,
+                width: width / 3,
+                decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(height / 50)),
+                child: Center(
+                    child: Text(
+                  "Add",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20),
+                )),
+              ),
             ),
           ],
         ),
