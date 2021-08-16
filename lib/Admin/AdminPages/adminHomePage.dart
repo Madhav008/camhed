@@ -154,11 +154,14 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                               children: [
                                                 InkWell(
                                                   onTap: () {
+                                                    // doctor.changeStatus(doc);
+
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                DoctorVerifyPage()));
+                                                                DoctorVerifyPage(
+                                                                    doc)));
                                                   },
                                                   child: Container(
                                                       height: height / 20,

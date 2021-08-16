@@ -25,7 +25,26 @@ class DoctorStatusProvider with ChangeNotifier {
       _doctorData.add(docData);
     });
 
-    print(_doctorData.toList());
+    notifyListeners();
+  }
+
+  changeStatus(DoctorProfileModel data) async {
+    await FirebaseFirestore.instance
+        .collection('DoctorProfile')
+        .doc(data.doctorId)
+        .update({'status': "done"});
+
+    _doctorData.remove(data);
+    notifyListeners();
+  }
+
+  removeStatus(DoctorProfileModel data) async {
+    await FirebaseFirestore.instance
+        .collection('DoctorProfile')
+        .doc(data.doctorId)
+        .update({'status': "reject"});
+
+    _doctorData.remove(data);
     notifyListeners();
   }
 }
