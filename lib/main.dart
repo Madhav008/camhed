@@ -1,3 +1,4 @@
+import 'package:camhed/Admin/AdminPages/adminHomePage.dart';
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorSearchProvider.dart';
 import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
@@ -76,7 +77,8 @@ class MyApp extends StatelessWidget {
                 return SplashScreen();
                 break;
               default:
-                return InitialSplashScreen();
+                // return InitialSplashScreen();
+                return AdminHomePage();
             }
           },
         ),
