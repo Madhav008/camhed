@@ -61,9 +61,10 @@ class AppointmentProvider with ChangeNotifier {
 
     var appListData = AppointmentList(data: _de);
     makeAppointment(appListData);
-
+//TODO: Payment Gateway response
     if (paymentDone) {
       getDoctorAppointmentsForUser(doctorId, data);
+      
     }
 
     notifyListeners();

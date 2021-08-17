@@ -69,3 +69,61 @@ email,
 address,
 pic
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Doctor Wallet
+
+{
+    total_amount,
+    List of Withdraw
+    List of Get Payment
+    Bank_Details;
+    Status;
+    id;
+    withdraw amount;
+    
+    method to add total_ammount each user paymemt;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -48,7 +48,7 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    // builder: (context) => DoctorVerify(),
+                    // builder: (context) => DoctorVerifyStatus(),
                     builder: (context) => DoctorHomePage(),
                   ));
             } else {

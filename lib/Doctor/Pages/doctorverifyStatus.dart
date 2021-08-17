@@ -1,4 +1,6 @@
+import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DoctorVerifyStatus extends StatefulWidget {
   const DoctorVerifyStatus({Key key}) : super(key: key);
@@ -8,6 +10,13 @@ class DoctorVerifyStatus extends StatefulWidget {
 }
 
 class _DoctorVerifyStatusState extends State<DoctorVerifyStatus> {
+  @override
+  void initState() {
+    Provider.of<DoctorWalletProvider>(context, listen: false)
+        .setInitialWallet();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -22,17 +31,31 @@ class _DoctorVerifyStatusState extends State<DoctorVerifyStatus> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 100),
-              child: Image(image: AssetImage("Images/verification.png"),),
+              child: Image(
+                image: AssetImage("Images/verification.png"),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30),
-              child: Text("Your Documents Are Under Review",style: TextStyle(color: Colors.black38,fontWeight: FontWeight.bold,fontSize: height/40),),
+              child: Text(
+                "Your Documents Are Under Review",
+                style: TextStyle(
+                    color: Colors.black38,
+                    fontWeight: FontWeight.bold,
+                    fontSize: height / 40),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 15),
-              child: Text("Please Wait at least 24 hours",style: TextStyle(color: Colors.black38,fontWeight: FontWeight.w500,fontSize: height/50),),
+              child: Text(
+                "Please Wait at least 24 hours",
+                style: TextStyle(
+                    color: Colors.black38,
+                    fontWeight: FontWeight.w500,
+                    fontSize: height / 50),
+              ),
             )
-            ],
+          ],
         ),
       ),
     );

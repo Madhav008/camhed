@@ -1,6 +1,8 @@
 import 'package:camhed/Auth/authentication.dart';
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
+import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:camhed/Doctor/Pages/doctorSettingPage.dart';
+import 'package:camhed/Doctor/Pages/doctorWalletPage.dart';
 import 'package:camhed/Model/AppointmentModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -361,8 +363,6 @@ class DoctorAppoinmentsHistory extends StatefulWidget {
 }
 
 class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
-
-
   @override
   Widget build(BuildContext context) {
     var docHistory = Provider.of<AppointmentProvider>(context);

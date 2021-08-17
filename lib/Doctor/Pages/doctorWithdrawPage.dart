@@ -1,4 +1,6 @@
+import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DoctorWithdrawPage extends StatefulWidget {
   const DoctorWithdrawPage({Key key}) : super(key: key);
@@ -10,6 +12,7 @@ class DoctorWithdrawPage extends StatefulWidget {
 class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
   @override
   Widget build(BuildContext context) {
+    var wallet = Provider.of<DoctorWalletProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -30,19 +33,26 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 20,top: 20),
+                  padding: const EdgeInsets.only(right: 20, top: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("570 USD",style: TextStyle(fontSize: height/45,fontWeight: FontWeight.w500),),
-                      Text("Avilable",style: TextStyle(color: Colors.black38),)
+                      Text(
+                        "${wallet.amount} USD",
+                        style: TextStyle(
+                            fontSize: height / 45, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "Avilable",
+                        style: TextStyle(color: Colors.black38),
+                      )
                     ],
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15,right: 15,top: 20),
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
               child: Column(
                 children: [
                   TextFormField(
@@ -105,17 +115,22 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                       ),
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Container(
-                      height: height/15,
-                      width: width/2,
+                      height: height / 15,
+                      width: width / 2,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(height/100),
-                        color: Color(0xffe8364e)
-                      ),
-                      child: Center(child: Text("Withdraw",style: TextStyle(color: Colors.white,fontSize: height/45,fontWeight: FontWeight.w600),)),
+                          borderRadius: BorderRadius.circular(height / 100),
+                          color: Color(0xffe8364e)),
+                      child: Center(
+                          child: Text(
+                        "Withdraw",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: height / 45,
+                            fontWeight: FontWeight.w600),
+                      )),
                     ),
                   )
                 ],
