@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
                 break;
               default:
                 // return InitialSplashScreen();
-                return AdminHomePage();
+                return InitialSplashScreen();
             }
           },
         ),

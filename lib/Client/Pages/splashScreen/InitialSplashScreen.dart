@@ -6,6 +6,7 @@ import 'package:camhed/Doctor/Pages/doctorVerify.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class InitialSplashScreen extends StatefulWidget {
   const InitialSplashScreen({Key key}) : super(key: key);
@@ -39,13 +40,28 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
           // print(userType);
           if (userType == "doctor") {
 //Status Check Of Doctor Verification
-
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  // builder: (context) => DoctorVerify(),
-                  builder: (context) => DoctorHomePage(),
-                ));
+            var res = await FirebaseFirestore.instance
+                .collection('DoctorProfile')
+                .doc(userId)
+                .get();
+            if (res.data()['status'] == 'done') {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    // builder: (context) => DoctorVerify(),
+                    builder: (context) => DoctorHomePage(),
+                  ));
+            } else {
+              //Rejection Handle For Doctor Profile
+              Fluttertoast.showToast(
+                  msg: "Your Profile Is Rejected  ",
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM_RIGHT,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
           }
           if (userType == "user") {
             Navigator.pushReplacement(
