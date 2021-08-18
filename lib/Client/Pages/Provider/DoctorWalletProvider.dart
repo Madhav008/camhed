@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class DoctorWalletProvider with ChangeNotifier {
+  AppointmentProvider _appointmentProvider = new AppointmentProvider();
   double _amount;
   double _widthdraw;
 
@@ -27,8 +28,9 @@ class DoctorWalletProvider with ChangeNotifier {
   }
 
   updateTotalAmount() async {
-    List<AppointmentModel> doc = AppointmentProvider().doctorAppointment;
+    List<AppointmentModel> doc = _appointmentProvider.doctorAppointment;
 
+    print(doc);
     doc.forEach((element) {
       _amount += double.parse(element.payment);
     });
@@ -46,7 +48,7 @@ class DoctorWalletProvider with ChangeNotifier {
 
   getTotalAmount() async {
     var userId = FirebaseAuth.instance.currentUser.uid;
-
+    updateTotalAmount();
     var res = await FirebaseFirestore.instance
         .collection('DoctorWallet')
         .doc(userId)
@@ -70,6 +72,8 @@ class DoctorWalletProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
-  
+  updateWithdraw(double widthdrawAmount) {
+    _amount = _amount - widthdrawAmount;
+    notifyListeners();
+  }
 }

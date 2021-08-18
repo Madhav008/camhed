@@ -9,6 +9,8 @@ class DoctorWithdrawPage extends StatefulWidget {
   _DoctorWithdrawPageState createState() => _DoctorWithdrawPageState();
 }
 
+TextEditingController amountController = TextEditingController();
+
 class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: amountController,
                     decoration: InputDecoration(
                       labelText: "Enter Amount",
                       alignLabelWithHint: false,
@@ -117,20 +120,26 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
-                    child: Container(
-                      height: height / 15,
-                      width: width / 2,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(height / 100),
-                          color: Color(0xffe8364e)),
-                      child: Center(
-                          child: Text(
-                        "Withdraw",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: height / 45,
-                            fontWeight: FontWeight.w600),
-                      )),
+                    child: InkWell(
+                      onTap: () {
+                        wallet.updateWithdraw(
+                            double.parse(amountController.text));
+                      },
+                      child: Container(
+                        height: height / 15,
+                        width: width / 2,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(height / 100),
+                            color: Color(0xffe8364e)),
+                        child: Center(
+                            child: Text(
+                          "Withdraw",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: height / 45,
+                              fontWeight: FontWeight.w600),
+                        )),
+                      ),
                     ),
                   )
                 ],

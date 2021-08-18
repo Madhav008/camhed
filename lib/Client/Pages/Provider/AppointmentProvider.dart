@@ -56,11 +56,8 @@ class AppointmentProvider with ChangeNotifier {
     setApiCall();
   }
 
-
-
-  //Main Function To Check And Verify If Payment is Done 
+  //Main Function To Check And Verify If Payment is Done
   //Then Add The Doctor Appointmet in collection
-
 
   setAppointment(AppointmentModel data, String doctorId) {
     _isApiCallProcess = true;
@@ -73,19 +70,16 @@ class AppointmentProvider with ChangeNotifier {
 
     if (paymentDone) {
       getDoctorAppointmentsForUser(doctorId, data);
-      
     }
 
     notifyListeners();
   }
-
 
   //Sub Function Get Doctor Appointments For User
   makeDoctorAppointment(AppointmentList data, String doctorId) async {
     await _db.collection("DoctorAppointments").doc(doctorId).set(data.toMap());
     // print(data.data);
   }
-
 
   getDoctorAppointmentsForUser(String userId, AppointmentModel datass) async {
     clearDocList();
@@ -108,47 +102,37 @@ class AppointmentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
-
   getDoctorAppointments() async {
-    clearDocList();
-    AppointmentList data;
     var userId = FirebaseAuth.instance.currentUser.uid;
     var res = await _db.collection('DoctorAppointments').doc(userId).get();
 
-    data = AppointmentList.fromFirestore(res.data());
-
-    _doctorAppointment.addAll(data.data);
-    getDoctorAppointmentsPending();
-    getDoctorAppointmentsHistory();
-    notifyListeners();
-  }
-   
-  getDoctorAppointmentsHistory() {
+    final data = AppointmentList.fromFirestore(res.data());
+    clearDocList();
+    clearDocPendingList();
     clearDocHistoryList();
-    // getDoctorAppointments();
-    _doctorAppointment.forEach((element) {
-      if (element.bookingStatus == 'Done') {
-        _doctorAppointmentHistory.add(element);
-      }
-    });
-    notifyListeners();
+    _doctorAppointment.addAll(data.data);
+
+    getDoctorAppointmentsPending();
   }
 
   getDoctorAppointmentsPending() {
     clearDocPendingList();
+    clearDocHistoryList();
     // getDoctorAppointments();
     _doctorAppointment.forEach((element) {
       // print(element.bookingStatus);
       if (element.bookingStatus == 'Pending') {
         _doctorAppointmentPending.add(element);
+        // print("Madhav");
+
         // print(_doctorAppointmentHistory.toList());
+      } else {
+        _doctorAppointmentHistory.add(element);
       }
     });
+
     notifyListeners();
   }
-
-
 
   getAppointments() async {
     clearList();
@@ -163,17 +147,6 @@ class AppointmentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
-
-
-
-
-
-
-
-
-
-
   void setApiCall() {
     _isApiCallProcess = !_isApiCallProcess;
     notifyListeners();
@@ -186,16 +159,13 @@ class AppointmentProvider with ChangeNotifier {
 
   clearDocList() {
     _doctorAppointment.clear();
-    notifyListeners();
   }
 
   clearDocHistoryList() {
     _doctorAppointmentHistory.clear();
-    notifyListeners();
   }
 
   clearDocPendingList() {
     _doctorAppointmentPending.clear();
-    notifyListeners();
   }
 }

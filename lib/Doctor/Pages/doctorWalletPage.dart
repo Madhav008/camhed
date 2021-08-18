@@ -2,6 +2,7 @@ import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:camhed/Doctor/Pages/doctorWithdrawPage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class DoctorWalletPage extends StatefulWidget {
@@ -14,6 +15,7 @@ class DoctorWalletPage extends StatefulWidget {
 class _DoctorWalletPageState extends State<DoctorWalletPage> {
   @override
   void initState() {
+    // print("DoctorWalletPage");
     Provider.of<DoctorWalletProvider>(context, listen: false).getTotalAmount();
     super.initState();
   }
@@ -70,11 +72,19 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DoctorWithdrawPage()));
+                              if (wallet.amount > 0) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DoctorWithdrawPage()));
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Don't Have Enough Money To Withdraw",
+                                    backgroundColor: Colors.red,
+                                    fontSize: 15,
+                                    textColor: Colors.white);
+                              }
                             },
                             child: Container(
                               height: height / 20,
