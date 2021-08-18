@@ -27,13 +27,8 @@ class DoctorWalletProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  updateTotalAmount() async {
-    List<AppointmentModel> doc = _appointmentProvider.doctorAppointment;
-
-    print(doc);
-    doc.forEach((element) {
-      _amount += double.parse(element.payment);
-    });
+  updateTotalAmount(double amount) async {
+    _amount = amount + _amount;
     var userId = FirebaseAuth.instance.currentUser.uid;
 
     await FirebaseFirestore.instance
@@ -48,7 +43,7 @@ class DoctorWalletProvider with ChangeNotifier {
 
   getTotalAmount() async {
     var userId = FirebaseAuth.instance.currentUser.uid;
-    updateTotalAmount();
+    // updateTotalAmount();
     var res = await FirebaseFirestore.instance
         .collection('DoctorWallet')
         .doc(userId)

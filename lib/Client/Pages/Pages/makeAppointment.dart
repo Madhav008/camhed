@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
+import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:camhed/Model/AppointmentModel.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
@@ -44,6 +45,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
   bool selectedDate = true;
   int selectedContainer;
   int selectedTimeContainer;
+  bool ispaymentdone = true;
   String doctorId;
   @override
   void initState() {
@@ -920,11 +922,21 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                     doctorName: widget.doctorProfileModel.name,
                                     hospitalName: widget.hospitalName,
                                     hospitalLocation: widget.hospitalLocation,
-                                    paymentStatus: "fasle",
+                                    paymentStatus: ispaymentdone.toString(),
                                     payment: widget.doctorProfileModel.fees);
 
-                                appointment.setAppointment(
-                                    data, widget.doctorProfileModel.doctorId);
+                                //TODO: PaymentGateWay
+                                if (ispaymentdone) {
+                                  appointment.getDoctorAppointmentsForUser(
+                                      widget.doctorProfileModel.doctorId, data);
+                                  Provider.of<DoctorWalletProvider>(context,
+                                          listen: false)
+                                      .updateTotalAmount(double.parse(
+                                          widget.doctorProfileModel.fees));
+                                } else {
+                                  appointment.setAppointment(
+                                      data, widget.doctorProfileModel.doctorId);
+                                }
                               },
                               child: Container(
                                 height: height / 18,
