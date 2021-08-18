@@ -25,6 +25,8 @@ class _DoctorHomePageState extends State<DoctorHomePage>
   @override
   void initState() {
     super.initState();
+    Provider.of<AppointmentProvider>(context, listen: false)
+        .getDoctorAppointments();
     _tabController = TabController(vsync: this, length: 2);
   }
 
@@ -94,13 +96,6 @@ class DoctorAppoinments extends StatefulWidget {
 }
 
 class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<AppointmentProvider>(context, listen: false)
-        .getDoctorAppointments();
-  }
-
   @override
   Widget build(BuildContext context) {
     var docAppointment = Provider.of<AppointmentProvider>(context);

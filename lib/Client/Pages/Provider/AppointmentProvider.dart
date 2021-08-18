@@ -42,6 +42,7 @@ class AppointmentProvider with ChangeNotifier {
   FirebaseFirestore _db = FirebaseFirestore.instance;
   var userId = FirebaseAuth.instance.currentUser.uid;
 
+  //Make Appointment in The User Collection
   makeAppointment(AppointmentList data) {
     _db.collection("Appointments").doc(userId).set(data.toMap());
     Fluttertoast.showToast(
@@ -55,13 +56,21 @@ class AppointmentProvider with ChangeNotifier {
     setApiCall();
   }
 
+
+
+  //Main Function To Check And Verify If Payment is Done 
+  //Then Add The Doctor Appointmet in collection
+
+
   setAppointment(AppointmentModel data, String doctorId) {
     _isApiCallProcess = true;
     _de.add(data);
 
     var appListData = AppointmentList(data: _de);
     makeAppointment(appListData);
+
 //TODO: Payment Gateway response
+
     if (paymentDone) {
       getDoctorAppointmentsForUser(doctorId, data);
       
@@ -70,10 +79,13 @@ class AppointmentProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+  //Sub Function Get Doctor Appointments For User
   makeDoctorAppointment(AppointmentList data, String doctorId) async {
     await _db.collection("DoctorAppointments").doc(doctorId).set(data.toMap());
     // print(data.data);
   }
+
 
   getDoctorAppointmentsForUser(String userId, AppointmentModel datass) async {
     clearDocList();
@@ -83,18 +95,35 @@ class AppointmentProvider with ChangeNotifier {
 
     data = AppointmentList.fromFirestore(res.data());
 
-    print(data.toMap());
+    // print(data.toMap());
+
     _doctorAppointment.addAll(data.data);
     // print(_doctorAppointment);
     _doctorAppointment.add(datass);
 
     var docAppointment = AppointmentList(data: _doctorAppointment);
-    print(docAppointment.data.length);
+    // print(docAppointment.data.length);
 
     makeDoctorAppointment(docAppointment, userId);
     notifyListeners();
   }
 
+
+
+  getDoctorAppointments() async {
+    clearDocList();
+    AppointmentList data;
+    var userId = FirebaseAuth.instance.currentUser.uid;
+    var res = await _db.collection('DoctorAppointments').doc(userId).get();
+
+    data = AppointmentList.fromFirestore(res.data());
+
+    _doctorAppointment.addAll(data.data);
+    getDoctorAppointmentsPending();
+    getDoctorAppointmentsHistory();
+    notifyListeners();
+  }
+   
   getDoctorAppointmentsHistory() {
     clearDocHistoryList();
     // getDoctorAppointments();
@@ -110,7 +139,7 @@ class AppointmentProvider with ChangeNotifier {
     clearDocPendingList();
     // getDoctorAppointments();
     _doctorAppointment.forEach((element) {
-      print(element.bookingStatus);
+      // print(element.bookingStatus);
       if (element.bookingStatus == 'Pending') {
         _doctorAppointmentPending.add(element);
         // print(_doctorAppointmentHistory.toList());
@@ -119,19 +148,7 @@ class AppointmentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getDoctorAppointments() async {
-    clearDocList();
-    AppointmentList data;
-    var userId = FirebaseAuth.instance.currentUser.uid;
-    var res = await _db.collection('DoctorAppointments').doc(userId).get();
 
-    data = AppointmentList.fromFirestore(res.data());
-
-    _doctorAppointment.addAll(data.data);
-    getDoctorAppointmentsPending();
-    getDoctorAppointmentsHistory();
-    notifyListeners();
-  }
 
   getAppointments() async {
     clearList();
@@ -145,6 +162,17 @@ class AppointmentProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
+
+
+
+
+
+
+
+
+
+
 
   void setApiCall() {
     _isApiCallProcess = !_isApiCallProcess;
