@@ -84,10 +84,12 @@ class AppointmentProvider with ChangeNotifier {
     data = AppointmentList.fromFirestore(res.data());
 
     // print(data.toMap());
-
-    _doctorAppointment.addAll(data.data);
-    // print(_doctorAppointment);
-    _doctorAppointment.add(datass);
+    if (data != null) {
+      _doctorAppointment.addAll(data.data);
+      _doctorAppointment.add(datass);
+    } else {
+      _doctorAppointment.add(datass);
+    }
 
     var docAppointment = AppointmentList(data: _doctorAppointment);
     // print(docAppointment.data.length);
@@ -135,8 +137,9 @@ class AppointmentProvider with ChangeNotifier {
     var res = await _db.collection('Appointments').doc(userId).get();
 
     data = AppointmentList.fromFirestore(res.data());
-
-    _de.addAll(data.data);
+    if (data != null) {
+      _de.addAll(data.data);
+    }
 
     notifyListeners();
   }

@@ -933,10 +933,10 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                           listen: false)
                                       .updateTotalAmount(double.parse(
                                           widget.doctorProfileModel.fees));
-                                } else {
+                                } 
                                   appointment.setAppointment(
                                       data, widget.doctorProfileModel.doctorId);
-                                }
+                              
                               },
                               child: Container(
                                 height: height / 18,

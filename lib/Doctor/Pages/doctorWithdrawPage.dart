@@ -1,5 +1,6 @@
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class DoctorWithdrawPage extends StatefulWidget {
@@ -10,6 +11,9 @@ class DoctorWithdrawPage extends StatefulWidget {
 }
 
 TextEditingController amountController = TextEditingController();
+TextEditingController nameController = TextEditingController();
+TextEditingController accountController = TextEditingController();
+TextEditingController accVerifyController = TextEditingController();
 
 class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
   @override
@@ -71,6 +75,7 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                     ),
                   ),
                   TextFormField(
+                    controller: nameController,
                     decoration: InputDecoration(
                       labelText: "Full Name",
                       alignLabelWithHint: false,
@@ -83,6 +88,7 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                     ),
                   ),
                   TextFormField(
+                    controller: accountController,
                     decoration: InputDecoration(
                       labelText: "Account Number",
                       alignLabelWithHint: false,
@@ -95,6 +101,7 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                     ),
                   ),
                   TextFormField(
+                    controller: accVerifyController,
                     decoration: InputDecoration(
                       labelText: "Re-enter Account Number",
                       alignLabelWithHint: false,
@@ -106,24 +113,39 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                       ),
                     ),
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Enter Ifse Code",
-                      alignLabelWithHint: false,
-                      helperText: "",
-                      fillColor: Colors.white,
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                        borderSide: new BorderSide(),
-                      ),
-                    ),
-                  ),
+                  // TextFormField(
+                  //   decoration: InputDecoration(
+                  //     labelText: "Enter Ifse Code",
+                  //     alignLabelWithHint: false,
+                  //     helperText: "",
+                  //     fillColor: Colors.white,
+                  //     border: new OutlineInputBorder(
+                  //       borderRadius: new BorderRadius.circular(25.0),
+                  //       borderSide: new BorderSide(),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: InkWell(
                       onTap: () {
-                        wallet.updateWithdraw(
-                            double.parse(amountController.text));
+                        if (accVerifyController.text !=
+                            accountController.text) {
+                          Fluttertoast.showToast(
+                              msg: "Account Number Not Same");
+                        } else {
+                          if (nameController.text != null &&
+                              amountController.text != null) {
+                            var withdrawData = Withdraw(
+                              accNo: accountController.text,
+                              amount: double.parse(amountController.text),
+                              name: nameController.text,
+                            );
+
+                            wallet.withdrawrequest(withdrawData);
+                            
+                          }
+                        }
                       },
                       child: Container(
                         height: height / 15,
