@@ -1,5 +1,6 @@
 import 'package:camhed/Admin/AdminServices/adminService.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
+import 'package:camhed/Doctor/Pages/addClinic.dart';
 import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -85,6 +86,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                         .doc(userId)
                         .update({"experiance": exp});
                   }
+                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddClinic()));
                 },
                 child: Text(
                   "SAVE",
@@ -132,7 +134,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                         errorStyle:
                             TextStyle(color: Colors.redAccent, fontSize: 16.0),
                         hintText: 'Please select expense',
-                        labelText: "Enter Your City",
+                        labelText: "Enter Your Country",
                       ),
                       isEmpty: _currentSelectedValue1 == '',
                       child: DropdownButtonHideUnderline(

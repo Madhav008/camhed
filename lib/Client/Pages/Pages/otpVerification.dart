@@ -1,4 +1,6 @@
 import 'package:camhed/Auth/firestore.dart';
+import 'package:camhed/Client/Pages/Pages/clientRegister.dart';
+import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
 import 'package:camhed/Model/AuthType.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -70,14 +72,7 @@ class _OtpVerificationState extends State<OtpVerification> {
         }
 
         
-      Fluttertoast.showToast(
-          msg: "FUCK",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM_RIGHT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ClientRegister()));
 
         // Navigator.pushReplacement(
         //     context,
@@ -90,7 +85,7 @@ class _OtpVerificationState extends State<OtpVerification> {
     } catch (e) {
 
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: "Wrong OTP",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,

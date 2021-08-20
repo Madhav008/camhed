@@ -1,8 +1,11 @@
+
 import 'package:camhed/Auth/firestore.dart';
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
+import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class DoctorRemaningDetails extends StatefulWidget {
@@ -35,7 +38,8 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
               padding: const EdgeInsets.only(right: 20, top: 20),
               child: InkWell(
                 onTap: () async {
-                  print(widget.hospitalId);
+                  // print(widget.hospitalId);
+                  try{
                   var userId = FirebaseAuth.instance.currentUser.uid;
                   FirebaseFirestore.instance
                       .collection('Hospitals')
@@ -69,7 +73,10 @@ class _DoctorRemaningDetailsState extends State<DoctorRemaningDetails> {
                       "EndTime":
                           List<dynamic>.from(end_time.map((e) => e.toString()))
                     });
+                  }}catch (e){
+                    Fluttertoast.showToast(msg: e);
                   }
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DoctorHomePage()));
                 },
                 child: Text(
                   "SAVE",

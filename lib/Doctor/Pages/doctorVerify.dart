@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camhed/Doctor/Pages/addClinic.dart';
 import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
+import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
@@ -347,7 +348,7 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                       doctorIdValidation.setApiCall();
 
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AddClinic()));
+                          MaterialPageRoute(builder: (context) => DoctorVerifyStatus()));
                     } else {
                       Fluttertoast.showToast(
                           msg: "Add Your Id's Properly  ",

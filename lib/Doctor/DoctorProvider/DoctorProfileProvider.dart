@@ -17,8 +17,10 @@ class DoctorProfileProvider with ChangeNotifier {
   String get name => _name;
 
   getSpeciality() async {
+    _speciality.clear();
     List<CategoryModel> data;
     var value = await FirebaseFirestore.instance.collection('Category').get();
+    _speciality.clear();
 
     data =
         (value.docs).map((e) => CategoryModel.fromFirestore(e.data())).toList();
@@ -30,9 +32,12 @@ class DoctorProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
   getLocation() async {
+    _country.clear();
     List<LocationModel> data;
     var value = await FirebaseFirestore.instance.collection('Locations').get();
+    _country.clear();
 
     data =
         (value.docs).map((e) => LocationModel.fromFirestore(e.data())).toList();

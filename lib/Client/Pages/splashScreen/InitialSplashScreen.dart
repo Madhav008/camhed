@@ -2,6 +2,8 @@ import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
 import 'package:camhed/Client/Pages/Pages/loginPage.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
+import 'package:camhed/Doctor/Pages/addClinic.dart';
+import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Doctor/Pages/doctorRegister.dart';
 import 'package:camhed/Doctor/Pages/doctorVerify.dart';
 import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
@@ -57,14 +59,22 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
                   ));
             }
 
-            if (res.data()['status'] == 'done') {
+            if (res.data()['status'] == 'done' && res.data()['fees'] == null) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    // builder: (context) => DoctorVerifyStatus(),
+                    builder: (context) => CreateDoctorProfile(),
+                  ));
+            }else if(res.data()['status'] == 'done' && res.data()['fees'] != null){
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     // builder: (context) => DoctorVerifyStatus(),
                     builder: (context) => DoctorHomePage(),
                   ));
-            } else if (res.data()['status'] == null) {
+            }
+            else if (res.data()['status'] == null) {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

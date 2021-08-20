@@ -1,4 +1,5 @@
 import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
+import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +91,7 @@ class _CreateClinicState extends State<CreateClinic> {
                           List<dynamic>.from(end_time.map((e) => e.toString()))
                     });
                   }
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DoctorHomePage()));
                 },
                 child: Text(
                   "SAVE",

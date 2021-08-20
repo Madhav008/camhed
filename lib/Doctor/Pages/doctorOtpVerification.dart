@@ -1,4 +1,6 @@
 import 'package:camhed/Auth/firestore.dart';
+import 'package:camhed/Doctor/Pages/doctorRegister.dart';
+import 'package:camhed/Doctor/Pages/doctorVerify.dart';
 import 'package:camhed/Model/AuthType.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -67,13 +69,11 @@ class _DoctorOtpVerificationState extends State<DoctorOtpVerification> {
           await FireStoreServices().setType(data);
         }
         if(existingUser !=null && existingUser.type=='doctor'){
-        // Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => MainPage(
-        //           userData.user
-        //       ),
-        //     ));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DoctorRegister(),
+            ));
         }else{
           Fluttertoast.showToast(
             msg: "You Are Not A Doctor",
@@ -91,7 +91,7 @@ class _DoctorOtpVerificationState extends State<DoctorOtpVerification> {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: "Wrong OTP",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
