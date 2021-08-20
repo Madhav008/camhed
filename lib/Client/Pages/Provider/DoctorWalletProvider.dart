@@ -98,8 +98,10 @@ class DoctorWalletProvider with ChangeNotifier {
         .get();
 
     final data = WithdrawList.fromFirestore(res.data());
-    print(data.withdraw);
-    _dataWithdraw.addAll(data.withdraw);
+
+    if (data != null) {
+      _dataWithdraw.addAll(data.withdraw);
+    }
     notifyListeners();
   }
 
