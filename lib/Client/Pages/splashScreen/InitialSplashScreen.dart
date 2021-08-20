@@ -4,6 +4,7 @@ import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
 import 'package:camhed/Doctor/Pages/doctorRegister.dart';
 import 'package:camhed/Doctor/Pages/doctorVerify.dart';
+import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,6 +64,12 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
                     // builder: (context) => DoctorVerifyStatus(),
                     builder: (context) => DoctorHomePage(),
                   ));
+            } else if (res.data()['status'] == null) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      // builder: (context) => DoctorVerifyStatus(),
+                      builder: (context) => DoctorVerifyStatus()));
             } else {
               //Rejection Handle For Doctor Profile
               Fluttertoast.showToast(
