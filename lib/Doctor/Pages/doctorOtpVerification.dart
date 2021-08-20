@@ -1,7 +1,11 @@
 import 'package:camhed/Auth/firestore.dart';
+import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
+import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Doctor/Pages/doctorRegister.dart';
 import 'package:camhed/Doctor/Pages/doctorVerify.dart';
+import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
 import 'package:camhed/Model/AuthType.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -68,26 +72,60 @@ class _DoctorOtpVerificationState extends State<DoctorOtpVerification> {
         if (existingUser == null) {
           await FireStoreServices().setType(data);
         }
-        if(existingUser !=null && existingUser.type=='doctor'){
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DoctorRegister(),
-            ));
-        }else{
+        if (existingUser != null && existingUser.type == 'doctor') {
+          var res = await FirebaseFirestore.instance
+              .collection('DoctorProfile')
+              .doc(userData.user.uid)
+              .get();
+
+          if (res.data()['status'] == 'done' && res.data()['fees'] != null) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  // builder: (context) => DoctorVerifyStatus(),
+                  builder: (context) => DoctorHomePage(),
+                ));
+          } else if (res.data()['status'] == 'done' &&
+              res.data()['fees'] == null) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  // builder: (context) => DoctorVerifyStatus(),
+                  builder: (context) => CreateDoctorProfile(),
+                ));
+          } else if (res.data()['status'] == null) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    // builder: (context) => DoctorVerifyStatus(),
+                    builder: (context) => DoctorVerifyStatus()));
+          } else if (res.data() == null) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DoctorRegister(),
+                ));
+          } else {
+            //Rejection Handle For Doctor Profile
+            Fluttertoast.showToast(
+                msg: "Your Profile Is Rejected  ",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM_RIGHT,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        } else {
           Fluttertoast.showToast(
-            msg: "You Are Not A Doctor",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM_RIGHT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0);
+              msg: "You Are Not A Doctor",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM_RIGHT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
-
-        
-
-        
       }
     } catch (e) {
       Fluttertoast.showToast(
