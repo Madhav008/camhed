@@ -31,6 +31,7 @@ class _DoctorHomePageState extends State<DoctorHomePage>
     _tabController = TabController(vsync: this, length: 2);
     Provider.of<AppointmentProvider>(context, listen: false)
         .getDoctorAppointments();
+  
   }
 
   @override
@@ -60,8 +61,6 @@ class _DoctorHomePageState extends State<DoctorHomePage>
                 padding: const EdgeInsets.only(right: 15),
                 child: InkWell(
                     onTap: () {
-                      // Auth().signOut();
-                      // setState(() {});
                       Navigator.push(
                           context,
                           MaterialPageRoute(

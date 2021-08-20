@@ -29,7 +29,6 @@ class _DoctorAccountState extends State<DoctorAccount> {
     var userId = FirebaseAuth.instance.currentUser.uid;
     var res = await _db.collection('DoctorProfile').doc(userId).get();
     data = DoctorProfileModel.fromFirestore(res.data());
-
     return data;
   }
 

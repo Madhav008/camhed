@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:camhed/Doctor/Pages/addClinic.dart';
+import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
@@ -338,16 +340,14 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                     top: 30, left: 15, right: 15, bottom: 30),
                 child: InkWell(
                   onTap: () {
-                    if (doctorIdValidation.frontId.value != null &&
-                        doctorIdValidation.backId.value != null &&
-                        doctorIdValidation.picture.value != null &&
+                    if (file1 != null &&
+                        file2 != null &&
+                        file3 != null &&
                         doctorIdValidation.isValid) {
                       doctorIdValidation.setApiCall();
 
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => DoctorVerify()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AddClinic()));
                     } else {
                       Fluttertoast.showToast(
                           msg: "Add Your Id's Properly  ",
