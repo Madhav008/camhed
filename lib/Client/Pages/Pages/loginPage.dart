@@ -7,7 +7,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'otpVerification.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -15,7 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _phoneController = TextEditingController();
-  var countrycode;
+  var countrycode = "+91";
 
   @override
   Widget build(BuildContext context) {
@@ -88,11 +87,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       initialSelection: '+91',
                       onChanged: (CountryCode code) {
-                        countrycode = code.code;
+                        countrycode = code.dialCode;
                       },
                       useUiOverlay: true,
-                      useSafeArea: false
-                  ),
+                      useSafeArea: false),
                   Flexible(
                     child: TextFormField(
                       controller: _phoneController,
@@ -113,7 +111,8 @@ class _LoginPageState extends State<LoginPage> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => OtpVerification(phone,countrycode),
+                                    builder: (context) =>
+                                        OtpVerification(phone, countrycode),
                                   ),
                                 );
                               }
@@ -166,7 +165,8 @@ class _LoginPageState extends State<LoginPage> {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OtpVerification(phone,countrycode),
+                        builder: (context) =>
+                            OtpVerification(phone, countrycode),
                       ),
                     );
                   }
@@ -179,12 +179,12 @@ class _LoginPageState extends State<LoginPage> {
                   width: width,
                   child: Center(
                       child: Text(
-                        "CONTINUE",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: height / 45),
-                      )),
+                    "CONTINUE",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: height / 45),
+                  )),
                 ),
               ),
             ),

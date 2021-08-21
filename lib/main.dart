@@ -16,12 +16,15 @@ import 'package:camhed/validatior/doctorRegisterValidation.dart';
 import 'package:camhed/validatior/userRegisterValidation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Stripe.publishableKey =
+      "pk_test_51JQzkRSCysouL4DFEaQ5EYalDJuwz92hyxAWVNlTY0p3IBRcUCztgPpZocuTTCcd619d1Ht1kZofRqlk37VSpT5q00v5LfYB0r";
   runApp(MyApp());
 }
 
@@ -29,8 +32,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-  
-
     Future<String> _getPref() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       return prefs.getString('firstTime');

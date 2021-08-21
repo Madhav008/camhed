@@ -1,7 +1,9 @@
 import 'package:camhed/Client/Pages/Pages/loginPage.dart';
+import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
 import 'package:camhed/Client/Pages/splashScreen/slide_dots.dart';
 import 'package:camhed/Client/Pages/splashScreen/slide_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SplashData.dart';
 
@@ -22,12 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _firstTime();
+    Provider.of<LocationProvider>(context, listen: false)
+        .enableLocationServices();
   }
 
   _firstTime() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("firstTime", "true");
-    print("First time");
   }
 
   _onPageChanged(int index) {
