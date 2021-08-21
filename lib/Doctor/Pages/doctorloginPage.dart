@@ -1,4 +1,6 @@
+import 'package:camhed/Client/Pages/Pages/loginPage.dart';
 import 'package:camhed/Doctor/Pages/doctorOtpVerification.dart';
+import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -29,12 +31,9 @@ class _DoctorLoginPageState extends State<DoctorLoginPage> {
               child: Row(
                 children: [
                   InkWell(
-                    // onTap: () {
-                    //   Navigator.pushReplacement(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => StartingPage()));
-                    // },
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                    },
                     child: Container(
                       height: height / 30,
                       width: height / 30,
@@ -89,54 +88,78 @@ class _DoctorLoginPageState extends State<DoctorLoginPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
-              child: TextFormField(
-                controller: _phoneController,
-                decoration: InputDecoration(
-                  suffixIcon: InkWell(
-                      onTap: () async {
-                        final phone = _phoneController.text.trim();
-                        if (phone.isEmpty) {
-                          Fluttertoast.showToast(
-                              msg: "Please Fill The Phone Number  ",
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.BOTTOM_RIGHT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        } else {
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => OtpVerification(phone),
-                          //   ),
-                          // );
-                        }
+              child: Row(
+                children: [
+                  CountryListPick(
+                      appBar: AppBar(
+                        backgroundColor: Colors.blue,
+                        title: Text('Select Country'),
+                      ),
+                      theme: CountryTheme(
+                        isShowFlag: true,
+                        isShowTitle: false,
+                        isShowCode: false,
+                        isDownIcon: false,
+                        showEnglishName: true,
+                      ),
+                      initialSelection: '+91',
+                      onChanged: (CountryCode code) {
+                        print(code.name);
+                        print(code.code);
+                        print(code.dialCode);
+                        print(code.flagUri);
                       },
-                      child: Icon(
-                        Icons.send,
-                        color: Color(0xffed1a4f),
-                      )),
-                  focusColor: Colors.black26,
-                  hoverColor: Colors.green,
-                  prefixIcon: Icon(
-                    Icons.dialpad,
-                    color: Color(0xffed1a4f),
+                      useUiOverlay: true,
+                      useSafeArea: false
                   ),
-                  labelText: "Phone Number",
-                  hintText: "10 Digit Number",
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0xffed1a4f),
-                      style: BorderStyle.solid,
-                      width: 2,
+                  Flexible(
+                    child: TextFormField(
+                      controller: _phoneController,
+                      decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                            onTap: () async {
+                              final phone = _phoneController.text.trim();
+                              if (phone.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Fill The Phone Number  ",
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.BOTTOM_RIGHT,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              } else {
+                                // await Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => OtpVerification(phone),
+                                //   ),
+                                // );
+                              }
+                            },
+                            child: Icon(
+                              Icons.send,
+                              color: Color(0xffed1a4f),
+                            )),
+                        focusColor: Colors.black26,
+                        hoverColor: Colors.green,
+                        labelText: "Phone Number",
+                        hintText: "10 Digit Number",
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xffed1a4f),
+                            style: BorderStyle.solid,
+                            width: 2,
+                          ),
+                        ),
+                        border: new OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(height / 80),
+                          borderSide: new BorderSide(color: Color(0xffed1a4f)),
+                        ),
+                      ),
                     ),
                   ),
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(height / 80),
-                    borderSide: new BorderSide(color: Color(0xffed1a4f)),
-                  ),
-                ),
+                ],
               ),
             ),
             SizedBox(height: height / 30),
@@ -187,12 +210,12 @@ class _DoctorLoginPageState extends State<DoctorLoginPage> {
             ),
             SizedBox(height: height / 50),
             InkWell(
-              // onTap: () {
-              //   Navigator.of(context).push(
-              //       MaterialPageRoute(builder: (context) => LoginWithEmail()));
-              // },
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
               child: Text(
-                "Login as a Doctor",
+                "Login as a User",
                 style: TextStyle(fontSize: 18, color: Colors.black45),
               ),
             )

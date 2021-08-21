@@ -322,10 +322,16 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(top: 15),
-                                          child: Text(
-                                            "${category[index].name}",
-                                            style: TextStyle(
-                                                color: Colors.black38),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "${category[index].name}",
+                                                style: TextStyle(
+                                                    color: Colors.black38),
+                                              ),
+                                            ],
                                           ),
                                         )
                                       ],

@@ -43,6 +43,7 @@ dependencies:
   provider: ^5.0.0
   shared_preferences: ^2.0.6
   uuid: ^3.0.4
+  country_list_pick: ^1.0.1+5
 
 dev_dependencies:
   flutter_test:

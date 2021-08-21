@@ -13,7 +13,8 @@ import 'package:otp_text_field/style.dart';
 // ignore: must_be_immutable
 class OtpVerification extends StatefulWidget {
   String phone;
-  OtpVerification(this.phone);
+  String countrycode;
+  OtpVerification(this.phone,this.countrycode);
 
   @override
   _OtpVerificationState createState() => _OtpVerificationState();
@@ -111,7 +112,7 @@ class _OtpVerificationState extends State<OtpVerification> {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     auth.verifyPhoneNumber(
-      phoneNumber: "+91${widget.phone}",
+      phoneNumber: "${widget.countrycode}+${widget.phone}",
       timeout: Duration(seconds: 120),
       verificationCompleted: (AuthCredential credential) async {},
       verificationFailed: (FirebaseAuthException exception) {

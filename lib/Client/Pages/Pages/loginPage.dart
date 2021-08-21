@@ -1,4 +1,7 @@
 import 'package:camhed/Doctor/Pages/doctorloginPage.dart';
+import 'package:country_list_pick/country_list_pick.dart';
+import 'package:country_list_pick/country_selection_theme.dart';
+import 'package:country_list_pick/support/code_country.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -12,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _phoneController = TextEditingController();
+  var countrycode;
 
   @override
   Widget build(BuildContext context) {
@@ -27,32 +31,9 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 15, left: 15),
+              padding: const EdgeInsets.only(top: 15, left: 20),
               child: Row(
                 children: [
-                  InkWell(
-                    // onTap: () {
-                    //   Navigator.pushReplacement(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => StartingPage()));
-                    // },
-                    child: Container(
-                      height: height / 30,
-                      width: height / 30,
-                      decoration: BoxDecoration(
-                          color: Color(0xffED1A4F),
-                          borderRadius: BorderRadius.circular(height / 50)),
-                      child: Icon(
-                        Icons.arrow_back_ios_sharp,
-                        size: height / 45,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: width / 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -91,54 +72,79 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
-              child: TextFormField(
-                controller: _phoneController,
-                decoration: InputDecoration(
-                  suffixIcon: InkWell(
-                      onTap: () async {
-                        final phone = _phoneController.text.trim();
-                        if (phone.isEmpty) {
-                          Fluttertoast.showToast(
-                              msg: "Please Fill The Phone Number  ",
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.BOTTOM_RIGHT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        } else {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OtpVerification(phone),
-                            ),
-                          );
-                        }
+              child: Row(
+                children: [
+                  CountryListPick(
+                      appBar: AppBar(
+                        backgroundColor: Colors.blue,
+                        title: Text('Select Country'),
+                      ),
+                      theme: CountryTheme(
+                        isShowFlag: true,
+                        isShowTitle: false,
+                        isShowCode: false,
+                        isDownIcon: false,
+                        showEnglishName: true,
+                      ),
+                      initialSelection: '+91',
+                      onChanged: (CountryCode code) {
+                        countrycode = code.code;
                       },
-                      child: Icon(
-                        Icons.send,
-                        color: Color(0xffed1a4f),
-                      )),
-                  focusColor: Colors.black26,
-                  hoverColor: Colors.green,
-                  prefixIcon: Icon(
-                    Icons.dialpad,
-                    color: Color(0xffed1a4f),
+                      useUiOverlay: true,
+                      useSafeArea: false
                   ),
-                  labelText: "Phone Number",
-                  hintText: "10 Digit Number",
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0xffed1a4f),
-                      style: BorderStyle.solid,
-                      width: 2,
+                  Flexible(
+                    child: TextFormField(
+                      controller: _phoneController,
+                      decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                            onTap: () async {
+                              final phone = _phoneController.text.trim();
+                              if (phone.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Fill The Phone Number  ",
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.BOTTOM_RIGHT,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              } else {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OtpVerification(phone,countrycode),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Icon(
+                              Icons.send,
+                              color: Color(0xffed1a4f),
+                            )),
+                        focusColor: Colors.black26,
+                        hoverColor: Colors.green,
+                        // prefixIcon: Icon(
+                        //   Icons.dialpad,
+                        //   color: Color(0xffed1a4f),
+                        // ),
+                        labelText: "Phone Number",
+                        hintText: "10 Digit Number",
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xffed1a4f),
+                            style: BorderStyle.solid,
+                            width: 2,
+                          ),
+                        ),
+                        border: new OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(height / 80),
+                          borderSide: new BorderSide(color: Color(0xffed1a4f)),
+                        ),
+                      ),
                     ),
                   ),
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(height / 80),
-                    borderSide: new BorderSide(color: Color(0xffed1a4f)),
-                  ),
-                ),
+                ],
               ),
             ),
             SizedBox(height: height / 30),
@@ -160,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OtpVerification(phone),
+                        builder: (context) => OtpVerification(phone,countrycode),
                       ),
                     );
                   }
