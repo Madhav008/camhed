@@ -402,8 +402,8 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                       child: Column(
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10),
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
                                             child: Image(
                                               image: AssetImage(
                                                   "Images/hospital.png"),
@@ -414,9 +414,8 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                           Column(
                                             children: [
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.only(
-                                                        left: 3),
+                                                padding: const EdgeInsets.only(
+                                                    left: 3),
                                                 child: Text(
                                                   '${hospital[index].name}',
                                                   style: TextStyle(
@@ -436,8 +435,6 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                     ),
                                   ),
                                 ),
-                             
-                             
                               );
                             });
                       }),
