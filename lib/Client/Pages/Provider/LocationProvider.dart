@@ -34,7 +34,9 @@ class LocationProvider with ChangeNotifier {
       //     '${placemark.subThoroughfare} ${placemark.thoroughfare}, ${placemark.subLocality} ${placemark.locality}, ${placemark.subAdminArea}, ${placemark.adminArea} ${placemark.postalCode}, ${placemark.countryName}';
       String formattedAddress =
           "${placemark.locality}, ${placemark.countryName} ";
-      _selectedCity = placemark.adminArea;
+      if (placemark.adminArea != null) {
+        _selectedCity = placemark.adminArea;
+      }
       _country = placemark.countryName;
       notifyListeners();
     });

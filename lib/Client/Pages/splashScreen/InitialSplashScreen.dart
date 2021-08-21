@@ -1,5 +1,6 @@
 import 'package:camhed/Client/Pages/Pages/clienthomePage.dart';
 import 'package:camhed/Client/Pages/Pages/loginPage.dart';
+import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
 import 'package:camhed/Client/Pages/splashScreen/SplashScreen.dart';
 import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
 import 'package:camhed/Doctor/Pages/addClinic.dart';
@@ -12,6 +13,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class InitialSplashScreen extends StatefulWidget {
   const InitialSplashScreen({Key key}) : super(key: key);
@@ -26,6 +28,8 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 1), () {
+      Provider.of<LocationProvider>(context, listen: false)
+          .enableLocationServices();
       FirebaseAuth.instance.authStateChanges().listen((User user) async {
         if (user == null) {
           await Navigator.pushReplacement(
@@ -66,15 +70,15 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
                     // builder: (context) => DoctorVerifyStatus(),
                     builder: (context) => CreateDoctorProfile(),
                   ));
-            }else if(res.data()['status'] == 'done' && res.data()['fees'] != null){
+            } else if (res.data()['status'] == 'done' &&
+                res.data()['fees'] != null) {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     // builder: (context) => DoctorVerifyStatus(),
                     builder: (context) => DoctorHomePage(),
                   ));
-            }
-            else if (res.data()['status'] == null) {
+            } else if (res.data()['status'] == null) {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
