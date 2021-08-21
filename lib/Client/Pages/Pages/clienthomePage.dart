@@ -374,6 +374,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                             itemBuilder: (BuildContext ctx, index) {
                               return InkWell(
                                 onTap: () {
+                                  print(hospital[index].toMap());
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -382,6 +383,8 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                                 hospital[index]),
                                       ));
                                 },
+
+                                // child: Container(child: Text("Madhav"),),
                                 child: Material(
                                   elevation: 1,
                                   borderRadius:
@@ -396,45 +399,45 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                         borderRadius:
                                             BorderRadius.circular(height / 120),
                                       ),
-                                      child: Expanded(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10),
-                                              child: Image(
-                                                image: AssetImage(
-                                                    "Images/hospital.png"),
-                                                height: height / 10,
-                                              ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 10),
+                                            child: Image(
+                                              image: AssetImage(
+                                                  "Images/hospital.png"),
+                                              height: height / 10,
                                             ),
-                                            Divider(),
-                                            Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 3),
-                                                  child: Text(
-                                                    '${hospital[index].name}',
-                                                    style: TextStyle(
-                                                        color: Colors.black38,
-                                                        fontSize: height / 65),
-                                                    overflow:
-                                                        TextOverflow.visible,
-                                                    maxLines: 2,
-                                                    softWrap: true,
-                                                  ),
-                                                )
-                                                // Text("COVID-19 COVID-19 COVID-19 COVID-19",style: TextStyle(color: Colors.black38),),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                          ),
+                                          Divider(),
+                                          Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.only(
+                                                        left: 3),
+                                                child: Text(
+                                                  '${hospital[index].name}',
+                                                  style: TextStyle(
+                                                      color: Colors.black38,
+                                                      fontSize: height / 65),
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  maxLines: 2,
+                                                  softWrap: true,
+                                                ),
+                                              )
+                                              // Text("COVID-19 COVID-19 COVID-19 COVID-19",style: TextStyle(color: Colors.black38),),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ),
+                             
+                             
                               );
                             });
                       }),
