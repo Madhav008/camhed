@@ -29,11 +29,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SharedPreferences prefs;
+    ;
 
-    Future<bool> _getPref() async {
-      prefs = await SharedPreferences.getInstance();
-      return prefs.getBool('firstTime');
+    Future<String> _getPref() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return prefs.getString('firstTime');
     }
 
     return MultiProvider(
@@ -81,16 +81,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: FutureBuilder<bool>(
+        home: FutureBuilder<String>(
           future: _getPref(),
           builder: (context, snapshot) {
-            switch (snapshot.data) {
-              case true:
-                return SplashScreen();
-                break;
-              default:
-                // return InitialSplashScreen();
-                return InitialSplashScreen();
+            if (snapshot.hasData && snapshot.data == 'true') {
+              return InitialSplashScreen();
+            } else {
+              return SplashScreen();
             }
           },
         ),

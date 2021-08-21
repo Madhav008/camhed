@@ -26,7 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _firstTime() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setBool("firstTime", true);
+    preferences.setString("firstTime", "true");
+    print("First time");
   }
 
   _onPageChanged(int index) {
