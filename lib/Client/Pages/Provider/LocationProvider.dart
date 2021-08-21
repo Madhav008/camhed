@@ -10,6 +10,8 @@ import 'package:geocoder/geocoder.dart';
 class LocationProvider with ChangeNotifier {
   List<String> _city = [];
   String _selectedCity = "";
+
+  String _country = "";
   List<String> get city => _city;
   String get selectedCity => _selectedCity;
 
@@ -32,8 +34,8 @@ class LocationProvider with ChangeNotifier {
       //     '${placemark.subThoroughfare} ${placemark.thoroughfare}, ${placemark.subLocality} ${placemark.locality}, ${placemark.subAdminArea}, ${placemark.adminArea} ${placemark.postalCode}, ${placemark.countryName}';
       String formattedAddress =
           "${placemark.locality}, ${placemark.countryName} ";
-      _selectedCity = placemark.locality;
-
+      _selectedCity = placemark.adminArea;
+      _country = placemark.countryName;
       notifyListeners();
     });
   }
@@ -41,7 +43,7 @@ class LocationProvider with ChangeNotifier {
   changeCity(String value) async {
     SharedPreferences _preferences = await SharedPreferences.getInstance();
     _preferences.setString('city', _selectedCity.toString());
-    print(value);
+    // print(value);
     _selectedCity = value;
     notifyListeners();
   }
@@ -50,11 +52,14 @@ class LocationProvider with ChangeNotifier {
   getLocation() async {
     enableLocationServices();
     resetStreams();
-    String _country = 'India';
+
     var locData = await FirebaseFirestore.instance
         .collection('Locations')
         .where('Country', isEqualTo: _country)
         .get();
+
+    resetStreams();
+
     locData.docs.forEach((location) {
       final loc = LocationModel.fromFirestore(location.data());
       var city = loc.city;
