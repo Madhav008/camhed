@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
           future: _getPref(),
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data == 'true') {
-              return InitialSplashScreen();
+              return AdminHomePage();
             } else {
               return SplashScreen();
             }

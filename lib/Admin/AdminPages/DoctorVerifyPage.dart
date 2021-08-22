@@ -104,11 +104,10 @@ class _DoctorVerifyPageState extends State<DoctorVerifyPage> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: (widget.data.idurl1 != null)
-                                ? NetworkImage(widget.data.idurl2)
+                                ? NetworkImage(widget.data.profilepic)
                                 : AssetImage("Images/add.png")),
                         borderRadius: BorderRadius.circular(height / 90),
                         color: Colors.white),
-                   
                   ),
                 ),
               ),
