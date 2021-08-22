@@ -35,7 +35,7 @@ dependencies:
   flutter_ticket_widget: ^0.0.1
   fluttertoast: ^8.0.7
   geocoder: ^0.2.1
-  geolocation: ^1.1.2
+  # geolocation: ^1.1.2
   image_picker: ^0.8.2
   intl: ^0.17.0
   otp_count_down: ^1.0.6
@@ -45,6 +45,7 @@ dependencies:
   uuid: ^3.0.4
   country_list_pick: ^1.0.1+5
   flutter_stripe: ^1.2.0
+  # stripe_payment: ^1.1.4
 
 dev_dependencies:
   flutter_test:
