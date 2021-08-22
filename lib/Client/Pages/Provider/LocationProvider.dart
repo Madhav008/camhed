@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:camhed/Admin/AdminModels/LocationModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:geolocation/geolocation.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geocoder/geocoder.dart';
 
@@ -23,23 +23,22 @@ class LocationProvider with ChangeNotifier {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     _selectedCity = _pref.getString('city');
 
-    // Geolocation.currentLocation(accuracy: LocationAccuracy.best)
-    //     .listen((result) async {
-    //   var coordinates =
-    //       Coordinates(result.location.latitude, result.location.longitude);
-    //   var placemarks =
-    //       await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    //   var placemark = placemarks[0];
-    //   // String completeAddress =
-    //   //     '${placemark.subThoroughfare} ${placemark.thoroughfare}, ${placemark.subLocality} ${placemark.locality}, ${placemark.subAdminArea}, ${placemark.adminArea} ${placemark.postalCode}, ${placemark.countryName}';
-    //   String formattedAddress =
-    //       "${placemark.locality}, ${placemark.countryName} ";
-    //   if (placemark.adminArea != null) {
-    //     _selectedCity = placemark.adminArea;
-    //   }
-    //   _country = placemark.countryName;
-    //   notifyListeners();
-    // });
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium);
+    var coordinates = Coordinates(position.latitude, position.longitude);
+
+    var placemarks =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var placemark = placemarks[0];
+    // String completeAddress =
+    //     '${placemark.subThoroughfare} ${placemark.thoroughfare}, ${placemark.subLocality} ${placemark.locality}, ${placemark.subAdminArea}, ${placemark.adminArea} ${placemark.postalCode}, ${placemark.countryName}';
+    String formattedAddress =
+        "${placemark.locality}, ${placemark.countryName} ";
+    if (placemark.adminArea != null) {
+      _selectedCity = placemark.adminArea;
+    }
+    _country = placemark.countryName;
+    notifyListeners();
   }
 
   changeCity(String value) async {
