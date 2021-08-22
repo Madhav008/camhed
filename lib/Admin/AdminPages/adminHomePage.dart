@@ -2,8 +2,10 @@ import 'package:camhed/Admin/AdminPages/DoctorVerifyPage.dart';
 import 'package:camhed/Admin/AdminPages/adminSettings.dart';
 import 'package:camhed/Admin/AdminProvider/ContryProvider.dart';
 import 'package:camhed/Admin/AdminProvider/DoctorStatusProvider.dart';
+import 'package:camhed/notificationservecies.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 
 class AdminHomePage extends StatefulWidget {
@@ -18,6 +20,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
   void initState() {
     super.initState();
     Provider.of<CountryProvider>(context, listen: false).getLocationData();
+    OneSignal.shared.sendTag("Admin", "admin");
 
     Provider.of<DoctorStatusProvider>(context, listen: false).getDoctorData();
   }

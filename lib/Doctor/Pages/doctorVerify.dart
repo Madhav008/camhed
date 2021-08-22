@@ -5,6 +5,7 @@ import 'package:camhed/Doctor/Pages/createDoctorProfile.dart';
 import 'package:camhed/Doctor/Pages/doctorverifyStatus.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
+import 'package:camhed/notificationservecies.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -341,14 +343,19 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                     top: 30, left: 15, right: 15, bottom: 30),
                 child: InkWell(
                   onTap: () {
+                    var userId = FirebaseAuth.instance.currentUser.uid;
+                    OneSignal.shared.setExternalUserId(userId);
                     if (file1 != null &&
                         file2 != null &&
                         file3 != null &&
                         doctorIdValidation.isValid) {
                       doctorIdValidation.setApiCall();
+                      NotificationServices().sendDoctorProfileNotification();
 
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => DoctorVerifyStatus()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DoctorVerifyStatus()));
                     } else {
                       Fluttertoast.showToast(
                           msg: "Add Your Id's Properly  ",

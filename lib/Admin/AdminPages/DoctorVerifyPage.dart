@@ -1,5 +1,6 @@
 import 'package:camhed/Admin/AdminProvider/DoctorStatusProvider.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
+import 'package:camhed/notificationservecies.dart';
 import 'package:fdottedline/fdottedline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -121,6 +122,10 @@ class _DoctorVerifyPageState extends State<DoctorVerifyPage> {
                   InkWell(
                     onTap: () {
                       doctor.removeStatus(widget.data);
+
+                      NotificationServices()
+                          .sendDoctorStatusNotification(widget.data.doctorId);
+
                       Navigator.pop(context);
                     },
                     child: Container(
@@ -142,6 +147,10 @@ class _DoctorVerifyPageState extends State<DoctorVerifyPage> {
                   InkWell(
                     onTap: () {
                       doctor.changeStatus(widget.data);
+
+                      NotificationServices()
+                          .sendDoctorStatusNotification(widget.data.doctorId);
+
                       Navigator.pop(context);
                     },
                     child: Container(
