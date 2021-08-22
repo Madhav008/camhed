@@ -2,10 +2,12 @@ import 'package:camhed/Admin/AdminModels/BannerModel.dart';
 import 'package:camhed/Admin/AdminModels/CategoryModel.dart';
 import 'package:camhed/Admin/AdminModels/HospitalModel.dart';
 import 'package:camhed/Admin/AdminModels/LocationModel.dart';
+import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdminServices {
   FirebaseFirestore _db = FirebaseFirestore.instance;
+  LocationProvider _location = new LocationProvider();
 
   Future addCategory(CategoryModel data) {
     return _db.collection('Category').doc(data.categoryId).set(data.toMap());
@@ -38,12 +40,16 @@ class AdminServices {
   }
 
   Future<List<HospitalModel>> getHospital() async {
+    await _location.getLocation();
     List<HospitalModel> data;
-    var value = await _db.collection('Hospitals').get();
+    var value = await _db
+        .collection('Hospitals')
+        .where('city', isEqualTo: _location.selectedCity)
+        .get();
 
     data =
         value.docs.map((e) => HospitalModel.fromFirestore(e.data())).toList();
-
+    print(_location.selectedCity);
     return data;
   }
 

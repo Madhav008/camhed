@@ -1,8 +1,10 @@
 import 'package:camhed/Admin/AdminModels/HospitalModel.dart';
+import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DoctorServices {
+  LocationProvider _location = new LocationProvider();
   FirebaseFirestore _db = FirebaseFirestore.instance;
   Future addUser(String userId, DoctorProfileModel user) {
     return _db.collection('DoctorProfile').doc(userId).set(user.toMap());
@@ -18,15 +20,19 @@ class DoctorServices {
 
   Future<List<DoctorProfileModel>> fetchCategoryDoctor(String category) async {
     List<DoctorProfileModel> data;
+    await _location.getLocation();
+
     await _db
         .collection('DoctorProfile')
         .where('category', isEqualTo: category)
+        .where('address', isEqualTo: _location.selectedCity)
         .get()
         .then((value) {
       data = (value.docs)
           .map((e) => DoctorProfileModel.fromFirestore(e.data()))
           .toList();
     });
+    print(_location.selectedCity);
     return data;
   }
 
@@ -53,6 +59,4 @@ class DoctorServices {
 
     return hospitalData.first.doctorId;
   }
-
-  
 }

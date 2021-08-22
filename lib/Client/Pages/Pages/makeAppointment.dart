@@ -4,11 +4,13 @@ import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:camhed/Model/AppointmentModel.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
+import 'package:camhed/card_payment.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -893,7 +895,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 20),
                             child: InkWell(
-                              onTap: () {
+                              onTap: () async {
                                 var id = "camhead000" +
                                     Random().nextInt(999999).toString();
                                 String gen;
@@ -926,17 +928,23 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                     payment: widget.doctorProfileModel.fees);
 
                                 //TODO: PaymentGateWay
-                                if (ispaymentdone) {
-                                  appointment.getDoctorAppointmentsForUser(
-                                      widget.doctorProfileModel.doctorId, data);
-                                  Provider.of<DoctorWalletProvider>(context,
-                                          listen: false)
-                                      .updateTotalAmount(double.parse(
-                                          widget.doctorProfileModel.fees));
-                                } 
-                                  appointment.setAppointment(
-                                      data, widget.doctorProfileModel.doctorId);
-                              
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CustomCardPaymentScreen()),
+                                );
+                                // if (ispaymentdone) {
+                                //   appointment.getDoctorAppointmentsForUser(
+                                //       widget.doctorProfileModel.doctorId, data);
+                                //   Provider.of<DoctorWalletProvider>(context,
+                                //           listen: false)
+                                //       .updateTotalAmount(double.parse(
+                                //           widget.doctorProfileModel.fees));
+                                // }
+                                // appointment.setAppointment(
+                                //     data, widget.doctorProfileModel.doctorId);
                               },
                               child: Container(
                                 height: height / 18,

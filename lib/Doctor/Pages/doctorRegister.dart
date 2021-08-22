@@ -1,12 +1,17 @@
+import 'package:camhed/Admin/AdminModels/LocationModel.dart';
 import 'package:camhed/Admin/AdminServices/adminService.dart';
+import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
 import 'package:camhed/Doctor/Pages/doctorVerify.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 class DoctorRegister extends StatefulWidget {
@@ -18,12 +23,45 @@ class DoctorRegister extends StatefulWidget {
 
 class _DoctorRegisterState extends State<DoctorRegister> {
   // bool value = false;
+  var _currentSelectedValue1;
+  List<String> cities = [];
+
+  getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium);
+    var coordinates = Coordinates(position.latitude, position.longitude);
+    var placemarks =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var placemark = placemarks[0];
+    // String completeAddress =
+    //     '${placemark.subThoroughfare} ${placemark.thoroughfare}, ${placemark.subLocality} ${placemark.locality}, ${placemark.subAdminArea}, ${placemark.adminArea} ${placemark.postalCode}, ${placemark.countryName}';
+
+    var locData = await FirebaseFirestore.instance
+        .collection('Locations')
+        .where('Country', isEqualTo: placemark.countryName)
+        .get();
+
+    locData.docs.forEach((location) {
+      final loc = LocationModel.fromFirestore(location.data());
+      var city = loc.city;
+
+      setState(() {
+        cities.addAll(city);
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getLocation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var doctorRegisterValidation =
         Provider.of<DoctorRegisterValidation>(context);
-
+    var doctorProfileProvider = Provider.of<LocationProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -139,23 +177,47 @@ class _DoctorRegisterState extends State<DoctorRegister> {
                       ),
                     ),
 
-                    TextFormField(
-                      onChanged: (value) {
-                        doctorRegisterValidation.changeAddress(value);
-                      },
-                      decoration: InputDecoration(
-                        errorText: doctorRegisterValidation.address.error,
-                        labelText: "Address",
-                        alignLabelWithHint: false,
-                        helperText: "",
-                        fillColor: Colors.white,
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                          borderSide: new BorderSide(),
-                        ),
-                      ),
-                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4.0, right: 4),
+                      child: FormField<String>(
+                        builder: (FormFieldState<String> state) {
+                          return InputDecorator(
+                            decoration: InputDecoration(
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                                borderSide: new BorderSide(),
+                              ),
+                              labelStyle: TextStyle(color: Colors.black38),
+                              errorStyle: TextStyle(
+                                  color: Colors.redAccent, fontSize: 16.0),
+                              labelText: "Enter Your City",
+                            ),
+                            isEmpty: _currentSelectedValue1 == '',
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: _currentSelectedValue1,
+                                isDense: true,
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                      _currentSelectedValue1 = newValue;
+                                    state.didChange(newValue);
+                                  });
 
+                                  doctorRegisterValidation
+                                      .changeAddress(newValue);
+                                },
+                                items: cities.map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    )
                     // TextFormField(
                     //   onChanged: (value) {
                     //     // signInValidator.changeEmail(value);
@@ -200,6 +262,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
               InkWell(
                 onTap: () {
                   doctorRegisterValidation.setApiCall();
+
                   var id = FirebaseAuth.instance.currentUser.uid;
                   if (doctorRegisterValidation.name.value != null &&
                       doctorRegisterValidation.email.value != null &&
@@ -212,7 +275,6 @@ class _DoctorRegisterState extends State<DoctorRegister> {
                       doctorId: id,
                     );
 
-                    print(data.toMap());
                     var userId = FirebaseAuth.instance.currentUser.uid;
                     DoctorServices().addUser(userId, data).then((value) {
                       doctorRegisterValidation.setApiCall();

@@ -11,6 +11,7 @@ import 'package:camhed/Doctor/DoctorProvider/DoctorProfileProvider.dart';
 import 'package:camhed/Doctor/DoctorProvider/SearchHospitalProvider.dart';
 import 'package:camhed/Doctor/DoctorProvider/TimeSessaionProvider.dart';
 import 'package:camhed/Doctor/Pages/DoctorHomePage.dart';
+import 'package:camhed/Doctor/Pages/doctorRegister.dart';
 import 'package:camhed/validatior/doctorIdVaildation.dart';
 import 'package:camhed/validatior/doctorRegisterValidation.dart';
 import 'package:camhed/validatior/userRegisterValidation.dart';
@@ -25,6 +26,10 @@ void main() async {
   await Firebase.initializeApp();
   Stripe.publishableKey =
       "pk_test_51JQzkRSCysouL4DFEaQ5EYalDJuwz92hyxAWVNlTY0p3IBRcUCztgPpZocuTTCcd619d1Ht1kZofRqlk37VSpT5q00v5LfYB0r";
+
+  Stripe.merchantIdentifier = 'MerchantIdentifier';
+  Stripe.urlScheme = 'flutterstripe';
+  await Stripe.instance.applySettings();
   runApp(MyApp());
 }
 

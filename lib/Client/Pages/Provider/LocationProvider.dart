@@ -9,12 +9,12 @@ import 'package:geocoder/geocoder.dart';
 
 class LocationProvider with ChangeNotifier {
   List<String> _city = [];
-  String _selectedCity = "";
+  String _selectedCity;
 
   String _country = "";
+
   List<String> get city => _city;
   String get selectedCity => _selectedCity;
-
   resetStreams() {
     _city.clear();
   }
@@ -67,6 +67,7 @@ class LocationProvider with ChangeNotifier {
 
       _city.addAll(city);
     });
+
     notifyListeners();
   }
 }
