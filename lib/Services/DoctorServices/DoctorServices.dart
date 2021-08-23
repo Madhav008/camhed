@@ -25,14 +25,13 @@ class DoctorServices {
     await _db
         .collection('DoctorProfile')
         .where('category', isEqualTo: category)
-        .where('address', isEqualTo: _location.selectedCity)
+        .where('address', isEqualTo: LocationProvider.seleceted)
         .get()
         .then((value) {
       data = (value.docs)
           .map((e) => DoctorProfileModel.fromFirestore(e.data()))
           .toList();
     });
-    print(_location.selectedCity);
     return data;
   }
 

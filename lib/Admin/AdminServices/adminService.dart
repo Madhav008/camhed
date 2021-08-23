@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdminServices {
   FirebaseFirestore _db = FirebaseFirestore.instance;
-  LocationProvider _location = new LocationProvider();
 
   Future addCategory(CategoryModel data) {
     return _db.collection('Category').doc(data.categoryId).set(data.toMap());
@@ -40,16 +39,18 @@ class AdminServices {
   }
 
   Future<List<HospitalModel>> getHospital() async {
+    LocationProvider _location = new LocationProvider();
+
     await _location.getLocation();
     List<HospitalModel> data;
     var value = await _db
         .collection('Hospitals')
-        .where('city', isEqualTo: _location.selectedCity)
+        .where('city', isEqualTo: LocationProvider.seleceted)
         .get();
 
     data =
         value.docs.map((e) => HospitalModel.fromFirestore(e.data())).toList();
-    print(_location.selectedCity);
+    print(LocationProvider.seleceted);
     return data;
   }
 

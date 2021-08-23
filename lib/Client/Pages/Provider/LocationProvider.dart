@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:camhed/Admin/AdminModels/LocationModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +8,7 @@ import 'package:geocoder/geocoder.dart';
 class LocationProvider with ChangeNotifier {
   List<String> _city = [];
   String _selectedCity;
-
+  static var seleceted;
   String _country = "";
 
   List<String> get city => _city;
@@ -35,6 +33,7 @@ class LocationProvider with ChangeNotifier {
     String formattedAddress =
         "${placemark.locality}, ${placemark.countryName} ";
     if (placemark.adminArea != null) {
+      seleceted = placemark.adminArea;
       _selectedCity = placemark.adminArea;
     }
     _country = placemark.countryName;
@@ -46,6 +45,7 @@ class LocationProvider with ChangeNotifier {
     _preferences.setString('city', _selectedCity.toString());
     // print(value);
     _selectedCity = value;
+    seleceted = value;
     notifyListeners();
   }
 
