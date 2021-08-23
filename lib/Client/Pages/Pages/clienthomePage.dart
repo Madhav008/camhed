@@ -65,7 +65,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                 width: 8,
               ),
               Text(
-                "${location.selectedCity}",
+                  (location.tempcity!=null)?"${location.tempcity}":"${location.selectedCity}",
                 style: TextStyle(color: Color(0xffe8364e)),
               ),
             ],

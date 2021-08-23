@@ -272,11 +272,15 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
                                                                   color: Colors
                                                                       .black38),
                                                             ),
-                                                            Text(
-                                                              "${data.appointmentId}",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black38),
+                                                            Column(
+                                                              children: [
+                                                                Text(
+                                                                  "${data.appointmentId}",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black38),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ],
                                                         ),

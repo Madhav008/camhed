@@ -45,7 +45,7 @@ class AdminServices {
     List<HospitalModel> data;
     var value = await _db
         .collection('Hospitals')
-        .where('city', isEqualTo: LocationProvider.seleceted)
+        .where('city', isEqualTo: (LocationProvider.tempseleceted!=null)?LocationProvider.tempseleceted:LocationProvider.seleceted)
         .get();
 
     data =

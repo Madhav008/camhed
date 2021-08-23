@@ -43,10 +43,16 @@ class _DoctorListPageState extends State<DoctorListPage> {
           children: [
             FutureBuilder<List<DoctorProfileModel>>(
                 future:
-                    DoctorServices().fetchCategoryDoctor(widget.categoryName),
+                DoctorServices().fetchCategoryDoctor(widget.categoryName),
                 builder: (context, snapshot) {
                   List<DoctorProfileModel> doctors = snapshot.data;
-                  return ListView.builder(
+                  return doctors==null?Center(
+                    child: Container(
+                      child: LinearProgressIndicator(
+                        color: Color(0xffe8364e),
+                      ),
+                    ),
+                  ):(doctors.length!=0) ?  ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
@@ -55,12 +61,12 @@ class _DoctorListPageState extends State<DoctorListPage> {
                         _db
                             .collection("Hospitals")
                             .where("Doctors",
-                                arrayContains: doctors[index].doctorId)
+                            arrayContains: doctors[index].doctorId)
                             .get()
                             .then((value) {
                           setState(() {
                             hospitalData.location =
-                                (value.docs).first['address'];
+                            (value.docs).first['address'];
                             hospitalData.name = (value.docs).first['name'];
                           });
                         });
@@ -76,7 +82,7 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black12),
                                   borderRadius:
-                                      BorderRadius.circular(height / 100),
+                                  BorderRadius.circular(height / 100),
                                 ),
                                 child: Column(
                                   children: [
@@ -90,9 +96,9 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                               bottom: 5),
                                           child: Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
                                                 children: [
@@ -101,9 +107,9 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                     width: height / 12,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    100000),
+                                                        BorderRadius
+                                                            .circular(
+                                                            100000),
                                                         image: DecorationImage(
                                                             image: AssetImage(
                                                                 "Images/doctorlogo.png"))),
@@ -113,17 +119,17 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                   ),
                                                   Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    CrossAxisAlignment
+                                                        .start,
                                                     children: [
                                                       Text(
                                                         "${doctors[index].name}",
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontWeight:
-                                                                FontWeight.w600,
+                                                            FontWeight.w600,
                                                             fontSize:
-                                                                height / 55),
+                                                            height / 55),
                                                       ),
                                                       SizedBox(
                                                         height: height / 200,
@@ -134,9 +140,9 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                             color: Color(
                                                                 0xffe8364e),
                                                             fontWeight:
-                                                                FontWeight.w500,
+                                                            FontWeight.w500,
                                                             fontSize:
-                                                                height / 65),
+                                                            height / 65),
                                                       ),
                                                       SizedBox(
                                                         height: height / 250,
@@ -145,9 +151,9 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                         "${doctors[index].position}",
                                                         style: TextStyle(
                                                             color:
-                                                                Colors.black38,
+                                                            Colors.black38,
                                                             fontSize:
-                                                                height / 65),
+                                                            height / 65),
                                                       ),
                                                       SizedBox(
                                                           height: height / 250),
@@ -155,9 +161,9 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                         "${widget.categoryName}",
                                                         style: TextStyle(
                                                             color:
-                                                                Colors.black38,
+                                                            Colors.black38,
                                                             fontSize:
-                                                                height / 65),
+                                                            height / 65),
                                                       ),
                                                     ],
                                                   )
@@ -165,7 +171,7 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                               ),
                                               Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                CrossAxisAlignment.end,
                                                 children: [
                                                   Icon(
                                                     Icons.info_outline,
@@ -182,9 +188,9 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                     "\$ ${doctors[index].fees}",
                                                     style: TextStyle(
                                                         color:
-                                                            Color(0xffe8364e),
+                                                        Color(0xffe8364e),
                                                         fontWeight:
-                                                            FontWeight.w500,
+                                                        FontWeight.w500,
                                                         fontSize: height / 40),
                                                   )
                                                 ],
@@ -203,14 +209,14 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                                       builder: (context) =>
                                                           MakeAppoinmentPage(
                                                               hospitalLocation:
-                                                                  hospitalData
-                                                                      .location,
+                                                              hospitalData
+                                                                  .location,
                                                               hospitalName:
-                                                                  hospitalData
-                                                                      .name,
+                                                              hospitalData
+                                                                  .name,
                                                               doctorProfileModel:
-                                                                  doctors[
-                                                                      index])));
+                                                              doctors[
+                                                              index])));
                                             },
                                             child: Container(
                                               height: height / 25,
@@ -218,15 +224,15 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xffe8364e),
                                                   borderRadius:
-                                                      BorderRadius.circular(5)),
+                                                  BorderRadius.circular(5)),
                                               child: Center(
                                                   child: Text(
-                                                "BOOK NOW ",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
+                                                    "BOOK NOW ",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
                                                         FontWeight.w300),
-                                              )),
+                                                  )),
                                             ),
                                           ),
                                         )
@@ -238,11 +244,11 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                           left: 5, right: 5),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 "${hospitalData.name}",
@@ -266,14 +272,14 @@ class _DoctorListPageState extends State<DoctorListPage> {
                                             width: height / 20,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        100000),
+                                                BorderRadius.circular(
+                                                    100000),
                                                 color: Color(0xffe8364e)),
                                             child: Center(
                                                 child: Icon(
-                                              Icons.directions,
-                                              color: Colors.white,
-                                            )),
+                                                  Icons.directions,
+                                                  color: Colors.white,
+                                                )),
                                           ),
                                         ],
                                       ),
@@ -284,7 +290,29 @@ class _DoctorListPageState extends State<DoctorListPage> {
                             ),
                           ),
                         );
-                      });
+                      }):Container(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30,top: 80),
+                          child: Container(
+                            height: height / 2,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage("Images/doctor.png"),
+                                    fit: BoxFit.contain)),
+                          ),
+                        ),
+                        Text(
+                          "No Doctors Available",
+                          style: TextStyle(
+                              color: Color(0xffED1A4F),
+                              fontSize: height / 35,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    ),
+                  );
                 }),
           ],
         ),

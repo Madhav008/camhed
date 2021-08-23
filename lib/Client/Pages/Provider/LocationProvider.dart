@@ -9,7 +9,11 @@ class LocationProvider with ChangeNotifier {
   List<String> _city = [];
   String _selectedCity;
   static var seleceted;
+  static var tempseleceted;
   String _country = "";
+  String _tempcity;
+
+  String get tempcity => _tempcity;
 
   List<String> get city => _city;
   String get selectedCity => _selectedCity;
@@ -44,8 +48,10 @@ class LocationProvider with ChangeNotifier {
     SharedPreferences _preferences = await SharedPreferences.getInstance();
     _preferences.setString('city', _selectedCity.toString());
     // print(value);
-    _selectedCity = value;
-    seleceted = value;
+    // _selectedCity = value;
+    tempseleceted = value;
+    // seleceted = value;
+    _tempcity = value;
     notifyListeners();
   }
 
