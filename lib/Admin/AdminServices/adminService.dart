@@ -14,7 +14,8 @@ class AdminServices {
 
   Future<List<CategoryModel>> getCategory() async {
     List<CategoryModel> data;
-    var value = await _db.collection('Category').get();
+    var value =
+        await _db.collection('Category').get();
 
     data =
         (value.docs).map((e) => CategoryModel.fromFirestore(e.data())).toList();
@@ -45,7 +46,10 @@ class AdminServices {
     List<HospitalModel> data;
     var value = await _db
         .collection('Hospitals')
-        .where('city', isEqualTo: (LocationProvider.tempseleceted!=null)?LocationProvider.tempseleceted:LocationProvider.seleceted)
+        .where('city',
+            isEqualTo: (LocationProvider.tempseleceted != null)
+                ? LocationProvider.tempseleceted
+                : LocationProvider.seleceted)
         .get();
 
     data =

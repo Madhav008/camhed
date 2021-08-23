@@ -25,7 +25,11 @@ class DoctorServices {
     await _db
         .collection('DoctorProfile')
         .where('category', isEqualTo: category)
-        .where('address', isEqualTo: (LocationProvider.tempseleceted!=null)?LocationProvider.tempseleceted:LocationProvider.seleceted)
+        .where('fees', isNull: false)
+        .where('address',
+            isEqualTo: (LocationProvider.tempseleceted != null)
+                ? LocationProvider.tempseleceted
+                : LocationProvider.seleceted)
         .get()
         .then((value) {
       data = (value.docs)
