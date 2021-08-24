@@ -177,13 +177,20 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
                                                     )
                                                   ],
                                                 ),
-                                                Container(
+                                                (data.paymentStatus=="false")?Container(
                                                   height: height / 15,
                                                   width: width / 4,
                                                   decoration: BoxDecoration(
                                                       image: DecorationImage(
                                                           image: AssetImage(
                                                               "Images/unpaid.jpg"))),
+                                                ):Container(
+                                                  height: height / 15,
+                                                  width: width / 4,
+                                                  decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              "Images/checked.png"))),
                                                 )
                                               ],
                                             ),
@@ -204,12 +211,12 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text(
-                                                      "${data.date}",
-                                                      style: TextStyle(
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
+                                                    // Text(
+                                                    //   "${data.date}",
+                                                    //   style: TextStyle(
+                                                    //     color: Colors.red,
+                                                    //   ),
+                                                    // ),
                                                     Text(
                                                       "${data.date}",
                                                       style: TextStyle(
@@ -218,12 +225,12 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
                                                           fontWeight:
                                                               FontWeight.w500),
                                                     ),
-                                                    Text(
-                                                      "${data.date}",
-                                                      style: TextStyle(
-                                                        color: Colors.black38,
-                                                      ),
-                                                    ),
+                                                    // Text(
+                                                    //   "${data.date}",
+                                                    //   style: TextStyle(
+                                                    //     color: Colors.black38,
+                                                    //   ),
+                                                    // ),
                                                   ],
                                                 ),
                                                 Padding(
@@ -278,7 +285,7 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
                                                                   "${data.appointmentId}",
                                                                   style: TextStyle(
                                                                       color: Colors
-                                                                          .black38),
+                                                                          .black38,fontSize: height/80),
                                                                 ),
                                                               ],
                                                             ),
