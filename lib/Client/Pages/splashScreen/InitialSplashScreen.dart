@@ -27,6 +27,8 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     Future.delayed(Duration(seconds: 1), () {
       Provider.of<LocationProvider>(context, listen: false)
           .enableLocationServices();
@@ -108,10 +110,35 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
     });
 
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        child: Text("splashScreen"),
-        color: Colors.white,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Color(0xffe8364e),
+        toolbarHeight: 0,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AnimatedContainer(
+            duration: const Duration(seconds: 2),
+            curve: Curves.elasticIn,
+            child: Container(
+              height: height/7,
+              width: width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("Images/CAMHED.png")
+                )
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: CircularProgressIndicator(
+              color: Color(0xffe8364e),
+            ),
+          )
+        ],
       ),
     );
   }

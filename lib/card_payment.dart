@@ -29,13 +29,13 @@ class _CustomCardPaymentScreenState extends State<CustomCardPaymentScreen> {
                   tokenizationKey: "sandbox_tvs84y3f_jvqyg4ywfjdvwv27",
                   collectDeviceData: true,
                   paypalRequest: BraintreePayPalRequest(
-                      amount: '1', displayName: "Madhav"),
+                      amount: '0.1', displayName: "Madhav"),
                   cardEnabled: true,
                 );
 
                 BraintreeDropInResult result = await BraintreeDropIn.start(res);
                 http.post(Uri.tryParse(
-                    'http://651c-210-89-62-114.ngrok.io/?=payment_method_nonce=${result.paymentMethodNonce.nonce}&device_data=${result.deviceData}'));
+                    'https://eb58-210-89-62-114.ngrok.io/?=payment_method_nonce=${result.paymentMethodNonce.nonce}&device_data=${result.deviceData}'));
                 if (result != null) {
                   print("Payment Done");
                   print(result.paymentMethodNonce.nonce);

@@ -154,6 +154,8 @@ class Withdraw {
   double amount;
   String status;
   String withdrawId;
+  //email of doctor
+  //transection number
 
   Withdraw({this.name, this.accNo, this.amount, this.status, this.withdrawId});
 

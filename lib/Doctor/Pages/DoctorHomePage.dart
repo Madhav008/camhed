@@ -244,26 +244,26 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
+                                              // Text(
+                                              //   "${docData.date}",
+                                              //   style: TextStyle(
+                                              //     color: Colors.red,
+                                              //   ),
+                                              // ),
                                               Text(
                                                 "${docData.date}",
                                                 style: TextStyle(
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                              Text(
-                                                "${docData.date}",
-                                                style: TextStyle(
-                                                    color: Colors.black,
+                                                    color: Colors.red,
                                                     fontSize: height / 50,
                                                     fontWeight:
                                                         FontWeight.w500),
                                               ),
-                                              Text(
-                                                "${docData.date}",
-                                                style: TextStyle(
-                                                  color: Colors.black38,
-                                                ),
-                                              ),
+                                              // Text(
+                                              //   "${docData.date}",
+                                              //   style: TextStyle(
+                                              //     color: Colors.black38,
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                           Padding(
@@ -311,7 +311,7 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                                         "${docData.appointmentId}",
                                                         style: TextStyle(
                                                             color:
-                                                                Colors.black38),
+                                                                Colors.black38,fontSize: height/75),
                                                       ),
                                                     ],
                                                   ),
@@ -509,25 +509,25 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
+                                            // Text(
+                                            //   "${docHistDetail.date}",
+                                            //   style: TextStyle(
+                                            //     color: Colors.red,
+                                            //   ),
+                                            // ),
                                             Text(
                                               "${docHistDetail.date}",
                                               style: TextStyle(
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                            Text(
-                                              "${docHistDetail.date}",
-                                              style: TextStyle(
-                                                  color: Colors.black,
+                                                  color: Colors.red,
                                                   fontSize: height / 50,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            Text(
-                                              "${docHistDetail.date}",
-                                              style: TextStyle(
-                                                color: Colors.black38,
-                                              ),
-                                            ),
+                                            // Text(
+                                            //   "${docHistDetail.date}",
+                                            //   style: TextStyle(
+                                            //     color: Colors.black38,
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
                                         Padding(
@@ -574,7 +574,7 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                       "${docHistDetail.appointmentId}",
                                                       style: TextStyle(
                                                           color:
-                                                              Colors.black38),
+                                                          Colors.black38,fontSize: height/75),
                                                     ),
                                                   ],
                                                 ),

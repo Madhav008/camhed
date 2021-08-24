@@ -1,5 +1,6 @@
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
+import 'package:camhed/Doctor/Pages/DoctorWithdrawStatus.dart';
 import 'package:camhed/Doctor/Pages/doctorWithdrawPage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -118,7 +119,66 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
                     fontWeight: FontWeight.w600,
                     fontSize: height / 35),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30,right: 30,top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("T - Id",style: TextStyle(fontWeight: FontWeight.bold,fontSize: height/55,color: Colors.black54),),
+                  Container(
+                    width: 1,
+                    height: height/40,
+                    color: Colors.black54,
+                  ),
+                  Text(" Withdrawn Amount",style: TextStyle(fontWeight: FontWeight.bold,fontSize: height/55,color: Colors.black54)),
+                  Container(
+                    width: 1,
+                    height: height/40,
+                    color: Colors.black54,
+                  ),
+                  Text("Status",style: TextStyle(fontWeight: FontWeight.bold,fontSize: height/55,color: Colors.black54),)
+                ],
+              ),
+            ),
+            ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 20,left: 15,right: 15),
+                    child: Material(
+                          borderRadius: BorderRadius.circular(height/80),
+                      elevation: 2,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorWithdrawStatus()));
+                          },
+                        child: Container(
+                          height: height/12,
+                          width: width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(height/80)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15,right: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("2569468"),
+                                Text("25 \$"),
+                                Text("Pending")
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                })
+
           ],
         ),
       ),
