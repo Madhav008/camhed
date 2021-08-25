@@ -1,5 +1,6 @@
 import 'package:camhed/Admin/AdminProvider/AdminWalletProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
+import 'package:camhed/notificationservecies.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -144,6 +145,8 @@ class _AdminWithdrawDetailsState extends State<AdminWithdrawDetails> {
                 widget.data.transacId = transIdControlller.text;
                 widget.data.status = "Done";
                 docDetails.withdrawrequest(widget.data, widget.id);
+                NotificationServices()
+                    .sendDoctorPaymentStatusNotification(widget.id);
               },
               child: Container(
                 height: height / 15,

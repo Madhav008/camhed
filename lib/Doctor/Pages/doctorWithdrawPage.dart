@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
+import 'package:camhed/notificationservecies.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -149,6 +150,8 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                                 status: "Pending");
 
                             wallet.withdrawrequest(withdrawData, context);
+                            NotificationServices()
+                                .sendWithdrawRequestNotification();
                           }
                         }
                       },
