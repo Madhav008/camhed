@@ -77,8 +77,7 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
                         children: [
                           InkWell(
                             onTap: () {
-                              if (wallet.amount > 0) {
-                                
+                              if (wallet.amount > 0 && wallet.amount > 15) {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -180,8 +179,9 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      DoctorWithdrawStatus(walletData.transacId,walletData.status)));
+                                  builder: (context) => DoctorWithdrawStatus(
+                                      walletData.transacId,
+                                      walletData.status)));
                         },
                         child: Container(
                           height: height / 12,

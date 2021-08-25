@@ -67,6 +67,7 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                 children: [
                   TextFormField(
                     controller: amountController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: "Enter Amount",
                       alignLabelWithHint: false,
@@ -150,8 +151,7 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                                 status: "Pending");
 
                             wallet.withdrawrequest(withdrawData, context);
-                            NotificationServices()
-                                .sendWithdrawRequestNotification();
+                           
                           }
                         }
                       },
