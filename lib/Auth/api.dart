@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-final mainUrl ="http://3c74-169-149-217-246.ngrok.io";
+final mainUrl ="http://274b-169-149-255-124.ngrok.io";
 final braintreePath = "checkouts/";
 final braintreePathr = "/checkouts/new";
 

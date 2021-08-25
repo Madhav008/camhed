@@ -185,7 +185,8 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: FileImage(file1),
-                                          fit: BoxFit.contain)),
+                                          fit: BoxFit.cover
+                                      )),
                                 )
                               : Image(
                                   image: AssetImage("Images/add.png"),
@@ -240,20 +241,11 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(height / 90),
                           color: Colors.white),
-                      child: Column(
+                      child: (file2 == null)?Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          (file2 != null)
-                              ? Container(
-                                  height: height / 4,
-                                  width: width,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: FileImage(file2),
-                                          fit: BoxFit.cover)),
-                                )
-                              : Image(
+                           Image(
                                   image: AssetImage("Images/add.png"),
                                   height: height / 6,
                                 ),
@@ -265,7 +257,14 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                             style: TextStyle(color: Colors.black54),
                           )
                         ],
-                      ),
+                      ):Container(
+                        height: height / 4,
+                        width: width,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: FileImage(file2),
+                                fit: BoxFit.cover)),
+                      )
                     ),
                   ),
                 ),
@@ -306,20 +305,11 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(height / 90),
                           color: Colors.white),
-                      child: Column(
+                      child: (file3 == null)?Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          (file3 != null)
-                              ? Container(
-                                  height: height / 4,
-                                  width: width,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: FileImage(file3),
-                                          fit: BoxFit.cover)),
-                                )
-                              : Image(
+                           Image(
                                   image: AssetImage("Images/userphoto.png"),
                                   height: height / 6,
                                 ),
@@ -333,7 +323,14 @@ class _DoctorVerifyState extends State<DoctorVerify> {
                             ),
                           )
                         ],
-                      ),
+                      ):Container(
+                      height: height / 4,
+                      width: width,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: FileImage(file3),
+                              fit: BoxFit.cover)),
+                    )
                     ),
                   ),
                 ),

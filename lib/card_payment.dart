@@ -76,7 +76,7 @@ class _CustomCardPaymentScreenState extends State<CustomCardPaymentScreen> {
                         firebaseToken);
                     print(clientToken);
                     try{ var resresult = await http.post(Uri.tryParse(
-                        'http://3c74-169-149-217-246.ngrok.io/checkouts/'),
+                        'http://274b-169-149-255-124.ngrok.io/checkouts/'),
                       headers: <String, String>{
                         'Content-Type': 'application/json',
                         'accept':'application/json',
@@ -84,7 +84,7 @@ class _CustomCardPaymentScreenState extends State<CustomCardPaymentScreen> {
                       },
                       body: jsonEncode(<String, String>{
                         'amount': "50.00",
-                        'nonce':"fake-valid-nonce",
+                        'nonce':result.paymentMethodNonce.nonce,
 
                       }),
 
