@@ -5,7 +5,9 @@ import 'package:camhed/Doctor/Pages/doctorSettingPage.dart';
 import 'package:camhed/Doctor/Pages/doctorWalletPage.dart';
 import 'package:camhed/Model/AppointmentModel.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 
@@ -31,7 +33,8 @@ class _DoctorHomePageState extends State<DoctorHomePage>
     _tabController = TabController(vsync: this, length: 2);
     Provider.of<AppointmentProvider>(context, listen: false)
         .getDoctorAppointments();
-  
+    var userId = FirebaseAuth.instance.currentUser.uid;
+    OneSignal.shared.setExternalUserId(userId);
   }
 
   @override
@@ -311,7 +314,9 @@ class _DoctorAppoinmentsState extends State<DoctorAppoinments> {
                                                         "${docData.appointmentId}",
                                                         style: TextStyle(
                                                             color:
-                                                                Colors.black38,fontSize: height/75),
+                                                                Colors.black38,
+                                                            fontSize:
+                                                                height / 75),
                                                       ),
                                                     ],
                                                   ),
@@ -573,8 +578,9 @@ class _DoctorAppoinmentsHistoryState extends State<DoctorAppoinmentsHistory> {
                                                     Text(
                                                       "${docHistDetail.appointmentId}",
                                                       style: TextStyle(
-                                                          color:
-                                                          Colors.black38,fontSize: height/75),
+                                                          color: Colors.black38,
+                                                          fontSize:
+                                                              height / 75),
                                                     ),
                                                   ],
                                                 ),
