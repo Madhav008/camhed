@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:camhed/Auth/api.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_braintree/flutter_braintree.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -18,33 +20,93 @@ class CustomCardPaymentScreen extends StatefulWidget {
 class _CustomCardPaymentScreenState extends State<CustomCardPaymentScreen> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ElevatedButton(
-              onPressed: () async {
-                var res = await BraintreeDropInRequest(
-                  tokenizationKey: "sandbox_tvs84y3f_jvqyg4ywfjdvwv27",
-                  collectDeviceData: true,
-                  paypalRequest: BraintreePayPalRequest(
-                      amount: '0.1', displayName: "Madhav"),
-                  cardEnabled: true,
-                );
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 50),
+            //   child: InkWell(
+            //     onTap: (){
+            //       FirebaseAuth.instance.currentUser.getIdToken().then((firebaseToken) async{
+            //         var clientToken = await getBraintreeclientToken(firebaseToken);
+            //         var res =  BraintreeDropInRequest(
+            //           tokenizationKey: "sandbox_rzy6xqv2_dy65dghcpgb8dxq3",
+            //           collectDeviceData: true,
+            //           paypalRequest: BraintreePayPalRequest(
+            //               amount: '100.00', displayName: "Madhav"),
+            //           cardEnabled: true,
+            //         );
+            //         BraintreeDropInResult result = await BraintreeDropIn.start(res);
+            //         var pri =50.00;
+            //
+            //         var data = await checkOut(firebaseToken,pri.toDouble(),result.paymentMethodNonce.toString());
+            //
+            //       });
+            //
+            //
+            //     },
+            //       child: Text("Pay")),
+            // ),
+            ElevatedButton(
+                onPressed: () async {
+                  var res =  BraintreeDropInRequest(
+                    tokenizationKey: "sandbox_rzy6xqv2_dy65dghcpgb8dxq3",
+                    collectDeviceData: true,
+                    paypalRequest: BraintreePayPalRequest(
+                        amount: '100.00', displayName: "Madhav"),
+                    cardEnabled: true,
+                  );
 
-                BraintreeDropInResult result = await BraintreeDropIn.start(res);
-                http.post(Uri.tryParse(
-                    'https://eb58-210-89-62-114.ngrok.io/?=payment_method_nonce=${result.paymentMethodNonce.nonce}&device_data=${result.deviceData}'));
-                if (result != null) {
-                  print("Payment Done");
-                  print(result.paymentMethodNonce.nonce);
-                } else {
-                  print("Payment Fail");
-                }
-              },
-              child: Text("Pay"))
-        ],
+                  // BraintreeDropInResult result = await BraintreeDropIn.start(res);
+                  // if(result != null){
+                  //   print(result.paymentMethodNonce.description);
+                  //   print(result.paymentMethodNonce.nonce);
+                  // }
+
+
+                  BraintreeDropInResult result = await BraintreeDropIn.start(res);
+
+                  FirebaseAuth.instance.currentUser.getIdToken().then((firebaseToken) async {
+                    var clientToken = await getBraintreeclientToken(
+                        firebaseToken);
+                    print(clientToken);
+                    try{ var resresult = await http.post(Uri.tryParse(
+                        'http://3c74-169-149-217-246.ngrok.io/checkouts/'),
+                      headers: <String, String>{
+                        'Content-Type': 'application/json',
+                        'accept':'application/json',
+                        'Authorization':clientToken
+                      },
+                      body: jsonEncode(<String, String>{
+                        'amount': "50.00",
+                        'nonce':"fake-valid-nonce",
+
+                      }),
+
+
+                    );
+                    print(resresult.body);
+                    }catch(e){
+                      print("error");
+                    }
+                  },);
+
+
+                  // if (result != null) {
+                  //   print("Payment Done");
+                  //   print(result.paymentMethodNonce.nonce);
+                  // } else {
+                  //   print("Payment Fail");
+                  // }
+                },
+                child: Text("Pay")),
+          ],
+        ),
       ),
     );
   }
