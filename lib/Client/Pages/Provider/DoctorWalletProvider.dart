@@ -1,5 +1,6 @@
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Model/AppointmentModel.dart';
+import 'package:camhed/notificationservecies.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -112,7 +113,7 @@ class DoctorWalletProvider with ChangeNotifier {
   withdrawrequest(Withdraw data, context) async {
     await getWithdrawList();
     var userId = FirebaseAuth.instance.currentUser.uid;
-    if (_amount > 0) {
+    if (_amount >= data.amount && data.amount > 0) {
       _dataWithdraw.add(data);
       var res = WithdrawList(
         withdraw: _dataWithdraw,
@@ -124,6 +125,8 @@ class DoctorWalletProvider with ChangeNotifier {
 
       updateWithdraw(data.amount);
       Navigator.pop(context);
+
+      NotificationServices().sendWithdrawRequestNotification();
     } else {
       Fluttertoast.showToast(msg: "Not Have Enough Money");
     }
