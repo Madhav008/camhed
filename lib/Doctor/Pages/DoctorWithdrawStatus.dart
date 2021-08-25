@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DoctorWithdrawStatus extends StatefulWidget {
-  const DoctorWithdrawStatus({Key key}) : super(key: key);
+  String transacId, status;
+
+  DoctorWithdrawStatus(this.transacId,this.status);
 
   @override
   _DoctorWithdrawStatusState createState() => _DoctorWithdrawStatusState();
@@ -26,23 +28,23 @@ class _DoctorWithdrawStatusState extends State<DoctorWithdrawStatus> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Container(
-            //   // height: height,
-            //   child: Column(
-            //     children: [
-            //       Container(
-            //         height: height/2,
-            //         width: width,
-            //         decoration: BoxDecoration(
-            //           image: DecorationImage(
-            //             image: AssetImage("Images/pending.png")
-            //           )
-            //         ),
-            //       ),
-            //       Text("Please wait at least 3 days for funds to transfer"),
-            //     ],
-            //   ),
-            // ),
+            (widget.status=="Pending")?Container(
+              // height: height,
+              child: Column(
+                children: [
+                  Container(
+                    height: height/2,
+                    width: width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("Images/pending.png")
+                      )
+                    ),
+                  ),
+                  Text("Please wait at least 3 days for funds to transfer"),
+                ],
+              ),
+            ):
             Container(
               child: Column(
                 children: [
@@ -71,7 +73,7 @@ class _DoctorWithdrawStatusState extends State<DoctorWithdrawStatus> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(height/80)
                         ),
-                        child: Center(child: Text("Transaction-id:  2135648525625",style: TextStyle(fontSize: height/45),)),
+                        child: Center(child: Text("Transaction-id:  ${widget.transacId}",style: TextStyle(fontSize: height/45),)),
                       ),
                     ),
                   )

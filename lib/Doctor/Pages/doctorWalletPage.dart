@@ -181,7 +181,7 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      DoctorWithdrawStatus()));
+                                      DoctorWithdrawStatus(walletData.transacId,walletData.status)));
                         },
                         child: Container(
                           height: height / 12,
