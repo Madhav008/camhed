@@ -54,7 +54,7 @@ class AdminServices {
 
     data =
         value.docs.map((e) => HospitalModel.fromFirestore(e.data())).toList();
-    print(LocationProvider.seleceted);
+    // print(LocationProvider.seleceted);
     return data;
   }
 

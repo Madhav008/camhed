@@ -104,10 +104,10 @@ class _DoctorLoginPageState extends State<DoctorLoginPage> {
                       ),
                       initialSelection: '+91',
                       onChanged: (CountryCode code) {
-                        print(code.name);
-                        print(code.code);
-                        print(code.dialCode);
-                        print(code.flagUri);
+                        // print(code.name);
+                        // print(code.code);
+                        // print(code.dialCode);
+                        // print(code.flagUri);
                       },
                       useUiOverlay: true,
                       useSafeArea: false

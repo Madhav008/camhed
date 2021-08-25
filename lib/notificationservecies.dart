@@ -80,4 +80,24 @@ class NotificationServices {
       print(e);
     }
   }
+
+  void newAppointmentNotification(String docNotId) async {
+    try {
+      var response =
+          await Dio().post('https://onesignal.com/api/v1/notifications',
+              options: Options(headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                "Authorization":
+                    "Basic Y2Q2NjgwMmMtZjI0My00MDcwLTk1ZDYtNjM1MTVmYjZkMGVl"
+              }),
+              data: {
+            'app_id': "5d44a640-c2bb-46bc-8ddf-85c9fe35af10",
+            'include_external_user_ids': [docNotId],
+            'contents': {'en': "New Appointment is There"},
+            'data': {'foo': "bar"}
+          });
+    } catch (e) {
+      print(e);
+    }
+  }
 }

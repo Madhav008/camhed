@@ -940,7 +940,7 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                 //       widget.doctorProfileModel.doctorId, data);
                                 //   Provider.of<DoctorWalletProvider>(context,
                                 //           listen: false)
-                                //       .updateTotalAmount(double.parse(
+                                //       .updateTotalAmount(int.parse(
                                 //           widget.doctorProfileModel.fees));
                                 // }
                                 // appointment.setAppointment(
