@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -129,6 +132,7 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                     padding: const EdgeInsets.only(top: 15),
                     child: InkWell(
                       onTap: () {
+                        var id = Random().nextInt(999999).toString();
                         if (accVerifyController.text !=
                             accountController.text) {
                           Fluttertoast.showToast(
@@ -137,13 +141,14 @@ class _DoctorWithdrawPageState extends State<DoctorWithdrawPage> {
                           if (nameController.text != null &&
                               amountController.text != null) {
                             var withdrawData = Withdraw(
-                              accNo: accountController.text,
-                              amount: double.parse(amountController.text),
-                              name: nameController.text,
-                            );
+                                accNo: accountController.text,
+                                amount: int.parse(amountController.text),
+                                name: nameController.text,
+                                docid: FirebaseAuth.instance.currentUser.uid,
+                                withdrawId: id,
+                                status: "Pending");
 
-                            wallet.withdrawrequest(withdrawData);
-                            
+                            wallet.withdrawrequest(withdrawData, context);
                           }
                         }
                       },

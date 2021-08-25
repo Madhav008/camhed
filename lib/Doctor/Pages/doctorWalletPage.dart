@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:camhed/Doctor/Pages/DoctorWithdrawStatus.dart';
@@ -18,6 +20,8 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
   void initState() {
     // print("DoctorWalletPage");
     Provider.of<DoctorWalletProvider>(context, listen: false).getTotalAmount();
+    Provider.of<DoctorWalletProvider>(context, listen: false).getWithdrawList();
+    // getWithdrawList
     super.initState();
   }
 
@@ -74,6 +78,7 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
                           InkWell(
                             onTap: () {
                               if (wallet.amount > 0) {
+                                
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -121,23 +126,39 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30,top: 20),
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("T - Id",style: TextStyle(fontWeight: FontWeight.bold,fontSize: height/55,color: Colors.black54),),
+                  Text(
+                    "T - Id",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: height / 55,
+                        color: Colors.black54),
+                  ),
                   Container(
                     width: 1,
-                    height: height/40,
+                    height: height / 40,
                     color: Colors.black54,
                   ),
-                  Text(" Withdrawn Amount",style: TextStyle(fontWeight: FontWeight.bold,fontSize: height/55,color: Colors.black54)),
+                  Text(" Withdrawn Amount",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: height / 55,
+                          color: Colors.black54)),
                   Container(
                     width: 1,
-                    height: height/40,
+                    height: height / 40,
                     color: Colors.black54,
                   ),
-                  Text("Status",style: TextStyle(fontWeight: FontWeight.bold,fontSize: height/55,color: Colors.black54),)
+                  Text(
+                    "Status",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: height / 55,
+                        color: Colors.black54),
+                  )
                 ],
               ),
             ),
@@ -145,31 +166,36 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
-                itemCount: 10,
+                itemCount: wallet.withdrwList.length,
                 itemBuilder: (context, index) {
+                  var walletData = wallet.withdrwList[index];
                   return Padding(
-                    padding: const EdgeInsets.only(top: 20,left: 15,right: 15),
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 15, right: 15),
                     child: Material(
-                          borderRadius: BorderRadius.circular(height/80),
+                      borderRadius: BorderRadius.circular(height / 80),
                       elevation: 2,
                       child: InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorWithdrawStatus()));
-                          },
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DoctorWithdrawStatus()));
+                        },
                         child: Container(
-                          height: height/12,
+                          height: height / 12,
                           width: width,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(height/80)
-                          ),
+                              borderRadius: BorderRadius.circular(height / 80)),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 15,right: 15),
+                            padding: const EdgeInsets.only(left: 15, right: 15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("2569468"),
-                                Text("25 \$"),
-                                Text("Pending")
+                                Text("${walletData.withdrawId}"),
+                                Text("${walletData.amount} \$"),
+                                Text("${walletData.status}")
                               ],
                             ),
                           ),
@@ -178,7 +204,6 @@ class _DoctorWalletPageState extends State<DoctorWalletPage> {
                     ),
                   );
                 })
-
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:camhed/Admin/AdminPages/DoctorVerifyPage.dart';
 import 'package:camhed/Admin/AdminPages/adminHomePage.dart';
+import 'package:camhed/Admin/AdminProvider/AdminWalletProvider.dart';
 import 'package:camhed/Admin/AdminProvider/ContryProvider.dart';
 import 'package:camhed/Admin/AdminProvider/DoctorStatusProvider.dart';
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
@@ -84,6 +85,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => DoctorWalletProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => AdminWalletProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -95,7 +99,7 @@ class MyApp extends StatelessWidget {
           future: _getPref(),
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data == 'true') {
-              return InitialSplashScreen();
+              return AdminHomePage();
             } else {
               return SplashScreen();
             }

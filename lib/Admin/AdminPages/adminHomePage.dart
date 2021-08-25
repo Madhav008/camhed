@@ -1,5 +1,6 @@
 import 'package:camhed/Admin/AdminPages/DoctorVerifyPage.dart';
 import 'package:camhed/Admin/AdminPages/adminSettings.dart';
+import 'package:camhed/Admin/AdminProvider/AdminWalletProvider.dart';
 import 'package:camhed/Admin/AdminProvider/ContryProvider.dart';
 import 'package:camhed/Admin/AdminProvider/DoctorStatusProvider.dart';
 import 'package:camhed/notificationservecies.dart';
@@ -21,7 +22,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
     super.initState();
     Provider.of<CountryProvider>(context, listen: false).getLocationData();
     OneSignal.shared.sendTag("Admin", "admin");
-
+    
     Provider.of<DoctorStatusProvider>(context, listen: false).getDoctorData();
   }
 

@@ -8,12 +8,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class DoctorWalletProvider with ChangeNotifier {
   AppointmentProvider _appointmentProvider = new AppointmentProvider();
-  double _amount = 0;
-  double _widthdraw = 0;
+  int _amount = 0;
+  int _widthdraw = 0;
   List<Withdraw> _dataWithdraw = [];
-
-  double get amount => _amount;
-  double get withdraw => _widthdraw;
+  int get amount => _amount;
+  int get withdraw => _widthdraw;
   List<Withdraw> get withdrwList => _dataWithdraw;
 
   setInitialWallet() async {
@@ -24,13 +23,13 @@ class DoctorWalletProvider with ChangeNotifier {
         .doc(userId)
         .set({'total_amount': 0.0, 'withdraw_amount': 0.0});
 
-    _amount = 0.0;
-    _widthdraw = 0.0;
+    _amount = 0;
+    _widthdraw = 0;
 
     notifyListeners();
   }
 
-  updateTotalAmount(double amount) async {
+  updateTotalAmount(int amount) async {
     _amount = amount + _amount;
     var userId = FirebaseAuth.instance.currentUser.uid;
 
@@ -65,12 +64,12 @@ class DoctorWalletProvider with ChangeNotifier {
         .doc(userId)
         .get();
 
-    _widthdraw = double.parse(res.data()['widthdraw_amount']);
+    _widthdraw = int.parse(res.data()['widthdraw_amount']);
 
     notifyListeners();
   }
 
-  updateWithdraw(double widthdrawAmount) async {
+  updateWithdraw(int widthdrawAmount) async {
     if (_amount >= widthdrawAmount) {
       _amount = _amount - widthdrawAmount;
     } else {
@@ -99,6 +98,7 @@ class DoctorWalletProvider with ChangeNotifier {
 
     final data = WithdrawList.fromFirestore(res.data());
 
+    print(data);
     if (data != null) {
       _dataWithdraw.addAll(data.withdraw);
     }
@@ -109,7 +109,7 @@ class DoctorWalletProvider with ChangeNotifier {
     _dataWithdraw.clear();
   }
 
-  withdrawrequest(Withdraw data) async {
+  withdrawrequest(Withdraw data, context) async {
     await getWithdrawList();
     var userId = FirebaseAuth.instance.currentUser.uid;
     if (_amount > 0) {
@@ -123,6 +123,7 @@ class DoctorWalletProvider with ChangeNotifier {
           .set(res.toMap());
 
       updateWithdraw(data.amount);
+      Navigator.pop(context);
     } else {
       Fluttertoast.showToast(msg: "Not Have Enough Money");
     }
@@ -151,13 +152,21 @@ class WithdrawList {
 class Withdraw {
   String name;
   String accNo;
-  double amount;
+  int amount;
   String status;
   String withdrawId;
-  //email of doctor
+  String docid;
+  String transacId;
   //transection number
 
-  Withdraw({this.name, this.accNo, this.amount, this.status, this.withdrawId});
+  Withdraw(
+      {this.name,
+      this.accNo,
+      this.amount,
+      this.status,
+      this.withdrawId,
+      this.transacId,
+      this.docid});
 
   Map<String, dynamic> toMap() {
     return {
@@ -166,6 +175,8 @@ class Withdraw {
       'amount': amount,
       'withdrawId': withdrawId,
       'status': status,
+      'transacId': transacId,
+      'docId': docid,
     };
   }
 
@@ -177,6 +188,8 @@ class Withdraw {
         amount: firestore['amount'],
         status: firestore['status'],
         withdrawId: firestore['withdrawId'],
+        docid: firestore['docId'],
+        transacId: firestore['transacId'],
         name: firestore['name']);
   }
 }
