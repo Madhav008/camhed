@@ -38,7 +38,30 @@ class DoctorServices {
     });
     return data;
   }
+  ///////////////////////////////////////////////////////////////////
 
+  Future<List<DoctorProfileModel>> fetchDoctor() async {
+    List<DoctorProfileModel> data;
+    await _location.getLocation();
+
+    await _db
+        .collection('DoctorProfile')
+        .where('fees', isNotEqualTo: null)
+        .where('address',
+        isEqualTo: (LocationProvider.tempseleceted != null)
+            ? LocationProvider.tempseleceted
+            : LocationProvider.seleceted)
+        .get()
+        .then((value) {
+      data = (value.docs)
+          .map((e) => DoctorProfileModel.fromFirestore(e.data()))
+          .toList();
+    });
+    return data;
+  }
+
+
+////////////////////////////////////////////////////////////////////
   Future<List<String>> fetchHospitalDoctor(String hospitalId) async {
     // List<DoctorProfileModel> data = [];
     List<HospitalModel> hospitalData;
