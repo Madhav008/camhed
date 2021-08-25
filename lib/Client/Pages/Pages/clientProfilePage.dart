@@ -86,7 +86,7 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
           future: getProfileData(),
           builder: (context, snapshot) {
             UserProfile userData = snapshot.data;
-            return SingleChildScrollView(
+            return (snapshot.hasData)?SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -323,6 +323,8 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
                   ),
                 ],
               ),
+            ):LinearProgressIndicator(
+              color: Color(0xffe8364e),
             );
           }),
     );

@@ -61,6 +61,7 @@ class _UserSelectCityState extends State<UserSelectCity> {
                           )
                         : Checkbox(
                             onChanged: (value) {
+                              location.changeCity(location.city[index]);
                               setState(() {
                                 selectedcity = index;
                               });

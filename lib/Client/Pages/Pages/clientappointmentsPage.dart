@@ -46,7 +46,11 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
           future: getAppointments(),
           builder: (context, snapshot) {
             List<AppointmentModel> appointments = snapshot.data.data;
-            return SingleChildScrollView(
+             if(snapshot.connectionState==ConnectionState.waiting){
+              return LinearProgressIndicator(
+                color: Color(0xffe8364e),
+              );
+            }else{return SingleChildScrollView(
               child: Column(
                 children: [
                   ListView.builder(
@@ -341,7 +345,7 @@ class _ClientAppointmentPageState extends State<ClientAppointmentPage> {
                       })
                 ],
               ),
-            );
+            );}
           }),
     );
   }

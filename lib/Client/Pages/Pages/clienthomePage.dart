@@ -10,6 +10,7 @@ import 'package:camhed/Client/Pages/Pages/doctorsListPage.dart';
 import 'package:camhed/Client/Pages/Pages/userselectcity.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorSearchProvider.dart';
 import 'package:camhed/Client/Pages/Provider/LocationProvider.dart';
+import 'package:camhed/Client/Pages/splashScreen/InitialSplashScreen.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
 import 'package:camhed/Model/UserModel/User.dart';
 import 'package:camhed/Services/DoctorServices/DoctorServices.dart';
@@ -18,6 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:uuid/uuid.dart';
 
 import 'homeSearchPage.dart';
@@ -69,6 +71,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: InkWell(
           onTap: () => Navigator.push(context,
@@ -188,7 +191,11 @@ class _ClientHomePageState extends State<ClientHomePage> {
                 ),
               ),
               ListTile(
-                onTap: () => Auth().signOut(),
+                onTap: (){
+                  Auth().signOut();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>InitialSplashScreen()));
+                },
+                // onTap: () => Auth().signOut(),
                 leading: Icon(Icons.power_settings_new),
                 title: Text(
                   "Log Out",
@@ -235,13 +242,13 @@ class _ClientHomePageState extends State<ClientHomePage> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: FutureBuilder<List<DoctorProfileModel>>(
-            future: DoctorServices().fetchDoctor(),
-          builder: (context, snapshot) {
-            List<DoctorProfileModel> doctors = snapshot.data;
-            return (doctors.length!=0)?Column(
+      body: FutureBuilder<List<DoctorProfileModel>>(
+          future: DoctorServices().fetchDoctor(),
+        builder: (context, snapshot) {
+          List<DoctorProfileModel> doctors = snapshot.data;
+          return (snapshot.hasData)?(doctors.length!=0)?SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 15, top: 10),
@@ -251,7 +258,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                         future: AdminServices().getBanner(),
                         builder: (context, snapshot) {
                           BannerModel banner = snapshot.data;
-                          return ListView.builder(
+                          return (snapshot.hasData)?ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: banner.url.length,
                               itemBuilder: (context, index) {
@@ -271,6 +278,35 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                             fit: BoxFit.cover,
                                           ),
                                           borderRadius: BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }):ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.only(right: 18, top: 15),
+                                    child: SizedBox(
+                                      height: height / 8.5,
+                                      width: width / 1.3,
+                                      child: Shimmer.fromColors(
+                                        direction: ShimmerDirection.ttb,
+                                        period: Duration(milliseconds: 1000),
+                                        baseColor: Colors.black54,
+                                        highlightColor: Colors.black,
+                                        child: Container(
+                                          height: height / 8.5,
+                                          width: width / 1.3,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black12,
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+
                                         ),
                                       ),
                                     ),
@@ -305,12 +341,12 @@ class _ClientHomePageState extends State<ClientHomePage> {
                         borderRadius: BorderRadius.circular(height / 120),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 20,bottom: 20),
                         child: FutureBuilder<List<CategoryModel>>(
                             future: AdminServices().getCategory(),
                             builder: (context, snapshot) {
                               List<CategoryModel> category = snapshot.data;
-                              return GridView.builder(
+                              return (snapshot.hasData)?GridView.builder(
                                   shrinkWrap: true, //just set this property
                                   physics: NeverScrollableScrollPhysics(),
                                   gridDelegate:
@@ -357,7 +393,32 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                         ),
                                       ),
                                     );
-                                  });
+                                  }):Shimmer.fromColors(
+                                direction: ShimmerDirection.ttb,
+                                period: Duration(milliseconds: 1000),
+                                baseColor: Colors.black54,
+                                highlightColor: Colors.black,
+                                    child: GridView.builder(
+                                    shrinkWrap: true, //just set this property
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 150,
+                                        childAspectRatio: 3 / 3,
+                                        crossAxisSpacing: 0,
+                                        mainAxisSpacing: 20),
+                                    itemCount: 6,
+                                    itemBuilder: (BuildContext ctx, index) {
+                                      return InkWell(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            color: Colors.black12,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  );
                             }),
                       ),
                     ),
@@ -386,7 +447,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                           future: AdminServices().getHospital(),
                           builder: (context, snapshot) {
                             List<HospitalModel> hospital = snapshot.data;
-                            return GridView.builder(
+                            return (snapshot.hasData)?GridView.builder(
                                 shrinkWrap: true, //just set this property
                                 physics: NeverScrollableScrollPhysics(),
                                 gridDelegate:
@@ -461,21 +522,60 @@ class _ClientHomePageState extends State<ClientHomePage> {
                                       ),
                                     ),
                                   );
-                                });
+                                }):Shimmer.fromColors(
+                              direction: ShimmerDirection.ttb,
+                              period: Duration(milliseconds: 1000),
+                              baseColor: Colors.black54,
+                              highlightColor: Colors.black,
+                              child: GridView.builder(
+                                  shrinkWrap: true, //just set this property
+                                  physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 150,
+                                      childAspectRatio: 3 / 3,
+                                      crossAxisSpacing: 0,
+                                      mainAxisSpacing: 20),
+                                  itemCount: 3,
+                                  itemBuilder: (BuildContext ctx, index) {
+                                    return InkWell(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          color: Colors.black12,
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            );
                           }),
                     ),
                   ),
                 ),
               ],
-            ):Container(
+            ),
+          ):Padding(
+            padding: const EdgeInsets.only(left: 15,right: 15),
+            child: Container(
+              color: Colors.white,
               height: height,
               width: width,
-              child: Center(
-                child: Text("Hello"),
-              ),
-            );
-          }
-        ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image(image: AssetImage("Images/avilable.png")),
+                  SizedBox(height: height/40,),
+                  Text("We are not avilable here Yet!",style: TextStyle(fontSize: height/40,color: Colors.black45),),
+                  SizedBox(height: height/100,),
+                  Text("Please change your Location",style: TextStyle(fontSize: height/50,color: Colors.black45),)
+                ],
+              )
+            ),
+          ):LinearProgressIndicator(
+            color: Color(0xffe8364e),
+          );
+        }
       ),
     );
   }

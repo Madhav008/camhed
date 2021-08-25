@@ -27,10 +27,6 @@ class _HospitalDoctorsListPageState extends State<HospitalDoctorsListPage> {
           style: TextStyle(color: Colors.black),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: Icon(Icons.search),
-          ),
         ],
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Color(0xffe8364e)),
