@@ -29,11 +29,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Stripe.publishableKey =
-      "pk_test_51JQzkRSCysouL4DFEaQ5EYalDJuwz92hyxAWVNlTY0p3IBRcUCztgPpZocuTTCcd619d1Ht1kZofRqlk37VSpT5q00v5LfYB0r";
+      "pk_test_51JSgLdSAU2VVzKqtLDriwc9t0a8MFrtT7j2L4wkQkG2NZNCC8RXgR7BEFnVpzP0oCSGpNyBMv51ukUvRXTT1WuS200p8r5ic9p";
 
-  Stripe.merchantIdentifier = 'MerchantIdentifier';
-  Stripe.urlScheme = 'flutterstripe';
-  await Stripe.instance.applySettings();
+  
   runApp(MyApp());
 }
 
