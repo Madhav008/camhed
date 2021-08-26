@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.0.6
   uuid: ^3.0.4
   shimmer: ^2.0.0
+  webview_flutter:
 
 dev_dependencies:
   flutter_test:

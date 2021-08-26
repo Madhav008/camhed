@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:convert';
 
+import 'package:camhed/CheckOut_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -931,7 +932,24 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                     paymentStatus: ispaymentdone.toString(),
                                     payment: widget.doctorProfileModel.fees);
 
-                                makePayment();
+                                final url = Uri.parse(
+                                    "http://0e29-210-89-62-114.ngrok.io/stripe-checkout");
+
+                                final response = await http.post(url, headers: {
+                                  'Content-Type': 'application/json'
+                                });
+
+                                paymentIntentData =
+                                    await json.decode(response.body);
+
+                                print(response.body);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CheckoutScreen(
+                                          sessionId: paymentIntentData[
+                                              'paymentIntent']),
+                                    ));
 
                                 // if (ispaymentdone) {
                                 //   appointment.getDoctorAppointmentsForUser(
@@ -977,43 +995,37 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
   Map<String, dynamic> paymentIntentData;
 
   Future<void> makePayment() async {
-    final url = Uri.parse("https://stripe121.herokuapp.com/");
+    //   await Stripe.instance.initPaymentSheet(
+    //       paymentSheetParameters: SetupPaymentSheetParameters(
+    //           paymentIntentClientSecret:
+    //               "pi_3JSnThSAU2VVzKqt0qjE0uM8_secret_GfzqSL2IlJ21eRCfMfOiDDZye",
+    //           applePay: true,
+    //           googlePay: true,
+    //           style: ThemeMode.dark,
+    //           merchantCountryCode: 'US',
+    //           merchantDisplayName: 'TechZirkon'));
 
-    final response =
-        await http.get(url, headers: {'Content-Type': 'application/json'});
+    //   setState(() {});
 
-    paymentIntentData = json.decode(response.body);
+    //   displayPaymentSheet();
+    // }
 
-    await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-            paymentIntentClientSecret: paymentIntentData['paymentIntent'],
-            applePay: true,
-            googlePay: true,
-            style: ThemeMode.dark,
-            merchantCountryCode: 'US',
-            merchantDisplayName: 'TechZirkon'));
+    // Future<void> displayPaymentSheet() async {
+    //   try {
+    //     await Stripe.instance.presentPaymentSheet(
+    //       parameters: PresentPaymentSheetParameters(
+    //         clientSecret: paymentIntentData['paymentIntent'],
+    //         confirmPayment: true,
+    //       ),
+    //     );
 
-    setState(() {});
-
-    displayPaymentSheet();
-  }
-
-  Future<void> displayPaymentSheet() async {
-    try {
-      await Stripe.instance.presentPaymentSheet(
-        parameters: PresentPaymentSheetParameters(
-          clientSecret: paymentIntentData['paymentIntent'],
-          confirmPayment: true,
-        ),
-      );
-      setState(() {
-        paymentIntentData = null;
-      });
-
-      Fluttertoast.showToast(msg: "Payment Done Succesfully");
-    } catch (e) {
-      print("Eroor");
-      print(e);
-    }
+    //     Fluttertoast.showToast(msg: "Payment Done Succesfully");
+    //     setState(() {
+    //       // paymentIntentData = null;
+    //     });
+    //   } catch (e) {
+    //     print("Eroor");
+    //     print(e);
+    //   }
   }
 }
