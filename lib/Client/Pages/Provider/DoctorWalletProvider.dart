@@ -31,6 +31,8 @@ class DoctorWalletProvider with ChangeNotifier {
   }
 
   updateTotalAmount(int amount) async {
+    getTotalAmount();
+    
     _amount = amount + _amount;
     var userId = FirebaseAuth.instance.currentUser.uid;
 

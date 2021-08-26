@@ -1,13 +1,24 @@
 import 'dart:convert';
+import 'package:camhed/Client/Pages/Pages/clientappointmentsPage.dart';
+import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
+import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:camhed/Client/Pages/splashScreen/InitialSplashScreen.dart';
+import 'package:camhed/Model/AppointmentModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'Model/DoctorModel/DoctorProfileModel.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final String sessionId;
-
-  const CheckoutScreen({Key key, @required this.sessionId}) : super(key: key);
+  final DoctorProfileModel doctorProfileModel;
+  final AppointmentModel data;
+  const CheckoutScreen(
+      {@required this.sessionId,
+      @required this.doctorProfileModel,
+      @required this.data});
 
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
@@ -42,6 +53,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var appointment = Provider.of<AppointmentProvider>(context);
+
     return Scaffold(
       appBar: AppBar(title: Text('Stripe Checkout')),
       body: WebView(
@@ -56,13 +69,26 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         navigationDelegate: (NavigationRequest request) {
           if (request.url.startsWith('https://example.com/success')) {
             print(request);
+
+            appointment.setAppointment(
+                widget.data, widget.doctorProfileModel.doctorId);
+
+            appointment.getDoctorAppointmentsForUser(
+                widget.doctorProfileModel.doctorId, widget.data);
+
+            Provider.of<DoctorWalletProvider>(context, listen: false)
+                .updateTotalAmount(int.parse(widget.doctorProfileModel.fees));
+
             return Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => InitialSplashScreen(),
+              builder: (context) => ClientAppointmentPage(),
             ));
           } else if (request.url.startsWith('https://example.com/cancel')) {
             print(request);
+
+            appointment.setAppointment(
+                widget.data, widget.doctorProfileModel.doctorId);
             return Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => InitialSplashScreen(),
+              builder: (context) => ClientAppointmentPage(),
             ));
           }
           return NavigationDecision.navigate;
