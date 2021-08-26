@@ -77,7 +77,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 widget.doctorProfileModel.doctorId, widget.data);
 
             Provider.of<DoctorWalletProvider>(context, listen: false)
-                .updateTotalAmount(int.parse(widget.doctorProfileModel.fees));
+                .updateTotalAmount(int.parse(widget.doctorProfileModel.fees),widget.doctorProfileModel.doctorId);
 
             return Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ClientAppointmentPage(),

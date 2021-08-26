@@ -30,11 +30,11 @@ class DoctorWalletProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  updateTotalAmount(int amount) async {
+  updateTotalAmount(int amount,String userId) async {
     getTotalAmount();
     
     _amount = amount + _amount;
-    var userId = FirebaseAuth.instance.currentUser.uid;
+    // var userId = FirebaseAuth.instance.currentUser.uid;
 
     await FirebaseFirestore.instance
         .collection('DoctorWallet')
