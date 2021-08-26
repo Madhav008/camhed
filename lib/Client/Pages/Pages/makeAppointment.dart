@@ -1,10 +1,14 @@
 import 'dart:math';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:camhed/Client/Pages/Provider/AppointmentProvider.dart';
 import 'package:camhed/Client/Pages/Provider/DoctorWalletProvider.dart';
 import 'package:camhed/Model/AppointmentModel.dart';
 import 'package:camhed/Model/DoctorModel/DoctorProfileModel.dart';
-import 'package:camhed/card_payment.dart';
 import 'package:camhed/validatior/Progress.aHUD.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -927,14 +931,8 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
                                     paymentStatus: ispaymentdone.toString(),
                                     payment: widget.doctorProfileModel.fees);
 
-                                //TODO: PaymentGateWay
+                                makePayment();
 
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CustomCardPaymentScreen()),
-                                );
                                 // if (ispaymentdone) {
                                 //   appointment.getDoctorAppointmentsForUser(
                                 //       widget.doctorProfileModel.doctorId, data);
@@ -974,5 +972,48 @@ class _MakeAppoinmentPageState extends State<MakeAppoinmentPage> {
         ),
       ),
     );
+  }
+
+  Map<String, dynamic> paymentIntentData;
+
+  Future<void> makePayment() async {
+    final url = Uri.parse("https://stripe121.herokuapp.com/");
+
+    final response =
+        await http.get(url, headers: {'Content-Type': 'application/json'});
+
+    paymentIntentData = json.decode(response.body);
+
+    await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+            paymentIntentClientSecret: paymentIntentData['paymentIntent'],
+            applePay: true,
+            googlePay: true,
+            style: ThemeMode.dark,
+            merchantCountryCode: 'US',
+            merchantDisplayName: 'TechZirkon'));
+
+    setState(() {});
+
+    displayPaymentSheet();
+  }
+
+  Future<void> displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet(
+        parameters: PresentPaymentSheetParameters(
+          clientSecret: paymentIntentData['paymentIntent'],
+          confirmPayment: true,
+        ),
+      );
+      setState(() {
+        paymentIntentData = null;
+      });
+
+      Fluttertoast.showToast(msg: "Payment Done Succesfully");
+    } catch (e) {
+      print("Eroor");
+      print(e);
+    }
   }
 }
